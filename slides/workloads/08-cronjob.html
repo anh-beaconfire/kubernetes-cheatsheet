@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workloads - CronJob</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../workloads/07-job.html" data-next="../networking/01-kubernetes-networking-model.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Workloads · 23/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Workloads</p>
+          <h2 class="reveal">CronJob</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">A CronJob runs Jobs on a schedule.</li>
+                <li class="reveal">nightly cleanup</li>
+                <li class="reveal">scheduled reports</li>
+                <li class="reveal">periodic sync</li>
+                <li class="reveal">backups</li>
+                <li class="reveal">set concurrencyPolicy</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cleanup
+spec:
+  schedule: "0 2 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: cleanup
+              image: busybox
+              command: ["sh", "-c", "echo cleanup"]</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../workloads/07-job.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../networking/01-kubernetes-networking-model.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

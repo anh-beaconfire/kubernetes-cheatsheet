@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Networking - DNS in Kubernetes</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../networking/06-gateway-api.html" data-next="../networking/08-networkpolicy.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Networking · 30/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Networking</p>
+          <h2 class="reveal">DNS in Kubernetes</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">Kubernetes provides DNS names for Services and sometimes Pods.</li>
+                <li class="reveal">use service DNS names instead of pod IPs</li>
+                <li class="reveal">avoid hardcoding cluster IPs</li>
+                <li class="reveal">debug DNS with temporary pods</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>api-service
+api-service.default
+api-service.default.svc
+api-service.default.svc.cluster.local
+
+---
+
+kubectl get svc
+kubectl run debug --image=busybox -it --rm -- nslookup api-service</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../networking/06-gateway-api.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../networking/08-networkpolicy.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

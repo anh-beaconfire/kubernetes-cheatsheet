@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workloads - Multi-Container Pod</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../workloads/01-pod.html" data-next="../workloads/03-deployment.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Workloads · 17/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Workloads</p>
+          <h2 class="reveal">Multi-Container Pod</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">Containers in the same pod share localhost networking and volumes.</li>
+                <li class="reveal">sidecar</li>
+                <li class="reveal">adapter</li>
+                <li class="reveal">ambassador</li>
+                <li class="reveal">init container</li>
+                <li class="reveal">use sidecars only when lifecycle coupling is necessary</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: app-with-sidecar
+spec:
+  containers:
+    - name: app
+      image: myapp:1.0
+    - name: log-sidecar
+      image: busybox
+      command: ["sh", "-c", "tail -f /logs/app.log"]
+      volumeMounts:
+        - name: logs
+          mountPath: /logs
+  volumes:
+    - name: logs
+      emptyDir: {}</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../workloads/01-pod.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../workloads/03-deployment.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

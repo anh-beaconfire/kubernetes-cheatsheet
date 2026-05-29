@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Networking - Request Flow: Internet to Pod</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../networking/04-ingress.html" data-next="../networking/06-gateway-api.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Networking · 28/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Networking</p>
+          <h2 class="reveal">Request Flow: Internet to Pod</h2>
+          <div class="diagram-wrap reveal">
+            <div class="diagram request-diagram"><span>User</span><i></i><span>DNS</span><i></i><span>Load
+                Balancer</span><i></i><span>Ingress
+                Controller</span><i></i><span>Service</span><i></i><span>EndpointSlice</span><i></i><span>Pod</span>
+            </div>
+          </div>
+          <div class="diagram-bullets">
+            <ul class="bullet-list">
+              <li class="reveal">User sends request to domain</li>
+              <li class="reveal">DNS resolves to load balancer</li>
+              <li class="reveal">Load balancer sends traffic to ingress controller</li>
+              <li class="reveal">Ingress controller matches host/path</li>
+              <li class="reveal">Ingress routes to Service</li>
+            </ul>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../networking/04-ingress.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../networking/06-gateway-api.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

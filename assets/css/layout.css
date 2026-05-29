@@ -1,0 +1,26 @@
+/* Site-level layout and index page patterns. */
+.site-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+
+.site-header { padding: 44px 0 28px; }
+.site-header h1 { max-width: 860px; margin-bottom: 12px; font-size: clamp(2.25rem, 6vw, 4.75rem); }
+.site-header p { max-width: 760px; color: var(--text-muted); font-size: 1.12rem; }
+
+.home-actions, .quick-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+.button-link, .nav-button {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 42px;
+  border: 1px solid var(--border); border-radius: 8px; padding: 9px 14px;
+  background: var(--surface); color: var(--text); font-weight: 700; text-decoration: none;
+}
+.button-link.primary, .nav-button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.section-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 28px 0 56px; }
+.toc-section, .path-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; box-shadow: var(--shadow); }
+.toc-section h2, .path-panel h2 { margin-bottom: 12px; font-size: 1.2rem; }
+.toc-section ol { margin: 0; padding-left: 1.35rem; }
+.toc-section li + li { margin-top: 6px; }
+.path-panel { margin: 24px 0; }
+.path-panel ol { margin-bottom: 0; }
+.site-footer { border-top: 1px solid var(--border); color: var(--text-muted); padding: 24px 0 42px; }
+
+@media (max-width: 820px) { .section-grid { grid-template-columns: 1fr; } .site-header { padding-top: 28px; } }

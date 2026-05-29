@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture - Worker Node Components</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../architecture/02-control-plane-components.html" data-next="../architecture/04-declarative-model-and-reconciliation.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Architecture · 11/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Architecture</p>
+          <h2 class="reveal">Worker Node Components</h2>
+          <table class="compare-table reveal">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Responsibility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>kubelet</td>
+                <td>ensures pods run on node</td>
+              </tr>
+              <tr>
+                <td>kube-proxy</td>
+                <td>service networking rules</td>
+              </tr>
+              <tr>
+                <td>container runtime</td>
+                <td>runs containers</td>
+              </tr>
+              <tr>
+                <td>CNI plugin</td>
+                <td>pod networking</td>
+              </tr>
+              <tr>
+                <td>pods</td>
+                <td>smallest deployable workload unit</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="footer-note reveal">kubelet</div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../architecture/02-control-plane-components.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../architecture/04-declarative-model-and-reconciliation.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

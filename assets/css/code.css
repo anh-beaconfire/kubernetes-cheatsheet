@@ -1,0 +1,5 @@
+/* Code, command, YAML, and Mermaid block styling. */
+pre { margin: 0; overflow-x: auto; white-space: pre-wrap; border-radius: 8px; padding: 18px; background: var(--code-bg); color: var(--code-text); border: 1px solid #25304a; }
+code { font-family: var(--font-mono); font-size: .92rem; line-height: 1.5; }
+:not(pre) > code { background: var(--accent-muted); color: var(--accent-dark); border-radius: 5px; padding: .12rem .32rem; }
+pre.mermaid { background: var(--surface); color: var(--text); border-color: var(--border); }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Networking - Gateway API</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../networking/05-request-flow-internet-to-pod.html" data-next="../networking/07-dns-in-kubernetes.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Networking · 29/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Networking</p>
+          <h2 class="reveal">Gateway API</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">Gateway API is a newer, more expressive Kubernetes networking API for service
+                  networking.</li>
+                <li class="reveal">GatewayClass</li>
+                <li class="reveal">Gateway</li>
+                <li class="reveal">HTTPRoute</li>
+                <li class="reveal">separation of infra owner and app owner</li>
+                <li class="reveal">consider Gateway API for new platform designs</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: web-gateway
+spec:
+  gatewayClassName: nginx
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+
+---
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: api-route
+spec:
+  parentRefs:
+    - name: web-gateway
+  rules:
+    - backendRefs:
+        - name: api-service
+          port: 80</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../networking/05-request-flow-internet-to-pod.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../networking/07-dns-in-kubernetes.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

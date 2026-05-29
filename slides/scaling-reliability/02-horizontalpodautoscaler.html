@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scaling and Reliability - HorizontalPodAutoscaler</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../scaling-reliability/01-resource-requests-and-limits.html" data-next="../scaling-reliability/03-cluster-autoscaler-vs-hpa-vs-vpa.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Scaling and Reliability · 40/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Scaling</p>
+          <h2 class="reveal">HorizontalPodAutoscaler</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">HPA automatically adjusts pod replica count based on metrics.</li>
+                <li class="reveal">define resource requests</li>
+                <li class="reveal">use custom metrics for better scaling</li>
+                <li class="reveal">avoid too-low minReplicas for production</li>
+                <li class="reveal">test scaling behavior</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../scaling-reliability/01-resource-requests-and-limits.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../scaling-reliability/03-cluster-autoscaler-vs-hpa-vs-vpa.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

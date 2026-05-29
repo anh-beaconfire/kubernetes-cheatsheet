@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture - Control Plane Components</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../architecture/01-cluster-architecture.html" data-next="../architecture/03-worker-node-components.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Architecture · 10/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Architecture</p>
+          <h2 class="reveal">Control Plane Components</h2>
+          <table class="compare-table reveal">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Responsibility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>API Server</td>
+                <td>front door of Kubernetes API</td>
+              </tr>
+              <tr>
+                <td>etcd</td>
+                <td>stores cluster state</td>
+              </tr>
+              <tr>
+                <td>Scheduler</td>
+                <td>assigns pods to nodes</td>
+              </tr>
+              <tr>
+                <td>Controller Manager</td>
+                <td>runs reconciliation controllers</td>
+              </tr>
+              <tr>
+                <td>Cloud Controller Manager</td>
+                <td>integrates with cloud provider APIs</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="footer-note reveal">API Server</div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../architecture/01-cluster-architecture.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../architecture/03-worker-node-components.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best Practices - Application Deployment Best Practices</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../packaging-extensions/03-crds-and-operators.html" data-next="../best-practices/02-security-best-practices.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Best Practices · 64/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Best Practices</p>
+          <h2 class="reveal">Application Deployment Best Practices</h2>
+          <div class="card-grid">
+            <article class="info-card reveal">
+              <h3>use Deployments for stateless apps</h3>
+              <p>use Deployments for stateless apps</p>
+            </article>
+            <article class="info-card reveal">
+              <h3>use StatefulSets for stable identity/storage</h3>
+              <p>use StatefulSets for stable identity/storage</p>
+            </article>
+            <article class="info-card reveal">
+              <h3>set requests and limits</h3>
+              <p>set requests and limits</p>
+            </article>
+            <article class="info-card reveal">
+              <h3>use readiness/liveness/startup probes</h3>
+              <p>use readiness/liveness/startup probes</p>
+            </article>
+            <article class="info-card reveal">
+              <h3>use ConfigMaps and Secrets</h3>
+              <p>use ConfigMaps and Secrets</p>
+            </article>
+            <article class="info-card reveal">
+              <h3>use immutable image tags</h3>
+              <p>use immutable image tags</p>
+            </article>
+            <article class="info-card reveal">
+              <h3>use rolling updates</h3>
+              <p>use rolling updates</p>
+            </article>
+            <article class="info-card reveal">
+              <h3>configure PDBs</h3>
+              <p>configure PDBs</p>
+            </article>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../packaging-extensions/03-crds-and-operators.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../best-practices/02-security-best-practices.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

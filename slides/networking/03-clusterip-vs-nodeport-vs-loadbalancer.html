@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Networking - ClusterIP vs NodePort vs LoadBalancer</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../networking/02-service.html" data-next="../networking/04-ingress.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Networking · 26/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Networking</p>
+          <h2 class="reveal">ClusterIP vs NodePort vs LoadBalancer</h2>
+          <table class="compare-table reveal">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Scope</th>
+                <th>Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ClusterIP</td>
+                <td>internal cluster only</td>
+                <td>service-to-service</td>
+              </tr>
+              <tr>
+                <td>NodePort</td>
+                <td>exposes port on every node</td>
+                <td>testing/simple access</td>
+              </tr>
+              <tr>
+                <td>LoadBalancer</td>
+                <td>cloud/external LB</td>
+                <td>public service</td>
+              </tr>
+              <tr>
+                <td>ExternalName</td>
+                <td>DNS alias</td>
+                <td>external dependency mapping</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="footer-note reveal">avoid NodePort for production public apps</div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../networking/02-service.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../networking/04-ingress.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

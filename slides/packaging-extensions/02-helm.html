@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Packaging and Extensions - Helm</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../packaging-extensions/01-kustomize.html" data-next="../packaging-extensions/03-crds-and-operators.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Packaging and Extensions · 62/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Packaging</p>
+          <h2 class="reveal">Helm</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">Helm is a Kubernetes package manager using charts and templates.</li>
+                <li class="reveal">package reusable apps</li>
+                <li class="reveal">install third-party tools</li>
+                <li class="reveal">parameterize deployments</li>
+                <li class="reveal">review rendered manifests</li>
+                <li class="reveal">pin chart versions</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install myapp ./chart
+helm upgrade myapp ./chart
+helm rollback myapp 1
+helm uninstall myapp</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../packaging-extensions/01-kustomize.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../packaging-extensions/03-crds-and-operators.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

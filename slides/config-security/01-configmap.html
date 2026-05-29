@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration and Security - ConfigMap</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../networking/09-egress-traffic.html" data-next="../config-security/02-secret.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Configuration and Security · 33/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Configuration</p>
+          <h2 class="reveal">ConfigMap</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">ConfigMap stores non-sensitive configuration.</li>
+                <li class="reveal">do not store secrets in ConfigMaps</li>
+                <li class="reveal">use versioned config changes</li>
+                <li class="reveal">restart pods when config changes if app does not reload dynamically</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+data:
+  LOG_LEVEL: "info"
+  FEATURE_FLAG: "true"
+
+---
+
+envFrom:
+  - configMapRef:
+      name: api-config</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../networking/09-egress-traffic.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../config-security/02-secret.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

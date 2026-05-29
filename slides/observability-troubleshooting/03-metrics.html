@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Observability and Troubleshooting - Metrics</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../observability-troubleshooting/02-logs.html" data-next="../observability-troubleshooting/04-events-and-describe.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Observability and Troubleshooting · 52/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Troubleshooting</p>
+          <h2 class="reveal">Metrics</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">metrics-server supports basic resource metrics</li>
+                <li class="reveal">Prometheus collects richer metrics</li>
+                <li class="reveal">Grafana visualizes dashboards</li>
+                <li class="reveal">monitor CPU, memory, restarts, latency, error rate</li>
+                <li class="reveal">monitor node pressure</li>
+                <li class="reveal">alert on unavailable replicas</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>kubectl top nodes
+kubectl top pods</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../observability-troubleshooting/02-logs.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../observability-troubleshooting/04-events-and-describe.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

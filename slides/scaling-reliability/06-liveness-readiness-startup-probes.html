@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scaling and Reliability - Liveness, Readiness, Startup Probes</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../scaling-reliability/05-poddisruptionbudget.html" data-next="../scaling-reliability/07-rolling-updates-and-rollbacks.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Scaling and Reliability · 44/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Reliability</p>
+          <h2 class="reveal">Liveness, Readiness, Startup Probes</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">liveness: should container be restarted?</li>
+                <li class="reveal">readiness: should pod receive traffic?</li>
+                <li class="reveal">startup: has slow-starting app finished booting?</li>
+                <li class="reveal">do not make liveness too aggressive</li>
+                <li class="reveal">readiness should check dependencies needed to serve traffic</li>
+                <li class="reveal">startup probe protects slow apps</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  periodSeconds: 5
+
+startupProbe:
+  httpGet:
+    path: /startup
+    port: 8080
+  failureThreshold: 30
+  periodSeconds: 10</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../scaling-reliability/05-poddisruptionbudget.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../scaling-reliability/07-rolling-updates-and-rollbacks.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

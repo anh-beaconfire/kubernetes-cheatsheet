@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kubectl Cheatsheet - Logs, Exec, Port Forward</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../kubectl-cheatsheet/03-apply-edit-delete.html" data-next="../kubectl-cheatsheet/05-rollouts-and-scaling.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">kubectl Cheatsheet · 59/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">kubectl</p>
+          <h2 class="reveal">Logs, Exec, Port Forward</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">Practical Kubernetes concept</li>
+                <li class="reveal">Production usage guidance</li>
+                <li class="reveal">Debugging and operations context</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>kubectl logs deployment/api
+kubectl logs -f pod/&lt;pod&gt;
+kubectl logs &lt;pod&gt; --previous
+kubectl exec -it &lt;pod&gt; -- sh
+kubectl port-forward svc/api-service 8080:80</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../kubectl-cheatsheet/03-apply-edit-delete.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../kubectl-cheatsheet/05-rollouts-and-scaling.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

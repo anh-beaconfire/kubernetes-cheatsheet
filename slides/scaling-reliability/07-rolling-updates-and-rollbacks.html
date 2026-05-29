@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scaling and Reliability - Rolling Updates and Rollbacks</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../scaling-reliability/06-liveness-readiness-startup-probes.html" data-next="../config-security/04-kubernetes-security-layers.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Scaling and Reliability · 45/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Reliability</p>
+          <h2 class="reveal">Rolling Updates and Rollbacks</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">use readiness probes</li>
+                <li class="reveal">use maxSurge/maxUnavailable</li>
+                <li class="reveal">monitor during rollout</li>
+                <li class="reveal">use immutable image tags</li>
+                <li class="reveal">keep rollback path available</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>kubectl set image deployment/api api=myorg/api:1.1.0
+kubectl rollout status deployment/api
+kubectl rollout history deployment/api
+kubectl rollout undo deployment/api</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../scaling-reliability/06-liveness-readiness-startup-probes.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../config-security/04-kubernetes-security-layers.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

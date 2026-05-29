@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kubectl Cheatsheet - Apply, Edit, Delete</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../kubectl-cheatsheet/02-get-and-inspect-resources.html" data-next="../kubectl-cheatsheet/04-logs-exec-port-forward.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">kubectl Cheatsheet · 58/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">kubectl</p>
+          <h2 class="reveal">Apply, Edit, Delete</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">Use declarative kubectl apply -f for repeatable environments.</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>kubectl apply -f app.yaml
+kubectl diff -f app.yaml
+kubectl delete -f app.yaml
+kubectl edit deployment api
+kubectl delete pod &lt;pod&gt;</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../kubectl-cheatsheet/02-get-and-inspect-resources.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../kubectl-cheatsheet/04-logs-exec-port-forward.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

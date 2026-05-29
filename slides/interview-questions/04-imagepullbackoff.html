@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Questions - ImagePullBackOff</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../interview-questions/03-crashloopbackoff.html" data-next="../interview-questions/05-service-not-working.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Interview Questions · 71/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Interview</p>
+          <h2 class="reveal">ImagePullBackOff</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">Kubernetes cannot pull the image.</li>
+                <li class="reveal">image name typo</li>
+                <li class="reveal">tag does not exist</li>
+                <li class="reveal">private registry auth missing</li>
+                <li class="reveal">registry unavailable</li>
+                <li class="reveal">image pull secret not configured</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>kubectl describe pod &lt;pod&gt;
+kubectl get secret
+kubectl create secret docker-registry regcred ...</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../interview-questions/03-crashloopbackoff.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../interview-questions/05-service-not-working.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

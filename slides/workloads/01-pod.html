@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workloads - Pod</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../object-basics/03-namespaces.html" data-next="../workloads/02-multi-container-pod.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Workloads · 16/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Workloads</p>
+          <h2 class="reveal">Pod</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">A Pod is the smallest deployable unit in Kubernetes. It wraps one or more containers
+                  that share network namespace, storage volumes, and lifecycle.</li>
+                <li class="reveal">rarely create standalone pods directly in production</li>
+                <li class="reveal">use Deployment, StatefulSet, Job, or DaemonSet instead</li>
+                <li class="reveal">do not manage standalone pods for long-running apps</li>
+                <li class="reveal">use controllers</li>
+                <li class="reveal">define requests/limits</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27
+      ports:
+        - containerPort: 80</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../object-basics/03-namespaces.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../workloads/02-multi-container-pod.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

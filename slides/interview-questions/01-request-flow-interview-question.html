@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Questions - Request Flow Interview Question</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../best-practices/04-operational-best-practices.html" data-next="../interview-questions/02-failing-pod-interview-question.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Interview Questions · 68/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Interview</p>
+          <h2 class="reveal">Request Flow Interview Question</h2>
+          <div class="diagram-wrap reveal">
+            <div class="diagram request-diagram"><span>User</span><i></i><span>DNS</span><i></i><span>Load
+                Balancer</span><i></i><span>Ingress
+                Controller</span><i></i><span>Service</span><i></i><span>EndpointSlice</span><i></i><span>Pod</span>
+            </div>
+          </div>
+          <div class="diagram-bullets">
+            <ul class="bullet-list">
+              <li class="reveal">How does a request from the internet reach a pod?</li>
+              <li class="reveal">DNS resolves domain to load balancer</li>
+              <li class="reveal">load balancer sends request to ingress controller</li>
+              <li class="reveal">ingress controller evaluates Ingress/Gateway rules</li>
+              <li class="reveal">routes to Service</li>
+            </ul>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../best-practices/04-operational-best-practices.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../interview-questions/02-failing-pod-interview-question.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

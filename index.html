@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes Cheatsheet</title>
+  <link rel="stylesheet" href="./assets/css/base.css">
+  <link rel="stylesheet" href="./assets/css/layout.css">
+  <link rel="stylesheet" href="./assets/css/slides.css">
+  <link rel="stylesheet" href="./assets/css/code.css">
+  <link rel="stylesheet" href="./assets/css/theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-shell">
+      <p class="section-label">Kubernetes Fundamentals</p>
+      <h1>Kubernetes Cheatsheet</h1>
+      <p>A production-focused slide reference for engineers familiar with Docker and ready to operate workloads on Kubernetes. Each slide is now a standalone static HTML page for easier editing and GitHub Pages hosting.</p>
+      <div class="home-actions">
+        <a class="button-link primary" href="./slides/kubernetes-fundamentals/01-introduction-cheat-sheet-best-practices-and-interview-reference.html">Start slides</a>
+        <a class="button-link" href="#table-of-contents">Browse table of contents</a>
+      </div>
+      <nav class="quick-links" aria-label="Quick links">
+      <a class="button-link" href="#architecture">Architecture</a>
+      <a class="button-link" href="#workloads">Workloads</a>
+      <a class="button-link" href="#networking">Networking</a>
+      <a class="button-link" href="#config-security">Security</a>
+      <a class="button-link" href="#kubectl-cheatsheet">kubectl</a>
+      <a class="button-link" href="#interview-questions">Interview</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-shell">
+    <section class="path-panel" aria-labelledby="learning-path-title">
+      <h2 id="learning-path-title">Recommended Learning Path</h2>
+      <ol>
+      <li><a href="./slides/kubernetes-fundamentals/01-introduction-cheat-sheet-best-practices-and-interview-reference.html">Introduction, Cheat Sheet, Best Practices, and Interview Reference</a></li>
+      <li><a href="./slides/kubernetes-fundamentals/02-course-goals.html">Course Goals</a></li>
+      <li><a href="./slides/architecture/01-cluster-architecture.html">Cluster Architecture</a></li>
+      <li><a href="./slides/architecture/02-control-plane-components.html">Control Plane Components</a></li>
+      <li><a href="./slides/workloads/01-pod.html">Pod</a></li>
+      <li><a href="./slides/workloads/03-deployment.html">Deployment</a></li>
+      <li><a href="./slides/networking/02-service.html">Service</a></li>
+      <li><a href="./slides/networking/04-ingress.html">Ingress</a></li>
+      <li><a href="./slides/config-security/01-configmap.html">ConfigMap</a></li>
+      <li><a href="./slides/storage/02-persistentvolume-and-persistentvolumeclaim.html">PersistentVolume and PersistentVolumeClaim</a></li>
+      <li><a href="./slides/scaling-reliability/01-resource-requests-and-limits.html">Resource Requests and Limits</a></li>
+      <li><a href="./slides/scaling-reliability/06-liveness-readiness-startup-probes.html">Liveness, Readiness, Startup Probes</a></li>
+      <li><a href="./slides/config-security/05-rbac-role-and-rolebinding.html">RBAC: Role and RoleBinding</a></li>
+      <li><a href="./slides/observability-troubleshooting/02-logs.html">Logs</a></li>
+      <li><a href="./slides/kubectl-cheatsheet/01-context-and-namespace-commands.html">Context and Namespace Commands</a></li>
+      <li><a href="./slides/best-practices/01-application-deployment-best-practices.html">Application Deployment Best Practices</a></li>
+      <li><a href="./slides/interview-questions/01-request-flow-interview-question.html">Request Flow Interview Question</a></li>
+      <li><a href="./slides/reference-summary/03-final-summary.html">Final Summary</a></li>
+      </ol>
+    </section>
+
+    <section id="table-of-contents" aria-labelledby="toc-title">
+      <h2 id="toc-title">Table of Contents</h2>
+      <div class="section-grid">
+      <section class="toc-section" id="kubernetes-fundamentals">
+        <h2>Kubernetes Fundamentals</h2>
+        <ol>
+        <li><a href="./slides/kubernetes-fundamentals/01-introduction-cheat-sheet-best-practices-and-interview-reference.html">Introduction, Cheat Sheet, Best Practices, and Interview Reference</a></li>
+        <li><a href="./slides/kubernetes-fundamentals/02-course-goals.html">Course Goals</a></li>
+        <li><a href="./slides/kubernetes-fundamentals/03-docker-drawbacks.html">Docker Drawbacks</a></li>
+        <li><a href="./slides/kubernetes-fundamentals/04-what-problems-kubernetes-solves.html">What Problems Kubernetes Solves</a></li>
+        <li><a href="./slides/kubernetes-fundamentals/05-what-is-kubernetes.html">What Is Kubernetes?</a></li>
+        <li><a href="./slides/kubernetes-fundamentals/06-why-do-we-need-kubernetes.html">Why Do We Need Kubernetes?</a></li>
+        <li><a href="./slides/kubernetes-fundamentals/07-docker-vs-kubernetes.html">Docker vs Kubernetes</a></li>
+        <li><a href="./slides/kubernetes-fundamentals/08-kubernetes-mental-model.html">Kubernetes Mental Model</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="architecture">
+        <h2>Architecture</h2>
+        <ol>
+        <li><a href="./slides/architecture/01-cluster-architecture.html">Cluster Architecture</a></li>
+        <li><a href="./slides/architecture/02-control-plane-components.html">Control Plane Components</a></li>
+        <li><a href="./slides/architecture/03-worker-node-components.html">Worker Node Components</a></li>
+        <li><a href="./slides/architecture/04-declarative-model-and-reconciliation.html">Declarative Model and Reconciliation</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="object-basics">
+        <h2>Object Basics</h2>
+        <ol>
+        <li><a href="./slides/object-basics/01-kubernetes-object-anatomy.html">Kubernetes Object Anatomy</a></li>
+        <li><a href="./slides/object-basics/02-labels-and-selectors.html">Labels and Selectors</a></li>
+        <li><a href="./slides/object-basics/03-namespaces.html">Namespaces</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="workloads">
+        <h2>Workloads</h2>
+        <ol>
+        <li><a href="./slides/workloads/01-pod.html">Pod</a></li>
+        <li><a href="./slides/workloads/02-multi-container-pod.html">Multi-Container Pod</a></li>
+        <li><a href="./slides/workloads/03-deployment.html">Deployment</a></li>
+        <li><a href="./slides/workloads/04-replicaset.html">ReplicaSet</a></li>
+        <li><a href="./slides/workloads/05-statefulset.html">StatefulSet</a></li>
+        <li><a href="./slides/workloads/06-daemonset.html">DaemonSet</a></li>
+        <li><a href="./slides/workloads/07-job.html">Job</a></li>
+        <li><a href="./slides/workloads/08-cronjob.html">CronJob</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="networking">
+        <h2>Networking</h2>
+        <ol>
+        <li><a href="./slides/networking/01-kubernetes-networking-model.html">Kubernetes Networking Model</a></li>
+        <li><a href="./slides/networking/02-service.html">Service</a></li>
+        <li><a href="./slides/networking/03-clusterip-vs-nodeport-vs-loadbalancer.html">ClusterIP vs NodePort vs LoadBalancer</a></li>
+        <li><a href="./slides/networking/04-ingress.html">Ingress</a></li>
+        <li><a href="./slides/networking/05-request-flow-internet-to-pod.html">Request Flow: Internet to Pod</a></li>
+        <li><a href="./slides/networking/06-gateway-api.html">Gateway API</a></li>
+        <li><a href="./slides/networking/07-dns-in-kubernetes.html">DNS in Kubernetes</a></li>
+        <li><a href="./slides/networking/08-networkpolicy.html">NetworkPolicy</a></li>
+        <li><a href="./slides/networking/09-egress-traffic.html">Egress Traffic</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="config-security">
+        <h2>Configuration and Security</h2>
+        <ol>
+        <li><a href="./slides/config-security/01-configmap.html">ConfigMap</a></li>
+        <li><a href="./slides/config-security/02-secret.html">Secret</a></li>
+        <li><a href="./slides/config-security/03-serviceaccount.html">ServiceAccount</a></li>
+        <li><a href="./slides/config-security/04-kubernetes-security-layers.html">Kubernetes Security Layers</a></li>
+        <li><a href="./slides/config-security/05-rbac-role-and-rolebinding.html">RBAC: Role and RoleBinding</a></li>
+        <li><a href="./slides/config-security/06-securitycontext.html">SecurityContext</a></li>
+        <li><a href="./slides/config-security/07-image-security.html">Image Security</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="storage">
+        <h2>Storage</h2>
+        <ol>
+        <li><a href="./slides/storage/01-volume-basics.html">Volume Basics</a></li>
+        <li><a href="./slides/storage/02-persistentvolume-and-persistentvolumeclaim.html">PersistentVolume and PersistentVolumeClaim</a></li>
+        <li><a href="./slides/storage/03-storageclass.html">StorageClass</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="scaling-reliability">
+        <h2>Scaling and Reliability</h2>
+        <ol>
+        <li><a href="./slides/scaling-reliability/01-resource-requests-and-limits.html">Resource Requests and Limits</a></li>
+        <li><a href="./slides/scaling-reliability/02-horizontalpodautoscaler.html">HorizontalPodAutoscaler</a></li>
+        <li><a href="./slides/scaling-reliability/03-cluster-autoscaler-vs-hpa-vs-vpa.html">Cluster Autoscaler vs HPA vs VPA</a></li>
+        <li><a href="./slides/scaling-reliability/04-scheduling-nodeselector-affinity-taints-tolerations.html">Scheduling: NodeSelector, Affinity, Taints, Tolerations</a></li>
+        <li><a href="./slides/scaling-reliability/05-poddisruptionbudget.html">PodDisruptionBudget</a></li>
+        <li><a href="./slides/scaling-reliability/06-liveness-readiness-startup-probes.html">Liveness, Readiness, Startup Probes</a></li>
+        <li><a href="./slides/scaling-reliability/07-rolling-updates-and-rollbacks.html">Rolling Updates and Rollbacks</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="observability-troubleshooting">
+        <h2>Observability and Troubleshooting</h2>
+        <ol>
+        <li><a href="./slides/observability-troubleshooting/01-observability-pillars.html">Observability Pillars</a></li>
+        <li><a href="./slides/observability-troubleshooting/02-logs.html">Logs</a></li>
+        <li><a href="./slides/observability-troubleshooting/03-metrics.html">Metrics</a></li>
+        <li><a href="./slides/observability-troubleshooting/04-events-and-describe.html">Events and Describe</a></li>
+        <li><a href="./slides/observability-troubleshooting/05-debugging-a-failing-pod.html">Debugging a Failing Pod</a></li>
+        <li><a href="./slides/observability-troubleshooting/06-debugging-service-connectivity.html">Debugging Service Connectivity</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="kubectl-cheatsheet">
+        <h2>kubectl Cheatsheet</h2>
+        <ol>
+        <li><a href="./slides/kubectl-cheatsheet/01-context-and-namespace-commands.html">Context and Namespace Commands</a></li>
+        <li><a href="./slides/kubectl-cheatsheet/02-get-and-inspect-resources.html">Get and Inspect Resources</a></li>
+        <li><a href="./slides/kubectl-cheatsheet/03-apply-edit-delete.html">Apply, Edit, Delete</a></li>
+        <li><a href="./slides/kubectl-cheatsheet/04-logs-exec-port-forward.html">Logs, Exec, Port Forward</a></li>
+        <li><a href="./slides/kubectl-cheatsheet/05-rollouts-and-scaling.html">Rollouts and Scaling</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="packaging-extensions">
+        <h2>Packaging and Extensions</h2>
+        <ol>
+        <li><a href="./slides/packaging-extensions/01-kustomize.html">Kustomize</a></li>
+        <li><a href="./slides/packaging-extensions/02-helm.html">Helm</a></li>
+        <li><a href="./slides/packaging-extensions/03-crds-and-operators.html">CRDs and Operators</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="best-practices">
+        <h2>Best Practices</h2>
+        <ol>
+        <li><a href="./slides/best-practices/01-application-deployment-best-practices.html">Application Deployment Best Practices</a></li>
+        <li><a href="./slides/best-practices/02-security-best-practices.html">Security Best Practices</a></li>
+        <li><a href="./slides/best-practices/03-reliability-best-practices.html">Reliability Best Practices</a></li>
+        <li><a href="./slides/best-practices/04-operational-best-practices.html">Operational Best Practices</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="interview-questions">
+        <h2>Interview Questions</h2>
+        <ol>
+        <li><a href="./slides/interview-questions/01-request-flow-interview-question.html">Request Flow Interview Question</a></li>
+        <li><a href="./slides/interview-questions/02-failing-pod-interview-question.html">Failing Pod Interview Question</a></li>
+        <li><a href="./slides/interview-questions/03-crashloopbackoff.html">CrashLoopBackOff</a></li>
+        <li><a href="./slides/interview-questions/04-imagepullbackoff.html">ImagePullBackOff</a></li>
+        <li><a href="./slides/interview-questions/05-service-not-working.html">Service Not Working</a></li>
+        </ol>
+      </section>
+      <section class="toc-section" id="reference-summary">
+        <h2>Reference Summary</h2>
+        <ol>
+        <li><a href="./slides/reference-summary/01-kubernetes-resource-map.html">Kubernetes Resource Map</a></li>
+        <li><a href="./slides/reference-summary/02-production-readiness-checklist.html">Production Readiness Checklist</a></li>
+        <li><a href="./slides/reference-summary/03-final-summary.html">Final Summary</a></li>
+        </ol>
+      </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-shell">Static HTML, CSS, JavaScript, and Mermaid. Compatible with GitHub Pages from the repository root.</div>
+  </footer>
+
+  <script src="./assets/js/slides-registry.js"></script>
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>

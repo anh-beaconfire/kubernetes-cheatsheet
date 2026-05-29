@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Observability and Troubleshooting - Logs</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../observability-troubleshooting/01-observability-pillars.html" data-next="../observability-troubleshooting/03-metrics.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Observability and Troubleshooting · 51/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Troubleshooting</p>
+          <h2 class="reveal">Logs</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">write logs to stdout/stderr</li>
+                <li class="reveal">use structured JSON logs</li>
+                <li class="reveal">centralize logs</li>
+                <li class="reveal">include correlation IDs</li>
+                <li class="reveal">retain logs outside pods</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>kubectl logs pod/api-123
+kubectl logs deployment/api
+kubectl logs pod/api-123 -c api
+kubectl logs pod/api-123 --previous
+kubectl logs -f deployment/api</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../observability-troubleshooting/01-observability-pillars.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../observability-troubleshooting/03-metrics.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

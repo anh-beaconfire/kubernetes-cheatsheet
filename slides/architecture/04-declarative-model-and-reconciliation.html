@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture - Declarative Model and Reconciliation</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../architecture/03-worker-node-components.html" data-next="../object-basics/01-kubernetes-object-anatomy.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Architecture · 12/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Architecture</p>
+          <h2 class="reveal">Declarative Model and Reconciliation</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">desired state lives in Kubernetes objects</li>
+                <li class="reveal">actual state is what is running</li>
+                <li class="reveal">controllers compare desired vs actual</li>
+                <li class="reveal">controllers continuously reconcile</li>
+              </ul>
+            </div>
+            <pre class="mermaid reveal">flowchart LR
+  Desired[Desired State: 3 replicas] --> Controller
+  Actual[Actual State: 2 pods running] --> Controller
+  Controller --> Action[Create 1 new Pod]</pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../architecture/03-worker-node-components.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../object-basics/01-kubernetes-object-anatomy.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

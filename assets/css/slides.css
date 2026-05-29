@@ -1,0 +1,38 @@
+/* Slide page layout and reusable slide components. */
+.slide-page { width: min(1280px, calc(100% - 32px)); margin: 0 auto; padding: 22px 0 34px; }
+.slide-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; color: var(--text-muted); }
+.home-link { font-weight: 800; color: var(--text); text-decoration: none; }
+.section-label, .kicker, .title-meta { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; }
+.slide { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: clamp(22px, 4vw, 42px); box-shadow: var(--shadow); }
+.slide h1 { font-size: clamp(2.2rem, 6vw, 5rem); max-width: 1050px; }
+.slide h2 { font-size: clamp(1.8rem, 4vw, 3.2rem); margin-bottom: 24px; }
+.title-sub { max-width: 880px; color: var(--text-muted); font-size: 1.25rem; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.tag-row span { border: 1px solid var(--border); background: var(--accent-muted); color: var(--accent-dark); border-radius: 999px; padding: 8px 12px; font-weight: 800; }
+.orbital { display: none; }
+.card-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.info-card, .card { background: var(--surface-muted); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+.info-card h3 { color: var(--accent-dark); font-size: 1.05rem; margin-bottom: 8px; }
+.info-card p, .footer-note { color: var(--text-muted); }
+.bullet-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.bullet-list li { position: relative; background: var(--surface-muted); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px 14px 34px; color: var(--text-muted); }
+.bullet-list li::before { content: ""; position: absolute; left: 15px; top: 22px; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); }
+.code-layout, .two-column { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 18px; align-items: start; }
+.text-panel .bullet-list { grid-template-columns: 1fr; }
+.compare-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.compare-table th, .compare-table td { border-bottom: 1px solid var(--border); padding: 13px 14px; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--accent-muted); color: var(--accent-dark); }
+.compare-table tr:last-child td { border-bottom: 0; }
+.diagram-wrap { border: 1px solid var(--border); background: var(--surface-muted); border-radius: 8px; padding: 18px; margin-bottom: 16px; overflow-x: auto; }
+.diagram { min-height: 220px; display: grid; gap: 14px; align-items: center; }
+.flow-diagram, .request-diagram, .reconcile-diagram { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; }
+.diagram span, .diagram div, .plane, .node { border: 1px solid var(--accent); background: #fff; border-radius: 8px; padding: 12px; text-align: center; }
+.diagram i { display: block; width: 36px; height: 4px; background: var(--accent); border-radius: 999px; }
+.cluster-diagram, .security-diagram, .map-diagram, .network-diagram { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.plane, .node { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.plane b, .node b { grid-column: 1 / -1; color: var(--accent-dark); }
+.diagram-bullets .bullet-list { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.slide-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.nav-button[aria-disabled="true"] { color: var(--text-muted); background: var(--surface-muted); pointer-events: none; }
+@media (max-width: 980px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .code-layout, .two-column { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .slide-header { align-items: flex-start; flex-direction: column; } .card-grid, .bullet-list, .cluster-diagram, .security-diagram, .map-diagram, .network-diagram { grid-template-columns: 1fr; } .slide-nav { grid-template-columns: 1fr; } }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scaling and Reliability - PodDisruptionBudget</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../scaling-reliability/04-scheduling-nodeselector-affinity-taints-tolerations.html" data-next="../scaling-reliability/06-liveness-readiness-startup-probes.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Scaling and Reliability · 43/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Scaling</p>
+          <h2 class="reveal">PodDisruptionBudget</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">PDB limits voluntary disruptions so enough pods remain available during maintenance.
+                </li>
+                <li class="reveal">use PDB for production services</li>
+                <li class="reveal">ensure replica count supports disruption budget</li>
+                <li class="reveal">do not set impossible budgets</li>
+                <li class="reveal">combine with readiness probes</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: api-pdb
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: api</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../scaling-reliability/04-scheduling-nodeselector-affinity-taints-tolerations.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../scaling-reliability/06-liveness-readiness-startup-probes.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

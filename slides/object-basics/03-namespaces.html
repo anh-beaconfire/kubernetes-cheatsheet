@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Object Basics - Namespaces</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../object-basics/02-labels-and-selectors.html" data-next="../workloads/01-pod.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Object Basics · 15/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Object Basics</p>
+          <h2 class="reveal">Namespaces</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">A namespace is a logical boundary for grouping resources inside a cluster.</li>
+                <li class="reveal">separate teams</li>
+                <li class="reveal">separate environments</li>
+                <li class="reveal">isolate dev/staging/prod</li>
+                <li class="reveal">apply quotas and policies</li>
+                <li class="reveal">do not put everything in default namespace</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+
+---
+
+kubectl get namespaces
+kubectl create namespace dev
+kubectl get pods -n dev
+kubectl config set-context --current --namespace=dev</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../object-basics/02-labels-and-selectors.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../workloads/01-pod.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

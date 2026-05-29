@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Questions - Service Not Working</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../interview-questions/04-imagepullbackoff.html" data-next="../reference-summary/01-kubernetes-resource-map.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Interview Questions · 72/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Interview</p>
+          <h2 class="reveal">Service Not Working</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">selector mismatch</li>
+                <li class="reveal">pods not ready</li>
+                <li class="reveal">wrong targetPort</li>
+                <li class="reveal">NetworkPolicy blocking</li>
+                <li class="reveal">DNS issue</li>
+                <li class="reveal">app binding to localhost only</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>kubectl get svc
+kubectl get endpoints
+kubectl get pods --show-labels
+kubectl describe ingress</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../interview-questions/04-imagepullbackoff.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../reference-summary/01-kubernetes-resource-map.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

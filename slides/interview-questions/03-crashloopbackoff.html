@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Questions - CrashLoopBackOff</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../interview-questions/02-failing-pod-interview-question.html" data-next="../interview-questions/04-imagepullbackoff.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Interview Questions · 70/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Interview</p>
+          <h2 class="reveal">CrashLoopBackOff</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">CrashLoopBackOff means the container starts, crashes, and Kubernetes repeatedly
+                  restarts it with backoff delay.</li>
+                <li class="reveal">app exception</li>
+                <li class="reveal">missing env variable</li>
+                <li class="reveal">wrong command</li>
+                <li class="reveal">failed dependency</li>
+                <li class="reveal">permission issue</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>kubectl logs &lt;pod&gt;
+kubectl logs &lt;pod&gt; --previous
+kubectl describe pod &lt;pod&gt;</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../interview-questions/02-failing-pod-interview-question.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../interview-questions/04-imagepullbackoff.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

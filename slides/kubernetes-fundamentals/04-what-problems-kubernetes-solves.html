@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes Fundamentals - What Problems Kubernetes Solves</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../kubernetes-fundamentals/03-docker-drawbacks.html" data-next="../kubernetes-fundamentals/05-what-is-kubernetes.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Kubernetes Fundamentals · 04/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Why Kubernetes Exists</p>
+          <h2 class="reveal">What Problems Kubernetes Solves</h2>
+          <table class="compare-table reveal">
+            <thead>
+              <tr>
+                <th>Problem</th>
+                <th>Docker Alone</th>
+                <th>Kubernetes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Multi-node scheduling</td>
+                <td>Manual</td>
+                <td>Automated</td>
+              </tr>
+              <tr>
+                <td>Container restart</td>
+                <td>Basic</td>
+                <td>Controller-driven</td>
+              </tr>
+              <tr>
+                <td>Scaling</td>
+                <td>Manual</td>
+                <td>Declarative / autoscaled</td>
+              </tr>
+              <tr>
+                <td>Service discovery</td>
+                <td>Limited</td>
+                <td>Built-in Service/DNS</td>
+              </tr>
+              <tr>
+                <td>Rolling updates</td>
+                <td>Manual</td>
+                <td>Deployment strategy</td>
+              </tr>
+              <tr>
+                <td>Desired state</td>
+                <td>Limited</td>
+                <td>Reconciliation loop</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="footer-note reveal">container scheduling</div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../kubernetes-fundamentals/03-docker-drawbacks.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../kubernetes-fundamentals/05-what-is-kubernetes.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

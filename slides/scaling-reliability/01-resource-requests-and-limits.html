@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scaling and Reliability - Resource Requests and Limits</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body data-prev="../storage/03-storageclass.html" data-next="../scaling-reliability/02-horizontalpodautoscaler.html" data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Scaling and Reliability · 39/75</span>
+    </header>
+
+    <article class="slide">
+<div class="content">
+          <p class="kicker reveal">Scaling</p>
+          <h2 class="reveal">Resource Requests and Limits</h2>
+          <div class="code-layout">
+            <div class="text-panel">
+              <ul class="bullet-list">
+                <li class="reveal">requests influence scheduling</li>
+                <li class="reveal">limits cap resource usage</li>
+                <li class="reveal">missing requests causes poor scheduling</li>
+                <li class="reveal">wrong limits can cause throttling or OOMKilled</li>
+                <li class="reveal">always set requests</li>
+                <li class="reveal">set memory limits carefully</li>
+              </ul>
+            </div>
+            <pre class="reveal"><code>resources:
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"</code></pre>
+          </div>
+        </div>
+    </article>
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../storage/03-storageclass.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../scaling-reliability/02-horizontalpodautoscaler.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+</html>
