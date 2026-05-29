@@ -108,6 +108,10 @@ window.SLIDES = [
       {
         "title": "CronJob",
         "path": "slides/workloads/08-cronjob.html"
+      },
+      {
+        "title": "Workload Recap",
+        "path": "slides/workloads/09-workload-recap.html"
       }
     ]
   },

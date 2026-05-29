@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,51 +11,60 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
+
 <body data-prev="../networking/02-service.html" data-next="../networking/04-ingress.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Networking · 25/74</span>
+      <span class="section-label">Networking · 26/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Networking</p>
-          <h2 class="reveal">ClusterIP vs NodePort vs LoadBalancer</h2>
-          <table class="compare-table reveal">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Scope</th>
-                <th>Use Case</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>ClusterIP</td>
-                <td>internal cluster only</td>
-                <td>service-to-service</td>
-              </tr>
-              <tr>
-                <td>NodePort</td>
-                <td>exposes port on every node</td>
-                <td>testing/simple access</td>
-              </tr>
-              <tr>
-                <td>LoadBalancer</td>
-                <td>cloud/external LB</td>
-                <td>public service</td>
-              </tr>
-              <tr>
-                <td>ExternalName</td>
-                <td>DNS alias</td>
-                <td>external dependency mapping</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="footer-note reveal">avoid NodePort for production public apps</div>
+      <div class="content">
+        <p class="kicker reveal">Networking</p>
+        <h2 class="reveal">ClusterIP vs NodePort vs LoadBalancer</h2>
+
+        <table class="compare-table reveal">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Scope</th>
+              <th>Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ClusterIP</td>
+              <td>Accessible only inside the cluster<br><small>virtual IP + DNS</small></td>
+              <td>Internal microservices, APIs, and backends<br><small>default and most common type</small></td>
+            </tr>
+
+            <tr>
+              <td>NodePort</td>
+              <td>Exposes a port on every node<br><small>nodeIP:nodePort</small></td>
+              <td>Simple external access, dev/test environments<br><small>not ideal for production traffic</small></td>
+            </tr>
+
+            <tr>
+              <td>LoadBalancer</td>
+              <td>Provisions a cloud load balancer<br><small>public or private external IP</small></td>
+              <td>Production‑grade external access<br><small>recommended for public‑facing services</small></td>
+            </tr>
+
+            <tr>
+              <td>ExternalName</td>
+              <td>DNS CNAME alias<br><small>no proxying, no VIP</small></td>
+              <td>Mapping to external dependencies<br><small>databases, SaaS endpoints, legacy systems</small></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="footer-note reveal">
+          Avoid NodePort for production public apps — use LoadBalancer or Ingress instead
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../networking/02-service.html">Previous</a>
@@ -67,4 +77,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

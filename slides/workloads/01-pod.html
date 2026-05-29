@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,30 +11,36 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../object-basics/03-namespaces.html" data-next="../workloads/02-multi-container-pod.html" data-home="../../index.html">
+
+<body data-prev="../object-basics/03-namespaces.html" data-next="../workloads/02-multi-container-pod.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Workloads · 15/74</span>
+      <span class="section-label">Workloads · 15/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Workloads</p>
-          <h2 class="reveal">Pod</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">A Pod is the smallest deployable unit in Kubernetes. It wraps one or more containers
-                  that share network namespace, storage volumes, and lifecycle.</li>
-                <li class="reveal">rarely create standalone pods directly in production</li>
-                <li class="reveal">use Deployment, StatefulSet, Job, or DaemonSet instead</li>
-                <li class="reveal">do not manage standalone pods for long-running apps</li>
-                <li class="reveal">use controllers</li>
-                <li class="reveal">define requests/limits</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: v1
+      <div class="content">
+        <p class="kicker reveal">Workloads</p>
+        <h2 class="reveal">Pod</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">A Pod is the smallest deployable unit in Kubernetes</li>
+              <li class="reveal">Wraps one or more tightly‑coupled containers</li>
+              <li class="reveal">Containers share network namespace, IP, and storage volumes</li>
+              <li class="reveal">Pods have a single lifecycle — containers start, run, and die together</li>
+              <li class="reveal">Not ideal to create standalone Pods in production</li>
+              <li class="reveal">Use controllers (Deployment, StatefulSet, Job, DaemonSet) to manage Pods</li>
+              <li class="reveal">Controllers handle scaling, rollout, and self‑healing</li>
+              <li class="reveal">Define resource requests/limits for scheduling and stability</li>
+              <li class="reveal">Pods are ephemeral — they can be recreated at any time</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code class="language-yaml">apiVersion: v1
 kind: Pod
 metadata:
   name: nginx-pod
@@ -44,10 +51,12 @@ spec:
     - name: nginx
       image: nginx:1.27
       ports:
-        - containerPort: 80</code></pre>
-          </div>
+        - containerPort: 80
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../object-basics/03-namespaces.html">Previous</a>
@@ -60,4 +69,5 @@ spec:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

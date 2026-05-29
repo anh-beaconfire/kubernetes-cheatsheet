@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,29 +11,47 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../networking/07-dns-in-kubernetes.html" data-next="../networking/09-egress-traffic.html" data-home="../../index.html">
+
+<body data-prev="../networking/07-dns-in-kubernetes.html" data-next="../networking/09-egress-traffic.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Networking · 30/74</span>
+      <span class="section-label">Networking · 31/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Networking</p>
-          <h2 class="reveal">NetworkPolicy</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">NetworkPolicy controls pod-to-pod and pod-to-external network traffic.</li>
-                <li class="reveal">Requires a CNI plugin that supports NetworkPolicy.</li>
-                <li class="reveal">start with default deny in sensitive namespaces</li>
-                <li class="reveal">explicitly allow required traffic</li>
-                <li class="reveal">test policies carefully</li>
-                <li class="reveal">remember DNS egress may be required</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: networking.k8s.io/v1
+      <div class="content">
+        <p class="kicker reveal">Networking</p>
+        <h2 class="reveal">NetworkPolicy</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">NetworkPolicy defines which Pods can communicate with each other and with external
+                destinations — enforcing zero‑trust networking inside the cluster.</li>
+
+              <li class="reveal">Requires a CNI plugin with policy support (Calico, Cilium, Weave Net, Kube‑Router).
+                Policies do nothing without a capable CNI.</li>
+
+              <li class="reveal">Start with a <strong>default deny</strong> policy in sensitive namespaces to block all
+                ingress/egress until explicitly allowed.</li>
+
+              <li class="reveal">Explicitly allow only the traffic your application needs — by Pod labels, namespaces,
+                ports, or IP blocks.</li>
+
+              <li class="reveal">Test policies carefully using temporary Pods to ensure you don’t accidentally block
+                required traffic.</li>
+
+              <li class="reveal">Remember to allow <strong>DNS egress</strong> (UDP/TCP 53) or your Pods may fail to
+                resolve Service names.</li>
+
+              <li class="reveal">NetworkPolicies apply to Pods, not Services — Services inherit the Pod’s
+                allowed/blocked traffic.</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code>apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-api-from-frontend
@@ -49,10 +68,12 @@ spec:
               app: frontend
       ports:
         - protocol: TCP
-          port: 8080</code></pre>
-          </div>
+          port: 8080
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../networking/07-dns-in-kubernetes.html">Previous</a>
@@ -65,4 +86,5 @@ spec:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

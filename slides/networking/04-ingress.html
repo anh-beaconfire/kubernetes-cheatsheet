@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,31 +11,47 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../networking/03-clusterip-vs-nodeport-vs-loadbalancer.html" data-next="../networking/05-request-flow-internet-to-pod.html" data-home="../../index.html">
+
+<body data-prev="../networking/03-clusterip-vs-nodeport-vs-loadbalancer.html"
+  data-next="../networking/05-request-flow-internet-to-pod.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Networking · 26/74</span>
+      <span class="section-label">Networking · 27/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Networking</p>
-          <h2 class="reveal">Ingress</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Ingress defines HTTP/HTTPS routing rules from outside the cluster to internal
-                  services.</li>
-                <li class="reveal">Ingress requires an Ingress Controller such as NGINX Ingress, Traefik, HAProxy, or
-                  cloud provider controller.</li>
-                <li class="reveal">use TLS</li>
-                <li class="reveal">configure timeouts/body limits</li>
-                <li class="reveal">avoid exposing internal-only services</li>
-                <li class="reveal">monitor ingress controller metrics</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: networking.k8s.io/v1
+      <div class="content">
+        <p class="kicker reveal">Networking</p>
+        <h2 class="reveal">Ingress</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Ingress defines HTTP/HTTPS routing rules that expose internal Services to the outside
+                world.</li>
+
+              <li class="reveal">Requires an Ingress Controller (NGINX, Traefik, HAProxy, Envoy, or cloud‑provider
+                controllers).</li>
+
+              <li class="reveal"><strong>Use TLS</strong> to secure traffic; terminate TLS at the Ingress Controller.
+              </li>
+
+              <li class="reveal">Configure <strong>timeouts, body size limits, rate limits, and headers</strong> to
+                protect upstream services.</li>
+
+              <li class="reveal">Avoid exposing internal‑only Services; restrict access using <strong>path rules, host
+                  rules, and NetworkPolicies</strong>.</li>
+
+              <li class="reveal">Monitor Ingress Controller metrics (latency, 4xx/5xx, saturation) for early detection
+                of issues.</li>
+
+              <li class="reveal">Ingress is for HTTP/HTTPS only — use LoadBalancer or NodePort for raw TCP/UDP traffic.
+              </li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code>apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-ingress
@@ -50,9 +67,10 @@ spec:
               service:
                 name: api-service
                 port:
-                  number: 80</code></pre>
-          </div>
+                  number: 80
+</code></pre>
         </div>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -66,4 +84,5 @@ spec:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

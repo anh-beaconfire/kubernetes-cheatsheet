@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,30 +11,47 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../networking/05-request-flow-internet-to-pod.html" data-next="../networking/07-dns-in-kubernetes.html" data-home="../../index.html">
+
+<body data-prev="../networking/05-request-flow-internet-to-pod.html" data-next="../networking/07-dns-in-kubernetes.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Networking · 28/74</span>
+      <span class="section-label">Networking · 29/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Networking</p>
-          <h2 class="reveal">Gateway API</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Gateway API is a newer, more expressive Kubernetes networking API for service
-                  networking.</li>
-                <li class="reveal">GatewayClass</li>
-                <li class="reveal">Gateway</li>
-                <li class="reveal">HTTPRoute</li>
-                <li class="reveal">separation of infra owner and app owner</li>
-                <li class="reveal">consider Gateway API for new platform designs</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: gateway.networking.k8s.io/v1
+      <div class="content">
+        <p class="kicker reveal">Networking</p>
+        <h2 class="reveal">Gateway API</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Gateway API is the next‑generation Kubernetes networking API — more expressive,
+                extensible, and role‑oriented than Ingress.</li>
+
+              <li class="reveal"><strong>GatewayClass</strong> — defines the type of data plane (NGINX, Envoy, Traefik,
+                cloud LB); created and owned by platform/infrastructure teams.</li>
+
+              <li class="reveal"><strong>Gateway</strong> — an instance of a GatewayClass; represents the actual load
+                balancer or proxy that receives traffic.</li>
+
+              <li class="reveal"><strong>HTTPRoute</strong> — application‑level routing rules (hosts, paths, headers,
+                filters) that attach to a Gateway.</li>
+
+              <li class="reveal">Enables <strong>clean separation of responsibilities</strong>: infra owners manage
+                Gateways, app teams manage Routes.</li>
+
+              <li class="reveal">Supports advanced traffic features: header matching, traffic splitting, retries,
+                timeouts, and filters — without vendor‑specific annotations.</li>
+
+              <li class="reveal">Recommended for <strong>new platform designs</strong> and modern service networking
+                architectures.</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code>apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: web-gateway
@@ -56,10 +74,12 @@ spec:
   rules:
     - backendRefs:
         - name: api-service
-          port: 80</code></pre>
-          </div>
+          port: 80
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../networking/05-request-flow-internet-to-pod.html">Previous</a>
@@ -72,4 +92,5 @@ spec:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

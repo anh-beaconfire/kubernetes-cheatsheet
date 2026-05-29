@@ -14,24 +14,61 @@
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Networking · 31/74</span>
+      <span class="section-label">Networking · 32/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Networking</p>
-          <h2 class="reveal">Egress Traffic</h2>
-          <ul class="bullet-list">
-            <li class="reveal">Egress is outbound traffic from pods to external systems.</li>
-            <li class="reveal">database outside cluster</li>
-            <li class="reveal">third-party APIs</li>
-            <li class="reveal">cloud services</li>
-            <li class="reveal">static outbound IP</li>
-            <li class="reveal">firewall allowlisting</li>
-            <li class="reveal">NetworkPolicy egress rules</li>
-          </ul>
-        </div>
-    </article>
+  <div class="content">
+    <p class="kicker reveal">Networking</p>
+    <h2 class="reveal">Egress Traffic</h2>
+
+    <div class="diagram-wrap reveal">
+      <pre class="mermaid">
+flowchart LR
+
+  %% Outside Kubernetes
+  INTERNET["Internet / External Systems"]
+
+  %% Ingress path
+  LB["Load Balancer"]
+  INGRESS["Ingress Controller"]
+
+  %% Pod
+  POD["Pod
+  • Receives inbound traffic
+  • Initiates outbound traffic"]
+
+  %% Egress path
+  NAT["NAT Gateway / Egress Gateway
+  • Provides static outbound IP"]
+
+  %% Flow
+  INTERNET --> LB --> INGRESS --> POD
+  POD --> NAT --> INTERNET
+      </pre>
+    </div>
+
+    <ul class="bullet-list">
+      <li class="reveal">Egress is outbound traffic from Pods to external systems — databases, APIs, SaaS, or the public internet.</li>
+
+      <li class="reveal">Common egress targets include:
+        <br>• external databases
+        <br>• third‑party APIs
+        <br>• cloud provider services (S3, Pub/Sub, etc.)
+      </li>
+
+      <li class="reveal">Use a <strong>static outbound IP</strong> (NAT gateway, egress gateway, or cloud NAT) when external systems require IP allowlisting.</li>
+
+      <li class="reveal">Firewalls often require <strong>egress allowlisting</strong> — ensure Pods exit through a predictable IP.</li>
+
+      <li class="reveal">Control outbound traffic using <strong>NetworkPolicy egress rules</strong> to enforce zero‑trust networking.</li>
+
+      <li class="reveal">Be mindful of DNS: Pods may need egress to <strong>UDP/TCP 53</strong> for name resolution.</li>
+
+      <li class="reveal">For advanced control, use an <strong>egress gateway</strong> (service mesh or CNI feature) to route, inspect, or log outbound traffic.</li>
+    </ul>
+  </div>
+</article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../networking/08-networkpolicy.html">Previous</a>

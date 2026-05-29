@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,29 +11,37 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../workloads/07-job.html" data-next="../networking/01-kubernetes-networking-model.html" data-home="../../index.html">
+
+<body data-prev="../workloads/07-job.html" data-next="../workloads/09-workload-recap.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Workloads · 22/74</span>
+      <span class="section-label">Workloads · 22/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Workloads</p>
-          <h2 class="reveal">CronJob</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">A CronJob runs Jobs on a schedule.</li>
-                <li class="reveal">nightly cleanup</li>
-                <li class="reveal">scheduled reports</li>
-                <li class="reveal">periodic sync</li>
-                <li class="reveal">backups</li>
-                <li class="reveal">set concurrencyPolicy</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: batch/v1
+      <div class="content">
+        <p class="kicker reveal">Workloads</p>
+        <h2 class="reveal">CronJob</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">A CronJob creates Jobs on a recurring schedule using standard cron syntax</li>
+              <li class="reveal">Ideal for recurring, time‑based tasks such as nightly cleanup, scheduled reports,
+                periodic syncs, and backups</li>
+              <li class="reveal">Each execution creates a new Job, which then runs Pods to completion</li>
+              <li class="reveal">Use <strong>concurrencyPolicy</strong> to control overlapping runs (Allow, Forbid,
+                Replace)</li>
+              <li class="reveal">Configure history limits to avoid excessive Job/Pod retention</li>
+              <li class="reveal">CronJobs should be idempotent — tasks may run more than once if failures occur</li>
+              <li class="reveal">Use <strong>restartPolicy: Never</strong> or <strong>OnFailure</strong> inside the Job
+                template</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code class="language-yaml">apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: cleanup
@@ -49,15 +58,17 @@ spec:
           containers:
             - name: cleanup
               image: busybox
-              command: ["sh", "-c", "echo cleanup"]</code></pre>
-          </div>
+              command: ["sh", "-c", "echo cleanup"]
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../workloads/07-job.html">Previous</a>
       <a class="nav-button" href="../../index.html">Home</a>
-      <a class="nav-button primary" href="../networking/01-kubernetes-networking-model.html">Next</a>
+      <a class="nav-button primary" href="../workloads/09-workload-recap.html">Next</a>
     </nav>
   </main>
 
@@ -65,4 +76,5 @@ spec:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,39 +11,67 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../workloads/08-cronjob.html" data-next="../networking/02-service.html" data-home="../../index.html">
+
+<body data-prev="../workloads/09-workload-recap.html" data-next="../networking/02-service.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Networking · 23/74</span>
+      <span class="section-label">Networking · 24/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Networking</p>
-          <h2 class="reveal">Kubernetes Networking Model</h2>
-          <div class="diagram-wrap reveal">
-            <div class="diagram network-diagram">
-              <div>Pod IPs<br><small>every pod gets an address</small></div>
-              <div>Service<br><small>stable VIP + DNS</small></div>
-              <div>Ingress / Gateway<br><small>external HTTP routing</small></div>
-              <div>CNI<br><small>implements networking</small></div>
-            </div>
-          </div>
-          <div class="diagram-bullets">
-            <ul class="bullet-list">
-              <li class="reveal">every pod gets its own IP</li>
-              <li class="reveal">pods can communicate across nodes</li>
-              <li class="reveal">services provide stable virtual IP/DNS</li>
-              <li class="reveal">ingress/gateway exposes HTTP traffic externally</li>
-              <li class="reveal">CNI implements networking</li>
-            </ul>
-          </div>
+      <div class="content">
+        <p class="kicker reveal">Networking</p>
+        <h2 class="reveal">Kubernetes Networking Model</h2>
+
+        <div class="diagram-wrap reveal">
+          <pre class="mermaid">
+flowchart LR
+
+  %% --- Control Plane ---
+  subgraph CP[Control Plane]
+    API["API Server
+    • Stores Services and Endpoints
+    • Provides cluster state"]
+  end
+
+  %% --- Worker Node ---
+  subgraph NODE[Worker Node]
+    INGRESS["1. Ingress or Gateway
+    • Receives external HTTP traffic
+    • Routes to Services"]
+
+    SERVICE["2. Service
+    • Stable VIP and DNS
+    • Load balances to Pods"]
+
+    POD["3. Pod
+    • Has unique Pod IP
+    • Receives traffic directly"]
+
+    CNI["4. CNI Plugin
+    • Configures Pod networking
+    • IP allocation and routing"]
+  end
+
+  %% --- External Client ---
+  CLIENT["0. External Client
+  • Sends request into cluster"]
+
+  %% --- Connections ---
+  CLIENT --> INGRESS
+  INGRESS --> SERVICE
+  SERVICE --> POD
+  POD --> CNI
+  API --> SERVICE
+      </pre>
         </div>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
-      <a class="nav-button" href="../workloads/08-cronjob.html">Previous</a>
+      <a class="nav-button" href="../workloads/09-workload-recap.html">Previous</a>
       <a class="nav-button" href="../../index.html">Home</a>
       <a class="nav-button primary" href="../networking/02-service.html">Next</a>
     </nav>
@@ -52,4 +81,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

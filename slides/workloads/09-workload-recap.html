@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workloads - Workload Recap</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/slides.css">
+  <link rel="stylesheet" href="../../assets/css/code.css">
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+
+<body data-prev="../workloads/08-cronjob.html" data-next="../networking/01-kubernetes-networking-model.html"
+  data-home="../../index.html">
+  <main class="slide-page">
+    <header class="slide-header">
+      <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
+      <span class="section-label">Workloads · 23/75</span>
+    </header>
+
+    <article class="slide">
+      <div class="content">
+        <p class="kicker reveal">Workloads</p>
+        <h2 class="reveal">Workload Recap</h2>
+
+        <!-- <div class="code-layout">
+          <div class="text-panel"> -->
+        <table class="compare-table reveal">
+          <thead>
+            <tr>
+              <th>Situation</th>
+              <th>Choose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Stateless app, API, or web service</td>
+              <td>Deployment</td>
+            </tr>
+            <tr>
+              <td>Requires stable identity, ordered startup, or persistent storage</td>
+              <td>StatefulSet</td>
+            </tr>
+            <tr>
+              <td>One Pod per node (or per selected nodes)</td>
+              <td>DaemonSet</td>
+            </tr>
+            <tr>
+              <td>Run to completion once (finite task)</td>
+              <td>Job</td>
+            </tr>
+            <tr>
+              <td>Run on a recurring schedule</td>
+              <td>CronJob</td>
+            </tr>
+            <tr>
+              <td>Lowest-level unit; used inside controllers</td>
+              <td>Pod</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- </div>
+
+        </div> -->
+
+        <ul class="bullet-list">
+          <li class="reveal">
+            Controllers manage desired state — Deployments, StatefulSets, DaemonSets, Jobs, and CronJobs
+            create, replace, and reconcile Pods automatically.
+          </li>
+
+          <li class="reveal">
+            Pods are ephemeral — they are disposable units that can restart, reschedule, or be replaced
+            at any time.
+          </li>
+
+          <!-- <li class="reveal">
+    Choose based on lifecycle — consider service type, identity requirements, node placement,
+    run‑to‑completion behavior, and scheduling needs.
+  </li> -->
+        </ul>
+
+      </div>
+    </article>
+
+
+    <nav class="slide-nav" aria-label="Slide navigation">
+      <a class="nav-button" href="../workloads/08-cronjob.html">Previous</a>
+      <a class="nav-button" href="../../index.html">Home</a>
+      <a class="nav-button primary" href="../networking/01-kubernetes-networking-model.html">Next</a>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../../assets/js/mermaid-init.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+</body>
+
+</html>

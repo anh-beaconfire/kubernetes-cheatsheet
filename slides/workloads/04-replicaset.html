@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,32 +11,40 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../workloads/03-deployment.html" data-next="../workloads/05-statefulset.html" data-home="../../index.html">
+
+<body data-prev="../workloads/03-deployment.html" data-next="../workloads/05-statefulset.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Workloads · 18/74</span>
+      <span class="section-label">Workloads · 18/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Workloads</p>
-          <h2 class="reveal">ReplicaSet</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">ReplicaSet ensures a specified number of pod replicas are running.</li>
-                <li class="reveal">Usually created and managed by Deployment. Engineers should understand it but rarely
-                  create it directly.</li>
-                <li class="reveal">manage stateless apps through Deployment</li>
-                <li class="reveal">do not manually edit ReplicaSets owned by Deployments</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl get replicasets
-kubectl describe rs</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Workloads</p>
+        <h2 class="reveal">ReplicaSet</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">A ReplicaSet ensures a specified number of identical Pods are running at all times</li>
+              <li class="reveal">Automatically replaces Pods that crash, fail, or are deleted</li>
+              <li class="reveal">Usually created and managed by a Deployment — not used directly in most workflows</li>
+              <li class="reveal">Deployments create new ReplicaSets during rollouts and keep old ones for rollback</li>
+              <li class="reveal">ReplicaSets match Pods using label selectors</li>
+              <li class="reveal">Avoid manually editing ReplicaSets owned by Deployments</li>
+              <li class="reveal">Useful standalone only for simple, stateless, non‑rolling workloads</li>
+            </ul>
           </div>
+
+          <pre class="reveal"><code class="language-bash">kubectl get replicasets
+kubectl describe rs
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../workloads/03-deployment.html">Previous</a>
@@ -48,4 +57,5 @@ kubectl describe rs</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

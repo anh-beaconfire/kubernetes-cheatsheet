@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,30 +11,35 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../workloads/02-multi-container-pod.html" data-next="../workloads/04-replicaset.html" data-home="../../index.html">
+
+<body data-prev="../workloads/02-multi-container-pod.html" data-next="../workloads/04-replicaset.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Workloads · 17/74</span>
+      <span class="section-label">Workloads · 17/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Workloads</p>
-          <h2 class="reveal">Deployment</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">A Deployment manages stateless replicated pods and supports rolling updates and
-                  rollbacks.</li>
-                <li class="reveal">APIs</li>
-                <li class="reveal">web apps</li>
-                <li class="reveal">stateless workers</li>
-                <li class="reveal">frontend services</li>
-                <li class="reveal">use immutable image tags</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: apps/v1
+      <div class="content">
+        <p class="kicker reveal">Workloads</p>
+        <h2 class="reveal">Deployment</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">A Deployment manages stateless Pods through a ReplicaSet</li>
+              <li class="reveal">Provides rolling updates, rollbacks, and controlled rollouts</li>
+              <li class="reveal">Ensures the desired number of replicas are always running</li>
+              <li class="reveal">Ideal for APIs, web apps, frontend services, and stateless workers</li>
+              <li class="reveal">Supports surge/availability controls during updates</li>
+              <li class="reveal">Automatically replaces failed Pods (self‑healing)</li>
+              <li class="reveal">Use immutable image tags for safe rollouts</li>
+              <li class="reveal">Not suitable for stateful workloads — use StatefulSet instead</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code class="language-yaml">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api
@@ -42,11 +48,13 @@ spec:
   selector:
     matchLabels:
       app: api
+
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: 1
+
   template:
     metadata:
       labels:
@@ -60,14 +68,17 @@ spec:
 
 ---
 
+# Common Deployment commands
 kubectl get deployments
 kubectl rollout status deployment/api
 kubectl rollout history deployment/api
 kubectl rollout undo deployment/api
-kubectl scale deployment/api --replicas=5</code></pre>
-          </div>
+kubectl scale deployment/api --replicas=5
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../workloads/02-multi-container-pod.html">Previous</a>
@@ -80,4 +91,5 @@ kubectl scale deployment/api --replicas=5</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

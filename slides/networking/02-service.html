@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,29 +11,44 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../networking/01-kubernetes-networking-model.html" data-next="../networking/03-clusterip-vs-nodeport-vs-loadbalancer.html" data-home="../../index.html">
+
+<body data-prev="../networking/01-kubernetes-networking-model.html"
+  data-next="../networking/03-clusterip-vs-nodeport-vs-loadbalancer.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Networking · 24/74</span>
+      <span class="section-label">Networking · 25/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Networking</p>
-          <h2 class="reveal">Service</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">A Service provides stable networking and load balancing for a set of pods.</li>
-                <li class="reveal">ClusterIP</li>
-                <li class="reveal">NodePort</li>
-                <li class="reveal">LoadBalancer</li>
-                <li class="reveal">ExternalName</li>
-                <li class="reveal">use ClusterIP for internal services</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: v1
+      <div class="content">
+        <p class="kicker reveal">Networking</p>
+        <h2 class="reveal">Service</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">A Service provides stable networking, discovery, and load balancing for a set of Pods.
+              </li>
+
+              <li class="reveal"><strong>ClusterIP</strong> — internal‑only virtual IP; default type; used for
+                service‑to‑service communication inside the cluster.</li>
+
+              <li class="reveal"><strong>NodePort</strong> — exposes the Service on a port on every node; useful for
+                simple external access or when paired with external load balancers.</li>
+
+              <li class="reveal"><strong>LoadBalancer</strong> — provisions a cloud load balancer; exposes the Service
+                externally with a public IP; common for production ingress points.</li>
+
+              <li class="reveal"><strong>ExternalName</strong> — maps a Service to an external DNS name; no proxying,
+                just DNS CNAME resolution.</li>
+
+              <li class="reveal">Use <strong>ClusterIP</strong> for most internal microservices; use
+                <strong>LoadBalancer</strong> or <strong>Ingress</strong> for external traffic.</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code>apiVersion: v1
 kind: Service
 metadata:
   name: api-service
@@ -42,10 +58,12 @@ spec:
     app: api
   ports:
     - port: 80
-      targetPort: 8080</code></pre>
-          </div>
+      targetPort: 8080
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../networking/01-kubernetes-networking-model.html">Previous</a>
@@ -58,4 +76,5 @@ spec:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

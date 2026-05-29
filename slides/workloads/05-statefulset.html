@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,30 +11,37 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../workloads/04-replicaset.html" data-next="../workloads/06-daemonset.html" data-home="../../index.html">
+
+<body data-prev="../workloads/04-replicaset.html" data-next="../workloads/06-daemonset.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Workloads · 19/74</span>
+      <span class="section-label">Workloads · 19/75</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Workloads</p>
-          <h2 class="reveal">StatefulSet</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">StatefulSet manages stateful applications requiring stable identity, stable network
-                  names, and stable storage.</li>
-                <li class="reveal">databases</li>
-                <li class="reveal">Kafka</li>
-                <li class="reveal">Elasticsearch</li>
-                <li class="reveal">ZooKeeper</li>
-                <li class="reveal">Redis clusters</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: apps/v1
+      <div class="content">
+        <p class="kicker reveal">Workloads</p>
+        <h2 class="reveal">StatefulSet</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Manages stateful applications that require stable identity, stable network names, and
+                persistent storage</li>
+              <li class="reveal">Provides predictable Pod names and stable ordinals (pod-0, pod-1, pod-2)</li>
+              <li class="reveal">Ensures ordered Pod startup, scaling, and termination</li>
+              <li class="reveal">Each Pod gets its own PersistentVolume via volumeClaimTemplates</li>
+              <li class="reveal">Ideal for distributed systems such as databases, message queues, and clustered storage
+                (e.g., PostgreSQL, Kafka, Elasticsearch, ZooKeeper, Redis clusters)</li>
+              <li class="reveal">Not suitable for stateless workloads — use Deployment instead</li>
+              <li class="reveal">StatefulSets do not support rolling updates as flexibly as Deployments; careful
+                planning is required</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code class="language-yaml">apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
@@ -43,6 +51,7 @@ spec:
   selector:
     matchLabels:
       app: postgres
+
   template:
     metadata:
       labels:
@@ -56,6 +65,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
+
   volumeClaimTemplates:
     - metadata:
         name: data
@@ -63,10 +73,12 @@ spec:
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
-            storage: 10Gi</code></pre>
-          </div>
+            storage: 10Gi
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../workloads/04-replicaset.html">Previous</a>
@@ -79,4 +91,5 @@ spec:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
