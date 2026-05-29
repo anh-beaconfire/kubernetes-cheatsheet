@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../architecture/04-declarative-model-and-reconciliation.html" data-next="../object-basics/02-labels-and-selectors.html" data-home="../../index.html">
+
+<body data-prev="../architecture/04-declarative-model-and-reconciliation.html"
+  data-next="../object-basics/02-labels-and-selectors.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,21 +21,24 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Object Basics</p>
-          <h2 class="reveal">Kubernetes Object Anatomy</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">apiVersion</li>
-                <li class="reveal">kind</li>
-                <li class="reveal">metadata</li>
-                <li class="reveal">spec</li>
-                <li class="reveal">status</li>
-                <li class="reveal">spec = desired state</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: apps/v1
+      <div class="content">
+        <p class="kicker reveal">Object Basics</p>
+        <h2 class="reveal">Kubernetes Object Anatomy</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal"><strong>apiVersion</strong> — API group and version for this object</li>
+              <li class="reveal"><strong>kind</strong> — the type of Kubernetes resource</li>
+              <li class="reveal"><strong>metadata</strong> — name, labels, annotations, namespace</li>
+              <li class="reveal"><strong>spec</strong> — desired state defined by the user</li>
+              <li class="reveal"><strong>status</strong> — actual state reported by the cluster</li>
+              <li class="reveal">Kubernetes controllers work to make <strong>status</strong> match <strong>spec</strong>
+              </li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code class="language-yaml">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api
@@ -50,10 +56,12 @@ spec:
     spec:
       containers:
         - name: api
-          image: nginx:1.27</code></pre>
-          </div>
+          image: nginx:1.27
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../architecture/04-declarative-model-and-reconciliation.html">Previous</a>
@@ -66,4 +74,5 @@ spec:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

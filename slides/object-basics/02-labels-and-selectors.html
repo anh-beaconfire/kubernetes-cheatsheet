@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../object-basics/01-kubernetes-object-anatomy.html" data-next="../object-basics/03-namespaces.html" data-home="../../index.html">
+
+<body data-prev="../object-basics/01-kubernetes-object-anatomy.html" data-next="../object-basics/03-namespaces.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,21 +21,26 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Object Basics</p>
-          <h2 class="reveal">Labels and Selectors</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Labels are key-value metadata used to organize and select Kubernetes objects.</li>
-                <li class="reveal">service selects pods</li>
-                <li class="reveal">deployment manages pods</li>
-                <li class="reveal">monitoring groups apps</li>
-                <li class="reveal">policies target workloads</li>
-                <li class="reveal">use consistent labels</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>metadata:
+      <div class="content">
+        <p class="kicker reveal">Object Basics</p>
+        <h2 class="reveal">Labels and Selectors</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Labels are key‑value metadata added under <strong>metadata.labels</strong></li>
+              <li class="reveal">Selectors appear in objects that target other resources (e.g., Services, Deployments)
+              </li>
+              <li class="reveal">Services use selectors to route traffic to matching Pods</li>
+              <li class="reveal">Deployments use selectors to manage their Pods</li>
+              <li class="reveal">Monitoring and logging systems group workloads using labels</li>
+              <li class="reveal">Policies (NetworkPolicy, PodSecurity) match workloads via labels</li>
+              <li class="reveal">Use consistent labeling conventions across your cluster</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code class="language-yaml"># Labels live inside metadata.labels
+metadata:
   labels:
     app: payment-api
     tier: backend
@@ -40,12 +48,15 @@
 
 ---
 
+# Selectors appear in objects that target Pods
 selector:
   matchLabels:
-    app: payment-api</code></pre>
-          </div>
+    app: payment-api
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../object-basics/01-kubernetes-object-anatomy.html">Previous</a>
@@ -58,4 +69,5 @@ selector:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

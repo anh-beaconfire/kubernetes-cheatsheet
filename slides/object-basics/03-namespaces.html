@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../object-basics/02-labels-and-selectors.html" data-next="../workloads/01-pod.html" data-home="../../index.html">
+
+<body data-prev="../object-basics/02-labels-and-selectors.html" data-next="../workloads/01-pod.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,34 +21,41 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Object Basics</p>
-          <h2 class="reveal">Namespaces</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">A namespace is a logical boundary for grouping resources inside a cluster.</li>
-                <li class="reveal">separate teams</li>
-                <li class="reveal">separate environments</li>
-                <li class="reveal">isolate dev/staging/prod</li>
-                <li class="reveal">apply quotas and policies</li>
-                <li class="reveal">do not put everything in default namespace</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: v1
+      <div class="content">
+        <p class="kicker reveal">Object Basics</p>
+        <h2 class="reveal">Namespaces</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">A namespace is a logical partition inside a cluster</li>
+              <li class="reveal">Used to separate teams, applications, or environments</li>
+              <li class="reveal">Ideal for isolating dev / staging / prod</li>
+              <li class="reveal">Allows applying resource quotas and network policies</li>
+              <li class="reveal">Improves organization and access control (RBAC)</li>
+              <li class="reveal">Not all resources are namespaced (e.g., Nodes, PVs)</li>
+              <li class="reveal">Avoid putting everything in the <strong>default</strong> namespace</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code class="language-yaml"># A namespace object
+apiVersion: v1
 kind: Namespace
 metadata:
   name: dev
 
 ---
 
+# Common namespace commands
 kubectl get namespaces
 kubectl create namespace dev
 kubectl get pods -n dev
-kubectl config set-context --current --namespace=dev</code></pre>
-          </div>
+kubectl config set-context --current --namespace=dev
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../object-basics/02-labels-and-selectors.html">Previous</a>
@@ -58,4 +68,5 @@ kubectl config set-context --current --namespace=dev</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
