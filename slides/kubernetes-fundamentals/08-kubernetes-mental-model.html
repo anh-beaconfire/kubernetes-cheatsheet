@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,33 +11,59 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../kubernetes-fundamentals/07-docker-vs-kubernetes.html" data-next="../architecture/01-cluster-architecture.html" data-home="../../index.html">
+
+<body data-prev="../kubernetes-fundamentals/07-docker-vs-kubernetes.html"
+  data-next="../architecture/01-cluster-architecture.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Kubernetes Fundamentals · 08/75</span>
+      <span class="section-label">Kubernetes Fundamentals · 07/74</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Overview</p>
-          <h2 class="reveal">Kubernetes Mental Model</h2>
-          <div class="diagram-wrap reveal">
-            <div class="diagram flow-diagram"><span>Engineer YAML</span><i></i><span>API
-                Server</span><i></i><span>etcd</span><span>Controllers</span><i></i><span>Scheduler</span><i></i><span>kubelet</span><i></i><span>Pod</span>
-            </div>
-          </div>
-          <div class="diagram-bullets">
-            <ul class="bullet-list">
-              <li class="reveal">YAML describes desired state</li>
-              <li class="reveal">API server stores desired state</li>
-              <li class="reveal">controllers watch state</li>
-              <li class="reveal">scheduler assigns pods to nodes</li>
-              <li class="reveal">kubelet runs pods</li>
-            </ul>
-          </div>
+      <div class="content">
+        <p class="kicker reveal">Overview</p>
+        <h2 class="reveal">Kubernetes Mental Model</h2>
+
+        <div class="diagram-wrap reveal">
+          <pre class="mermaid">
+flowchart LR
+  subgraph CP[Control Plane]
+    A[API Server]
+    B[etcd]
+    C[Controllers]
+    D[Scheduler]
+  end
+
+  subgraph NODE[Worker Node]
+    E[Kubelet]
+    F[Pod]
+  end
+
+  Engineer[Engineer writes YAML] --> A
+  A --> B
+  B --> C
+  C --> A
+  A --> D
+  D --> E
+  E --> F
+      </pre>
         </div>
+
+        <div class="diagram-bullets">
+          <ul class="bullet-list">
+            <li class="reveal">YAML defines the desired state</li>
+            <li class="reveal">API Server exposes the Kubernetes API</li>
+            <li class="reveal">etcd stores cluster state</li>
+            <li class="reveal">Controllers maintain desired state</li>
+            <li class="reveal">Scheduler places Pods on nodes</li>
+            <li class="reveal">Kubelet runs Pods and reports status</li>
+          </ul>
+        </div>
+
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../kubernetes-fundamentals/07-docker-vs-kubernetes.html">Previous</a>
@@ -49,4 +76,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

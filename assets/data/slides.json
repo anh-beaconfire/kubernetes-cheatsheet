@@ -4,7 +4,7 @@
     "slug": "kubernetes-fundamentals",
     "slides": [
       {
-        "title": "Introduction, Cheat Sheet, Best Practices, and Interview Reference",
+        "title": "Introduction, Best Practices, and Interview Prep",
         "path": "slides/kubernetes-fundamentals/01-introduction-cheat-sheet-best-practices-and-interview-reference.html"
       },
       {
@@ -14,10 +14,6 @@
       {
         "title": "Docker Drawbacks",
         "path": "slides/kubernetes-fundamentals/03-docker-drawbacks.html"
-      },
-      {
-        "title": "What Problems Kubernetes Solves",
-        "path": "slides/kubernetes-fundamentals/04-what-problems-kubernetes-solves.html"
       },
       {
         "title": "What Is Kubernetes?",

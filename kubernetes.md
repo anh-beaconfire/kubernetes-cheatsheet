@@ -114,7 +114,7 @@ kubectl commands related to this component.
 ## Slide 1 — Title
 
 Title: Kubernetes Fundamentals
-Subtitle: Introduction, Cheat Sheet, Best Practices, and Interview Reference
+Subtitle: Introduction, Best Practices, and Interview Prep
 
 Include:
 

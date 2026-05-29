@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,51 +11,72 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../kubernetes-fundamentals/02-course-goals.html" data-next="../kubernetes-fundamentals/04-what-problems-kubernetes-solves.html" data-home="../../index.html">
+
+<body data-prev="../kubernetes-fundamentals/02-course-goals.html"
+  data-next="../kubernetes-fundamentals/05-what-is-kubernetes.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
-      <span class="section-label">Kubernetes Fundamentals · 03/75</span>
+      <span class="section-label">Kubernetes Fundamentals · 03/74</span>
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Why Kubernetes Exists</p>
-          <h2 class="reveal">Docker Drawbacks</h2>
+      <div class="content">
+        <p class="kicker reveal">Why Kubernetes Exists</p>
+        <h2 class="reveal">Docker Drawbacks</h2>
 
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Single-host focused — containers run only on one machine</li>
-                <li class="reveal">No built-in multi-node scheduling or workload distribution</li>
-                <li class="reveal">Manual container restart & recovery — no automatic self‑healing</li>
-                <li class="reveal">No native service discovery or load balancing between containers</li>
-                <li class="reveal">No automatic scaling — must scale containers manually</li>
-                <li class="reveal">No declarative desired state — cannot ensure system consistency</li>
-                <li class="reveal">Limited monitoring & health checks without external tooling</li>
-                <li class="reveal">No built-in secrets/config management for complex apps</li>
-              </ul>
-            </div>
-
-            <pre class="mermaid reveal">flowchart TD
-  A[Run containers on a single server] --> B[Works for small apps]
-  B --> C[Need more servers? Manual setup required]
-  C --> D[No built-in scheduling or load balancing]
-  D --> E[Hard to scale, hard to recover, hard to manage]
-  E --> F[Kubernetes solves these problems]</pre>
-          </div>
-        </div>
+        <table class="compare-table equal-columns reveal">
+          <thead>
+            <tr>
+              <th>Docker Engine</th>
+              <th>Docker Compose</th>
+              <th>Docker Swarm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <ul class="drawback-list">
+                  <li>Single-host only: no clustering or multi-node support</li>
+                  <li>No scheduler or workload placement</li>
+                  <li>No cross-node self-healing</li>
+                  <li>No service discovery or multi-host networking</li>
+                  <li>No autoscaling or declarative desired state</li>
+                  <li>Limited monitoring and lifecycle management</li>
+                </ul>
+              </td>
+              <td>
+                <ul class="drawback-list">
+                  <li>Cannot span multiple machines</li>
+                  <li>No rolling updates or zero-downtime deployments</li>
+                  <li>No self-healing or autoscaling</li>
+                  <li>No cluster networking or service discovery</li>
+                  <li>No RBAC, quotas, or multi-tenant isolation</li>
+                </ul>
+              </td>
+              <td>
+                <ul class="drawback-list">
+                  <li>Limited ecosystem and community adoption</li>
+                  <li>Weak autoscaling with no HPA equivalent</li>
+                  <li>Basic scheduling with limited affinity and anti-affinity</li>
+                  <li>No CRDs, operators, or extensibility</li>
+                  <li>Limited observability and policy enforcement</li>
+                  <li>Not suitable for large-scale or enterprise workloads</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </article>
-
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../kubernetes-fundamentals/02-course-goals.html">Previous</a>
       <a class="nav-button" href="../../index.html">Home</a>
-      <a class="nav-button primary" href="../kubernetes-fundamentals/04-what-problems-kubernetes-solves.html">Next</a>
+      <a class="nav-button primary" href="../kubernetes-fundamentals/05-what-is-kubernetes.html">Next</a>
     </nav>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
