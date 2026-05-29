@@ -1,6 +1,6 @@
 # Kubernetes Cheatsheet
 
-A modular, GitHub Pages compatible Kubernetes cheatsheet and slide reference. The original monolithic HTML deck has been split into standalone slide pages grouped by topic.
+A modular, GitHub Pages compatible Kubernetes cheatsheet and slide reference. 
 
 ## Local Preview
 
