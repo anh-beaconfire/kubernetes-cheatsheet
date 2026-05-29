@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../architecture/01-cluster-architecture.html" data-next="../architecture/03-worker-node-components.html" data-home="../../index.html">
+
+<body data-prev="../architecture/01-cluster-architecture.html"
+  data-next="../architecture/03-worker-node-components.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,42 +21,52 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Architecture</p>
-          <h2 class="reveal">Control Plane Components</h2>
-          <table class="compare-table reveal">
-            <thead>
-              <tr>
-                <th>Component</th>
-                <th>Responsibility</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>API Server</td>
-                <td>front door of Kubernetes API</td>
-              </tr>
-              <tr>
-                <td>etcd</td>
-                <td>stores cluster state</td>
-              </tr>
-              <tr>
-                <td>Scheduler</td>
-                <td>assigns pods to nodes</td>
-              </tr>
-              <tr>
-                <td>Controller Manager</td>
-                <td>runs reconciliation controllers</td>
-              </tr>
-              <tr>
-                <td>Cloud Controller Manager</td>
-                <td>integrates with cloud provider APIs</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="footer-note reveal">API Server</div>
+      <div class="content">
+        <p class="kicker reveal">Architecture</p>
+        <h2 class="reveal">Control Plane Components</h2>
+
+        <table class="compare-table reveal">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Responsibility</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>API Server</td>
+              <td>Central management interface that exposes the Kubernetes API, validates requests, and updates cluster
+                state in etcd</td>
+            </tr>
+            <tr>
+              <td>etcd</td>
+              <td>Distributed key‑value store that persists all cluster data — configuration, secrets, and resource
+                definitions</td>
+            </tr>
+            <tr>
+              <td>Scheduler</td>
+              <td>Assigns Pods to nodes based on resource availability, affinity rules, and scheduling policies</td>
+            </tr>
+            <tr>
+              <td>Controller Manager</td>
+              <td>Runs control loops that monitor cluster state and take actions to achieve the desired state (e.g.,
+                creating Pods, updating replicas)</td>
+            </tr>
+            <tr>
+              <td>Cloud Controller Manager</td>
+              <td>Integrates Kubernetes with cloud provider APIs to manage load balancers, volumes, and node lifecycle
+                events</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="footer-note reveal">
+          The control plane maintains cluster state and makes scheduling and orchestration decisions, while worker nodes
+          execute workloads.
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../architecture/01-cluster-architecture.html">Previous</a>
@@ -66,4 +79,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

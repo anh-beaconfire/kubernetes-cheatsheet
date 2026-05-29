@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../architecture/02-control-plane-components.html" data-next="../architecture/04-declarative-model-and-reconciliation.html" data-home="../../index.html">
+
+<body data-prev="../architecture/02-control-plane-components.html"
+  data-next="../architecture/04-declarative-model-and-reconciliation.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,42 +21,53 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Architecture</p>
-          <h2 class="reveal">Worker Node Components</h2>
-          <table class="compare-table reveal">
-            <thead>
-              <tr>
-                <th>Component</th>
-                <th>Responsibility</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>kubelet</td>
-                <td>ensures pods run on node</td>
-              </tr>
-              <tr>
-                <td>kube-proxy</td>
-                <td>service networking rules</td>
-              </tr>
-              <tr>
-                <td>container runtime</td>
-                <td>runs containers</td>
-              </tr>
-              <tr>
-                <td>CNI plugin</td>
-                <td>pod networking</td>
-              </tr>
-              <tr>
-                <td>pods</td>
-                <td>smallest deployable workload unit</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="footer-note reveal">kubelet</div>
+      <div class="content">
+        <p class="kicker reveal">Architecture</p>
+        <h2 class="reveal">Worker Node Components</h2>
+
+        <table class="compare-table reveal">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Responsibility</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>kubelet</td>
+              <td>Node agent that ensures Pods are running, pulls Pod specs from API Server, and reports node & Pod
+                status</td>
+            </tr>
+
+            <tr>
+              <td>kube-proxy</td>
+              <td>Implements Service networking by managing iptables/IPVS rules and routing cluster traffic</td>
+            </tr>
+
+            <tr>
+              <td>Container Runtime</td>
+              <td>Pulls images, starts containers, and provides the CRI interface (e.g., containerd, CRI‑O)</td>
+            </tr>
+
+            <tr>
+              <td>CNI Plugin</td>
+              <td>Provides Pod networking — assigns IPs, configures routes, and enforces network policies</td>
+            </tr>
+
+            <tr>
+              <td>Pods</td>
+              <td>Smallest deployable unit; groups one or more containers with shared network and storage</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="footer-note reveal">
+          Worker nodes execute workloads; the control plane manages them.
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../architecture/02-control-plane-components.html">Previous</a>
@@ -66,4 +80,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../kubernetes-fundamentals/08-kubernetes-mental-model.html" data-next="../architecture/02-control-plane-components.html" data-home="../../index.html">
+
+<body data-prev="../kubernetes-fundamentals/08-kubernetes-mental-model.html"
+  data-next="../architecture/02-control-plane-components.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,27 +21,46 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Architecture</p>
-          <h2 class="reveal">Cluster Architecture</h2>
-          <div class="diagram-wrap reveal">
-            <div class="diagram cluster-diagram">
-              <div class="plane"><b>Control Plane</b><span>API
-                  Server</span><span>etcd</span><span>Scheduler</span><span>Controller Manager</span></div>
-              <div class="node"><b>Worker Node</b><span>kubelet</span><span>kube-proxy</span><span>Container
-                  Runtime</span><span>Pods</span></div>
-            </div>
-          </div>
-          <div class="diagram-bullets">
-            <ul class="bullet-list">
-              <li class="reveal">cluster = control plane + worker nodes</li>
-              <li class="reveal">control plane makes decisions</li>
-              <li class="reveal">worker nodes run workloads</li>
-              <li class="reveal">kubectl talks to API server</li>
-            </ul>
-          </div>
-        </div>
+      <div class="content">
+        <p class="kicker reveal">Architecture</p>
+        <h2 class="reveal">Cluster Architecture</h2>
+
+        <pre class="mermaid reveal">
+flowchart LR
+  subgraph CP[Control Plane]
+    API["api-server
+    • Central management interface"]
+    CM["Controller Manager
+    • Ensures desired state of resources"]
+    ETCD["etcd
+    • Persists cluster configuration & state"]
+    SCHED["Scheduler
+    • Assigns Pods to nodes"]
+  end
+
+  subgraph NODE[Worker Node]
+    KUBELET["kubelet
+    • Ensures containers are running as defined"]
+    KPROXY["kube-proxy
+    • Manages network rules"]
+    RUNTIME["Container Runtime
+    • Pulls images & runs containers"]
+    PODS["Pods
+    • Smallest deployable unit"]
+  end
+
+  %% Connections
+  API --> ETCD
+  API --> CM
+  API --> SCHED
+  API <--> KUBELET
+  KUBELET --> RUNTIME
+  RUNTIME --> PODS
+  KUBELET --> KPROXY
+    </pre>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../kubernetes-fundamentals/08-kubernetes-mental-model.html">Previous</a>
@@ -51,4 +73,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
