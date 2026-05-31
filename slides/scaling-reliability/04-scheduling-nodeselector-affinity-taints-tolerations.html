@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../scaling-reliability/03-cluster-autoscaler-vs-hpa-vs-vpa.html" data-next="../scaling-reliability/05-poddisruptionbudget.html" data-home="../../index.html">
+
+<body data-prev="../scaling-reliability/03-cluster-autoscaler-vs-hpa-vs-vpa.html"
+  data-next="../scaling-reliability/05-poddisruptionbudget.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,33 +21,93 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Scaling</p>
-          <h2 class="reveal">Scheduling: NodeSelector, Affinity, Taints, Tolerations</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">nodeSelector: simple node matching</li>
-                <li class="reveal">affinity: advanced scheduling preference/requirement</li>
-                <li class="reveal">taints: repel pods</li>
-                <li class="reveal">tolerations: allow pods onto tainted nodes</li>
-                <li class="reveal">use labels consistently</li>
-                <li class="reveal">avoid over-constraining scheduling</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>nodeSelector:
+      <div class="content">
+        <p class="kicker reveal">Scaling</p>
+        <h2 class="reveal">Scheduling: NodeSelector, Affinity, Taints, Tolerations</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal"><strong>nodeSelector</strong>: simplest form of scheduling — exact match on node
+                labels.</li>
+
+              <li class="reveal"><strong>nodeAffinity</strong>: advanced rules; supports <em>required</em> (hard) and
+                <em>preferred</em> (soft) placement.</li>
+
+              <li class="reveal"><strong>podAffinity / podAntiAffinity</strong>: co‑locate Pods together or spread them
+                apart across nodes/zones.</li>
+
+              <li class="reveal"><strong>taints</strong>: repel Pods from nodes unless they explicitly tolerate the
+                taint.</li>
+
+              <li class="reveal"><strong>tolerations</strong>: allow Pods to be scheduled onto tainted nodes.</li>
+
+              <li class="reveal">Use labels consistently — they are the foundation of all scheduling rules.</li>
+
+              <li class="reveal">Avoid over‑constraining scheduling — too many rules lead to Pending Pods.</li>
+
+            </ul>
+          </div>
+
+          <pre class="reveal"><code># nodeSelector: simple, exact match
+nodeSelector:
   workload: gpu
 
 ---
 
+# nodeAffinity: required (hard rule)
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-type
+              operator: In
+              values: ["high-memory"]
+
+---
+
+# nodeAffinity: preferred (soft rule)
+affinity:
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 50
+        preference:
+          matchExpressions:
+            - key: zone
+              operator: In
+              values: ["us-east-1a"]
+
+---
+
+# podAntiAffinity: spread Pods across nodes
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app: api
+        topologyKey: "kubernetes.io/hostname"
+
+---
+
+# Tolerations: allow scheduling onto tainted nodes
 tolerations:
   - key: "dedicated"
     operator: "Equal"
     value: "platform"
-    effect: "NoSchedule"</code></pre>
-          </div>
+    effect: "NoSchedule"
+
+---
+
+# Example taint applied to a node (kubectl)
+# kubectl taint nodes node1 dedicated=platform:NoSchedule
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../scaling-reliability/03-cluster-autoscaler-vs-hpa-vs-vpa.html">Previous</a>
@@ -57,4 +120,5 @@ tolerations:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
