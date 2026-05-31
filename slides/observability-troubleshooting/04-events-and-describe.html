@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../observability-troubleshooting/03-metrics.html" data-next="../observability-troubleshooting/05-debugging-a-failing-pod.html" data-home="../../index.html">
+
+<body data-prev="../observability-troubleshooting/03-metrics.html"
+  data-next="../observability-troubleshooting/05-debugging-a-failing-pod.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,27 +21,53 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Troubleshooting</p>
-          <h2 class="reveal">Events and Describe</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">scheduling failures</li>
-                <li class="reveal">image pull errors</li>
-                <li class="reveal">probe failures</li>
-                <li class="reveal">OOMKilled</li>
-                <li class="reveal">volume mount errors</li>
-                <li class="reveal">node pressure</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl describe pod api-123
-kubectl get events --sort-by=.metadata.creationTimestamp
-kubectl describe deployment api
-kubectl describe node worker-1</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Troubleshooting</p>
+        <h2 class="reveal">Events and Describe</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Events show what happened to a Kubernetes object — scheduling, pulling
+                images, restarts, probe failures, etc.</li>
+              <li class="reveal"><code>kubectl describe</code> gives a detailed view of an object’s state,
+                conditions, and recent Events.</li>
+              <li class="reveal">Use Events to diagnose scheduling failures, image pull
+                  errors, probe failures, and OOMKilled crashes.</li>
+              <li class="reveal">Check for volume mount errors and node pressure (memory, disk, PID).</li>
+              <li class="reveal">Look at <strong>Conditions</strong>, <strong>Events</strong>, <strong>Status</strong>,
+                <strong>RestartCount</strong>, and <strong>Last State</strong> when debugging Pods.</li>
+
+            </ul>
           </div>
+
+          <pre class="reveal"><code># Inspect a Pod's full state + Events
+kubectl describe pod api-123
+# → Check: Conditions, Restarts, OOMKilled, probe failures, image pull issues
+
+--- 
+
+# View all cluster Events in chronological order
+kubectl get events --sort-by=.metadata.creationTimestamp
+# → Look for: scheduling failures, node pressure, eviction warnings
+
+--- 
+
+# Describe a Deployment (replicas, rollout status, Events)
+kubectl describe deployment api
+# → Check: unavailable replicas, rollout failures, HPA interactions
+
+--- 
+
+# Inspect node health and pressure conditions
+kubectl describe node worker-1
+# → Look for: MemoryPressure, DiskPressure, PIDPressure, taints
+</code></pre>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../observability-troubleshooting/03-metrics.html">Previous</a>
@@ -51,4 +80,5 @@ kubectl describe node worker-1</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

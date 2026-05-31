@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../observability-troubleshooting/04-events-and-describe.html" data-next="../observability-troubleshooting/06-debugging-service-connectivity.html" data-home="../../index.html">
+
+<body data-prev="../observability-troubleshooting/04-events-and-describe.html"
+  data-next="../observability-troubleshooting/06-debugging-service-connectivity.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,33 +21,110 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Troubleshooting</p>
-          <h2 class="reveal">Debugging a Failing Pod</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Check pod status</li>
-                <li class="reveal">Describe pod</li>
-                <li class="reveal">Check logs</li>
-                <li class="reveal">Check events</li>
-                <li class="reveal">Exec into pod if running</li>
-                <li class="reveal">Check deployment/replicaset</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl get pods
+      <div class="content">
+        <p class="kicker reveal">Troubleshooting</p>
+        <h2 class="reveal">Debugging a Failing Pod</h2>
 
----
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal"><strong>Check Pod status</strong> — see if it's Pending, CrashLoopBackOff,
+                ImagePullBackOff, or OOMKilled. Status gives the first clue.</li>
+              <li class="reveal"><strong>Describe the Pod</strong> — inspect Conditions, container states, Events,
+                restart count, probe failures, and image pull issues.</li>
+              <li class="reveal"><strong>Check logs</strong> — look for stack traces, startup failures, missing configs,
+                connection errors, or crashes.</li>
+              <li class="reveal"><strong>Check Events</strong> — identify scheduling failures, mount errors, node
+                pressure, probe failures, or eviction warnings.</li>
+              <li class="reveal"><strong>Exec into Pod</strong> (if running) — verify env vars, config files, DNS,
+                network connectivity, permissions, and dependencies.</li>
+              <li class="reveal"><strong>Check Deployment/ReplicaSet</strong> — confirm rollout status, unavailable
+                replicas, wrong image tags, or HPA scaling issues.</li>
 
-kubectl describe pod &lt;pod&gt;</code></pre>
+            </ul>
           </div>
+
+          <pre class="reveal"><code># 1. Check Pod status (Pending, CrashLoopBackOff, OOMKilled)
+kubectl get pods -o wide
+
+# 2. Describe Pod (Conditions, Events, container state)
+kubectl describe pod <pod>
+
+# 3. Check logs (crashes, errors, startup failures)
+kubectl logs <pod> -c <container>
+kubectl logs <pod> --previous   # last crash
+
+# 4. Check cluster Events (scheduling, mounts, pressure)
+kubectl get events --sort-by=.metadata.creationTimestamp
+
+# 5. Exec into Pod (inspect env, config, DNS, network)
+kubectl exec -it <pod> -- sh
+
+# 6. Check Deployment/ReplicaSet (rollout issues)
+kubectl describe deployment <name>
+kubectl describe rs
+</code></pre>
         </div>
+        <table class="compare-table reveal" style="margin-top: 10px;">
+          <thead>
+            <tr>
+              <th><strong>Issue</strong></th>
+              <th><strong>Common Reason</strong></th>
+              <th><strong>Common Fix</strong></th>
+            </tr>
+          </thead>
+
+          <div>
+            <tbody>
+            <tr>
+              <td><strong>Pod Pending</strong></td>
+              <td>Scheduling constraints or node pressure</td>
+              <td>Check Events, adjust resource requests, fix taints/affinity</td>
+            </tr>
+            <tr>
+              <td><strong>CrashLoopBackOff</strong></td>
+              <td>App crash, bad config, missing dependency</td>
+              <td>Fix config/env vars, dependencies, startup logic</td>
+            </tr>
+            <tr>
+              <td><strong>ImagePullBackOff</strong></td>
+              <td>Wrong tag or private registry auth failure</td>
+              <td>Use correct tag, fix registry creds, verify image exists</td>
+            </tr>
+            <tr>
+              <td><strong>OOMKilled</strong></td>
+              <td>Memory limit too low or memory leak</td>
+              <td>Increase memory limit, fix leak, tune app usage</td>
+            </tr>
+            <tr>
+              <td><strong>Probe Failures</strong></td>
+              <td>App not ready or wrong probe config</td>
+              <td>Fix probe path/port, increase startup time, adjust thresholds</td>
+            </tr>
+            <tr>
+              <td><strong>FailedMount</strong></td>
+              <td>PVC not bound or wrong StorageClass</td>
+              <td>Bind PVC, correct StorageClass, fix volume permissions</td>
+            </tr>
+            <tr>
+              <td><strong>Unavailable Replicas</strong></td>
+              <td>Rollout failure or HPA scaling issues</td>
+              <td>Fix rollout, correct image, adjust HPA targets</td>
+            </tr>
+
+          </tbody>
+          </div>
+        </table>
+
+
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../observability-troubleshooting/04-events-and-describe.html">Previous</a>
       <a class="nav-button" href="../../index.html">Home</a>
-      <a class="nav-button primary" href="../observability-troubleshooting/06-debugging-service-connectivity.html">Next</a>
+      <a class="nav-button primary"
+        href="../observability-troubleshooting/06-debugging-service-connectivity.html">Next</a>
     </nav>
   </main>
 
@@ -52,4 +132,5 @@ kubectl describe pod &lt;pod&gt;</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../config-security/07-image-security.html" data-next="../observability-troubleshooting/02-logs.html" data-home="../../index.html">
+
+<body data-prev="../config-security/07-image-security.html" data-next="../observability-troubleshooting/02-logs.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,19 +21,44 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Troubleshooting</p>
-          <h2 class="reveal">Observability Pillars</h2>
-          <ul class="bullet-list">
-            <li class="reveal">logs</li>
-            <li class="reveal">metrics</li>
-            <li class="reveal">traces</li>
-            <li class="reveal">events</li>
-            <li class="reveal">health checks</li>
-            <li class="reveal">Prometheus</li>
-            <li class="reveal">Grafana</li>
-          </ul>
+      <div class="content">
+        <p class="kicker reveal">Troubleshooting</p>
+        <h2 class="reveal">Observability Pillars</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal"><strong>Observability helps you understand system behavior</strong> by exposing what
+                your services are doing internally.</li>
+              <li class="reveal"><strong>Logs</strong> — detailed event records for debugging and root‑cause analysis.
+              </li>
+              <li class="reveal"><strong>Metrics</strong> — numeric time‑series data for performance, SLOs, and
+                alerting.</li>
+              <li class="reveal"><strong>Traces</strong> — end‑to‑end request flows across microservices.</li>
+              <li class="reveal"><strong>Events</strong> — Kubernetes lifecycle signals (Pod restarts, scheduling
+                issues).</li>
+              <li class="reveal"><strong>Health checks</strong> — readiness/liveness signals for service reliability.
+              </li>
+              <li class="reveal"><strong>Prometheus</strong> — metrics collection and alerting engine.</li>
+              <li class="reveal"><strong>Grafana</strong> — visualization and dashboards for metrics and traces.</li>
+            </ul>
+          </div>
+          <pre class="mermaid reveal">
+flowchart TD
+
+    A["Observability"]
+
+    A --> B["Logging"]
+    A --> C["Metrics"]
+    A --> D["Tracing"]
+
+    B --> E["Events"]
+    C --> F["Health Checks"]
+    C --> G["Prometheus"]
+    C --> H["Grafana"]
+          </pre>
         </div>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -44,4 +72,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

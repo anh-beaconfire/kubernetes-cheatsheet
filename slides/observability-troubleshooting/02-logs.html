@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../observability-troubleshooting/01-observability-pillars.html" data-next="../observability-troubleshooting/03-metrics.html" data-home="../../index.html">
+
+<body data-prev="../observability-troubleshooting/01-observability-pillars.html"
+  data-next="../observability-troubleshooting/03-metrics.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,26 +21,62 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Troubleshooting</p>
-          <h2 class="reveal">Logs</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">write logs to stdout/stderr</li>
-                <li class="reveal">use structured JSON logs</li>
-                <li class="reveal">centralize logs</li>
-                <li class="reveal">include correlation IDs</li>
-                <li class="reveal">retain logs outside pods</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl logs pod/api-123
-kubectl logs deployment/api
-kubectl logs pod/api-123 -c api
-kubectl logs pod/api-123 --previous
-kubectl logs -f deployment/api</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Troubleshooting</p>
+        <h2 class="reveal">Logs</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal"><strong>Logs show what your application is doing</strong> — they are the first place to
+                look when debugging failures.</li>
+              <li class="reveal">Write logs to <strong>stdout/stderr</strong> so Kubernetes can collect them
+                automatically.</li>
+              <li class="reveal">Use <strong>structured JSON logs</strong> for easier searching, filtering, and
+                correlation.</li>
+              <li class="reveal"><strong>Centralize logs</strong> (ELK, Loki, Cloud logging) to avoid losing them when
+                Pods restart.</li>
+              <li class="reveal">Include <strong>correlation IDs</strong> to trace a request across services.</li>
+              <li class="reveal"><strong>Retain logs outside Pods</strong> — container logs are ephemeral and disappear
+                on restart.</li>
+              <li class="reveal">Check logs for <strong>errors, stack traces, timeouts, restarts, readiness failures,
+                  and latency spikes</strong>.</li>
+            </ul>
           </div>
+
+          <pre class="reveal"><code># Logs from a specific Pod
+kubectl logs pod/api-123
+# → Check for errors, crashes, startup failures
+
+---
+
+# Logs from all Pods in a Deployment
+kubectl logs deployment/api
+# → Useful when replicas share the same behavior
+
+---
+
+# Logs from a specific container in a Pod
+kubectl logs pod/api-123 -c api
+# → For multi-container Pods (sidecars, init containers)
+
+---
+
+# Logs from the previous container instance
+kubectl logs pod/api-123 --previous
+# → Critical for debugging crash loops (CrashLoopBackOff)
+
+---
+
+# Stream logs in real time
+kubectl logs -f deployment/api
+# → Watch live behavior during deploys or incidents
+</code></pre>
+
         </div>
+      </div>
+    </article>
+
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -51,4 +90,5 @@ kubectl logs -f deployment/api</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

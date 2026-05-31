@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../observability-troubleshooting/02-logs.html" data-next="../observability-troubleshooting/04-events-and-describe.html" data-home="../../index.html">
+
+<body data-prev="../observability-troubleshooting/02-logs.html"
+  data-next="../observability-troubleshooting/04-events-and-describe.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,25 +21,98 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Troubleshooting</p>
-          <h2 class="reveal">Metrics</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">metrics-server supports basic resource metrics</li>
-                <li class="reveal">Prometheus collects richer metrics</li>
-                <li class="reveal">Grafana visualizes dashboards</li>
-                <li class="reveal">monitor CPU, memory, restarts, latency, error rate</li>
-                <li class="reveal">monitor node pressure</li>
-                <li class="reveal">alert on unavailable replicas</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl top nodes
-kubectl top pods</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Troubleshooting</p>
+        <h2 class="reveal">Metrics</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal"><strong>Metrics reveal system health and performance</strong> — essential for
+                debugging, scaling, and alerting.</li>
+              <li class="reveal"><strong>metrics-server</strong> (used by <code>kubectl top</code>) provides basic
+                CPU/memory usage for Pods and nodes.
+              </li>
+              <li class="reveal"><strong>Prometheus</strong> collects detailed application, cluster, and infrastructure
+                metrics.</li>
+              <li class="reveal"><strong>Grafana</strong> visualizes dashboards for latency, throughput, saturation, and
+                errors.</li>
+              <li class="reveal">Monitor <strong>CPU, memory, restarts, latency, error rate, throughput,
+                  saturation</strong>.</li>
+              <li class="reveal">Check <strong>node pressure</strong> (disk, memory, PID pressure) to detect
+                cluster‑level issues.</li>
+              <li class="reveal">Alert on <strong>unavailable replicas</strong>, <strong>high latency</strong>,
+                <strong>OOMKills</strong>, and <strong>CrashLoopBackOff</strong>.
+              </li>
+              <li class="reveal">Use metrics to validate <strong>autoscaling behavior</strong> (HPA/VPA) and
+                <strong>resource requests</strong>.
+              </li>
+
+            </ul>
           </div>
+
+          <pre class="reveal"><code>
+kubectl top nodes
+# → Check CPU/memory pressure, node saturation
+
+---
+
+kubectl top pods -A
+# → Identify Pods consuming excessive resources
+
+---
+
+# Describe Pod to see restarts, OOMKills, throttling
+kubectl describe pod api-123
+# → Look for: OOMKilled, RestartCount, CPU throttling
+
+---
+
+# Check HPA metrics and scaling decisions
+kubectl describe hpa api
+# → See current CPU/memory utilization and scale events
+
+---
+
+# Check node conditions (memory/disk/PID pressure)
+kubectl describe node worker-1
+# → Look for: MemoryPressure, DiskPressure, PIDPressure
+
+---
+
+# Query Prometheus directly (if port-forwarded)
+curl http://localhost:9090/api/v1/query?query=up
+# → Verify targets are scraping correctly
+</code></pre>
         </div>
+        <pre class="mermaid reveal">
+flowchart LR
+
+    subgraph K8s["Kubernetes Cluster"]
+        APIServer["API Server"]
+        MetricsServer["metrics-server<br/>(CPU/Memory only)"]
+        Prom["Prometheus<br/>(full metrics + history)"]
+        HPA["Horizontal Pod Autoscaler"]
+        Graf["Grafana<br/>(dashboards)"]
+        Nodes["Nodes / Kubelet / cAdvisor"]
+        Apps["Applications<br/>(/metrics endpoints)"]
+    end
+
+    %% Data flow with descriptions
+    Nodes -->|Reports resource usage| MetricsServer
+    MetricsServer -->|Provides CPU/Memory metrics| APIServer
+    APIServer -->|Triggers scaling decisions| HPA
+
+    Apps -->|Expose /metrics for scraping| Prom
+    Nodes -->|Expose node & cAdvisor metrics| Prom
+    Prom -->|Feeds dashboards| Graf
+    Prom -->|Provides custom metrics| HPA
+
+</pre>
+
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../observability-troubleshooting/02-logs.html">Previous</a>
@@ -49,4 +125,5 @@ kubectl top pods</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

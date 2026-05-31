@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../observability-troubleshooting/05-debugging-a-failing-pod.html" data-next="../kubectl-cheatsheet/01-context-and-namespace-commands.html" data-home="../../index.html">
+
+<body data-prev="../observability-troubleshooting/05-debugging-a-failing-pod.html"
+  data-next="../kubectl-cheatsheet/01-context-and-namespace-commands.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,34 +21,127 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Troubleshooting</p>
-          <h2 class="reveal">Debugging Service Connectivity</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">service selector mismatch</li>
-                <li class="reveal">pod not ready</li>
-                <li class="reveal">wrong targetPort</li>
-                <li class="reveal">NetworkPolicy blocking traffic</li>
-                <li class="reveal">ingress misconfiguration</li>
-                <li class="reveal">DNS issue</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl get svc
-kubectl get endpoints
-kubectl get endpointslices
+      <div class="content">
+        <p class="kicker reveal">Troubleshooting</p>
+        <h2 class="reveal">Debugging Service Connectivity</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Check <strong>Service definition</strong> — verify selector matches Pod labels, correct
+                ports, and correct type (ClusterIP/NodePort/LoadBalancer).</li>
+              <li class="reveal">Check <strong>Endpoints</strong> — ensure the Service actually has Pod IPs; empty
+                endpoints means no matching Pods or Pods not Ready.</li>
+              <li class="reveal">Check <strong>Pod readiness</strong> — Pods failing readiness probes will not receive
+                traffic.</li>
+              <li class="reveal">Validate <strong>targetPort</strong> — ensure the Service’s targetPort matches the
+                container’s actual listening port.</li>
+              <li class="reveal">Check <strong>NetworkPolicies</strong> — confirm traffic is allowed between namespaces,
+                Pods, and Services.</li>
+              <li class="reveal">Check <strong>Ingress</strong> — verify host/path rules, backend Service name, and TLS
+                configuration.</li>
+              <li class="reveal">Check <strong>DNS</strong> — ensure the Service name resolves correctly inside the
+                cluster.</li>
+
+            </ul>
+          </div>
+
+          <pre class="reveal"><code># 1. Check Service definition (ports, selectors)
+kubectl get svc
 kubectl describe svc api-service
+
+---
+
+# 2. Check Endpoints (should list Pod IPs)
+kubectl get endpoints api-service
+kubectl get endpointslices api-service
+
+---
+
+# 3. Check Pod labels and readiness
 kubectl get pods --show-labels
+kubectl describe pod <pod>
+
+---
+
+# 4. Run a debug Pod to test connectivity
 kubectl run debug --image=busybox -it --rm -- sh
 
 ---
 
+# 5. Test DNS and HTTP connectivity from inside cluster
 nslookup api-service
-wget -qO- http://api-service</code></pre>
-          </div>
+wget -qO- http://api-service
+</code></pre>
+
         </div>
+        <div style="margin-top: 10px;">
+          <table class="compare-table reveal">
+            <thead>
+              <tr>
+                <th><strong>Error Seen</strong></th>
+                <th><strong>Common Reason</strong></th>
+                <th><strong>Common Fix</strong></th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td><strong>No endpoints available for service</strong></td>
+                <td>Service selector does not match any Pod labels</td>
+                <td>Fix Service selector; verify Pod labels with kubectl get pods --show-labels</td>
+              </tr>
+
+              <tr>
+                <td><strong>Endpoints: <none></strong></td>
+                <td>Pods exist but are not Ready (failing readiness probe)</td>
+                <td>Fix readiness probe, check container logs, ensure app is listening</td>
+              </tr>
+
+              <tr>
+                <td><strong>Connection refused</strong></td>
+                <td>Service targetPort does not match containerPort; app not listening</td>
+                <td>Correct targetPort; verify containerPort via kubectl describe pod</td>
+              </tr>
+
+              <tr>
+                <td><strong>NetworkPolicy denied</strong></td>
+                <td>Ingress/Egress rules block traffic between Pods or namespaces</td>
+                <td>Update NetworkPolicy to allow required Pod/namespace/port traffic</td>
+              </tr>
+
+              <tr>
+                <td><strong>Ingress: backend service not found</strong></td>
+                <td>Ingress rule points to wrong Service name or port</td>
+                <td>Fix Ingress backend serviceName/servicePort</td>
+              </tr>
+
+              <tr>
+                <td><strong>Ingress: no matching host/path</strong></td>
+                <td>Request does not match any Ingress rule</td>
+                <td>Correct host/path rules; verify with kubectl describe ingress</td>
+              </tr>
+
+              <tr>
+                <td><strong>DNS lookup failed</strong></td>
+                <td>Service name incorrect or wrong namespace; CoreDNS issue</td>
+                <td>Use nslookup; check FQDN (svc.namespace.svc.cluster.local)</td>
+              </tr>
+
+              <tr>
+                <td><strong>I/O timeout</strong></td>
+                <td>Pod unreachable due to NetworkPolicy, node issue, or wrong port</td>
+                <td>Test connectivity from debug Pod; verify policies and ports</td>
+              </tr>
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../observability-troubleshooting/05-debugging-a-failing-pod.html">Previous</a>
@@ -58,4 +154,5 @@ wget -qO- http://api-service</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
