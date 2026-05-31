@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../config-security/03-serviceaccount.html" data-next="../storage/02-persistentvolume-and-persistentvolumeclaim.html" data-home="../../index.html">
+
+<body data-prev="../config-security/03-serviceaccount.html"
+  data-next="../storage/02-persistentvolume-and-persistentvolumeclaim.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,26 +21,53 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Storage</p>
-          <h2 class="reveal">Volume Basics</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Container filesystem is ephemeral. Volumes provide data sharing or persistence.</li>
-                <li class="reveal">emptyDir</li>
-                <li class="reveal">configMap</li>
-                <li class="reveal">secret</li>
-                <li class="reveal">persistentVolumeClaim</li>
-                <li class="reveal">projected</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>volumes:
-  - name: cache
-    emptyDir: {}</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Storage</p>
+        <h2 class="reveal">Volume Basics</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Container filesystems are <strong>ephemeral</strong> — data disappears when a container
+                restarts. Volumes provide <strong>persistence</strong> or <strong>data sharing</strong> across
+                containers.</li>
+
+              <li class="reveal"><strong>emptyDir</strong> — temporary storage that
+                lives as long as the Pod; great for caches, scratch space, or shared work directories.</li>
+
+              <li class="reveal"><strong><a href="../config-security/01-configmap.html">configMap</a></strong> — mount configuration
+                files directly into a container; updates require Pod restart unless app reloads dynamically.</li>
+
+              <li class="reveal"><strong><a href="../config-security/02-secret.html">secret</a></strong> — mount sensitive values as
+                files; Kubernetes keeps them in tmpfs for extra safety.</li>
+
+              <li class="reveal"><strong>persistentVolumeClaim</strong> —
+                request durable storage backed by cloud disks, NFS, or storage systems; survives Pod restarts and
+                rescheduling.</li>
+
+              <li class="reveal"><strong>projected</strong> — combine multiple
+                sources (ConfigMaps, Secrets, ServiceAccount tokens) into a single unified volume.</li>
+
+              <li class="reveal">Choose the volume type based on <strong>lifecycle needs</strong>: temporary,
+                configuration, sensitive data, or long‑term persistence.</li>
+            </ul>
           </div>
+
+          <pre class="reveal"><code># Example: temporary cache shared between containers
+volumes:
+  - name: cache
+    emptyDir: {}
+
+containers:
+  - name: api
+    volumeMounts:
+      - name: cache
+        mountPath: /tmp/cache
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../config-security/03-serviceaccount.html">Previous</a>
@@ -50,4 +80,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

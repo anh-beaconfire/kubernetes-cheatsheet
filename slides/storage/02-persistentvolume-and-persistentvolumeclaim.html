@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../storage/01-volume-basics.html" data-next="../storage/03-storageclass.html" data-home="../../index.html">
+
+<body data-prev="../storage/01-volume-basics.html" data-next="../storage/03-storageclass.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,21 +21,58 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Storage</p>
-          <h2 class="reveal">PersistentVolume and PersistentVolumeClaim</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">PersistentVolume = storage resource</li>
-                <li class="reveal">PersistentVolumeClaim = request for storage</li>
-                <li class="reveal">use StorageClass for dynamic provisioning</li>
-                <li class="reveal">understand access modes</li>
-                <li class="reveal">backup stateful data</li>
-                <li class="reveal">monitor disk usage</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: v1
+      <div class="content">
+        <p class="kicker reveal">Storage</p>
+        <h2 class="reveal">PersistentVolume and PersistentVolumeClaim</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal"><strong>PersistentVolume (PV)</strong> — a cluster‑level storage resource (NFS, cloud
+                disk, SAN, hostPath, etc.).</li>
+
+              <li class="reveal"><strong>PersistentVolumeClaim (PVC)</strong> — a request for storage by a Pod (size,
+                access mode).</li>
+
+              <li class="reveal">A PVC <strong>binds</strong> to a matching PV based on size, access mode, and
+                selectors.</li>
+
+              <li class="reveal">Pods mount PVCs — they never mount PVs directly.</li>
+
+              <li class="reveal"><strong>Access modes</strong>:
+                <br>• ReadWriteOnce (RWO) — single node read/write
+                <br>• ReadWriteMany (RWX) — multiple nodes read/write
+                <br>• ReadOnlyMany (ROX) — multiple nodes read‑only
+              </li>
+
+              <li class="reveal">Backup stateful data — PVs map to real disks but are not backups.</li>
+
+              <li class="reveal">Monitor disk usage and IOPS — storage saturation can cause latency or Pod eviction.
+              </li>
+
+              <li class="reveal">Choose reclaim policy: <strong>Retain</strong>, <strong>Delete</strong>, or
+                <strong>Recycle</strong> depending on data lifecycle.</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code># PersistentVolume (static provisioning)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: api-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:               # Example only — not for production
+    path: /mnt/data
+
+---
+
+# PersistentVolumeClaim that binds to the PV
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: api-data
@@ -45,12 +85,20 @@ spec:
 
 ---
 
+# Pod mounting the PVC
 volumes:
   - name: data
     persistentVolumeClaim:
-      claimName: api-data</code></pre>
-          </div>
+      claimName: api-data
+
+containers:
+  - name: api
+    volumeMounts:
+      - name: data
+        mountPath: /var/lib/api
+</code></pre>
         </div>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -64,4 +112,5 @@ volumes:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

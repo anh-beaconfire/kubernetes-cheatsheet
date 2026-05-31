@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../networking/09-egress-traffic.html" data-next="../config-security/02-secret.html" data-home="../../index.html">
+
+<body data-prev="../networking/09-egress-traffic.html" data-next="../config-security/02-secret.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,34 +21,71 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Configuration</p>
-          <h2 class="reveal">ConfigMap</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">ConfigMap stores non-sensitive configuration.</li>
-                <li class="reveal">do not store secrets in ConfigMaps</li>
-                <li class="reveal">use versioned config changes</li>
-                <li class="reveal">restart pods when config changes if app does not reload dynamically</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: v1
+      <div class="content">
+        <p class="kicker reveal">Configuration</p>
+        <h2 class="reveal">ConfigMap</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">A ConfigMap stores <strong>non‑sensitive configuration</strong> such as flags,
+                environment variables, and app settings.</li>
+
+              <li class="reveal">Never store secrets in ConfigMaps — they are <strong>not encrypted</strong> and
+                readable by anyone with namespace access.</li>
+
+              <li class="reveal">Use <strong>versioned ConfigMaps</strong> (e.g., <code>api-config-v1</code>,
+                <code>api-config-v2</code>) to enable safe rollouts and rollbacks.</li>
+
+              <li class="reveal">If your application does not reload config dynamically, you must <strong>restart
+                  Pods</strong> when the ConfigMap changes.</li>
+
+              <li class="reveal">ConfigMaps can be consumed as environment variables, mounted files, or entire
+                configuration directories.</li>
+
+              <li class="reveal">Avoid large ConfigMaps — keep configuration small and focused to reduce rollout
+                complexity.</li>
+
+              <li class="reveal">Use <strong>immutable ConfigMaps</strong> for performance and safety when config does
+                not change frequently.</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code># Versioned ConfigMap
+apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: api-config
+  name: api-config-v1
 data:
   LOG_LEVEL: "info"
   FEATURE_FLAG: "true"
 
 ---
 
+# Pod referencing a specific version
 envFrom:
   - configMapRef:
-      name: api-config</code></pre>
-          </div>
+      name: api-config-v1
+
+---
+
+# Updating config? Create a new version:
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config-v2
+data:
+  LOG_LEVEL: "debug"
+  FEATURE_FLAG: "false"
+
+# Then update your Deployment to reference:
+#   api-config-v2
+</code></pre>
         </div>
+      </div>
     </article>
+
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../networking/09-egress-traffic.html">Previous</a>
@@ -58,4 +98,5 @@ envFrom:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

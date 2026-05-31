@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../storage/03-storageclass.html" data-next="../scaling-reliability/02-horizontalpodautoscaler.html" data-home="../../index.html">
+
+<body data-prev="../storage/03-storageclass.html" data-next="../scaling-reliability/02-horizontalpodautoscaler.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,30 +21,68 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Scaling</p>
-          <h2 class="reveal">Resource Requests and Limits</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">requests influence scheduling</li>
-                <li class="reveal">limits cap resource usage</li>
-                <li class="reveal">missing requests causes poor scheduling</li>
-                <li class="reveal">wrong limits can cause throttling or OOMKilled</li>
-                <li class="reveal">always set requests</li>
-                <li class="reveal">set memory limits carefully</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>resources:
-  requests:
-    cpu: "250m"
-    memory: "256Mi"
-  limits:
-    cpu: "500m"
-    memory: "512Mi"</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Scaling</p>
+        <h2 class="reveal">Resource Requests and Limits</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal"><strong>Requests</strong> define the minimum CPU/memory a Pod needs — the scheduler
+                uses these values to decide where the Pod can run.</li>
+
+              <li class="reveal"><strong>Limits</strong> define the maximum CPU/memory a Pod is allowed to consume —
+                preventing noisy‑neighbor issues.</li>
+
+              <li class="reveal">We are scaling <strong>per‑Pod resources</strong>: how much CPU and RAM each Pod gets,
+                not how many Pods exist.</li>
+
+              <li class="reveal">Missing requests cause poor scheduling — Pods may land on nodes without enough capacity
+                and get evicted.</li>
+
+              <li class="reveal">Wrong limits cause performance issues:
+                <br>• CPU limit too low → throttling
+                <br>• Memory limit too low → OOMKilled
+                <br>• No memory limit → Pod can crash the node
+              </li>
+
+              <li class="reveal">Always set <strong>requests</strong> — they ensure predictable scheduling and stable
+                autoscaling behavior.</li>
+
+              <li class="reveal">Set <strong>memory limits carefully</strong> — memory is not compressible; exceeding
+                the limit kills the container.</li>
+
+              <li class="reveal">Use real metrics (Prometheus, Datadog, CloudWatch) to size requests/limits based on
+                actual usage, not guesses.</li>
+
+            </ul>
           </div>
+
+          <pre class="reveal"><code># Example: CPU and memory sizing per Pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: api
+          image: my-api:1.0
+          resources:
+            requests:
+              cpu: "250m"      # scheduler guarantees 0.25 CPU
+              memory: "256Mi"  # scheduler guarantees 256 MiB RAM
+            limits:
+              cpu: "500m"      # Pod cannot exceed 0.5 CPU
+              memory: "512Mi"  # Pod is killed if it exceeds 512 MiB
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../storage/03-storageclass.html">Previous</a>
@@ -54,4 +95,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

@@ -18,20 +18,31 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Scaling</p>
-          <h2 class="reveal">HorizontalPodAutoscaler</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">HPA automatically adjusts pod replica count based on metrics.</li>
-                <li class="reveal">define resource requests</li>
-                <li class="reveal">use custom metrics for better scaling</li>
-                <li class="reveal">avoid too-low minReplicas for production</li>
-                <li class="reveal">test scaling behavior</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: autoscaling/v2
+  <div class="content">
+    <p class="kicker reveal">Scaling</p>
+    <h2 class="reveal">HorizontalPodAutoscaler</h2>
+
+    <div class="code-layout">
+      <div class="text-panel">
+        <ul class="bullet-list">
+          <li class="reveal">HPA automatically adjusts the <strong>number of Pod replicas</strong> for a workload based on metrics (e.g., CPU, custom metrics).</li>
+
+          <li class="reveal">HPA targets a <strong>scalable workload</strong> via <code>scaleTargetRef</code> (Deployment, StatefulSet, ReplicaSet).</li>
+
+          <li class="reveal">You must define <strong>CPU (and/or memory) requests</strong> on containers — HPA uses utilization relative to requests.</li>
+
+          <li class="reveal">Default CPU‑based scaling is often not enough — use <strong>custom or external metrics</strong> (QPS, latency, queue length) for better behavior.</li>
+
+          <li class="reveal">Avoid too‑low <code>minReplicas</code> in production — keep enough Pods for baseline traffic and warm caches.</li>
+
+          <li class="reveal">Set <strong>reasonable maxReplicas</strong> to avoid runaway scaling and cost explosions.</li>
+
+          <li class="reveal">Always <strong>test scaling behavior</strong> under load: scale‑up speed, scale‑down stability, and impact on latency.</li>
+        </ul>
+      </div>
+
+      <pre class="reveal"><code># HPA scaling a Deployment based on CPU utilization
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: api-hpa
@@ -39,19 +50,37 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: api
-  minReplicas: 3
-  maxReplicas: 10
+    name: api          # must match the Deployment name
+
+  minReplicas: 3       # keep at least 3 Pods running
+  maxReplicas: 10      # never scale beyond 10 Pods
+
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 70</code></pre>
-          </div>
-        </div>
-    </article>
+          averageUtilization: 70 
+
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - type: Percent
+          value: 100       # at most double the replicas at once
+          periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 50        # reduce by at most 50% at a time
+          periodSeconds: 60
+</code></pre>
+    </div>
+  </div>
+</article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../scaling-reliability/01-resource-requests-and-limits.html">Previous</a>

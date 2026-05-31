@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../storage/02-persistentvolume-and-persistentvolumeclaim.html" data-next="../scaling-reliability/01-resource-requests-and-limits.html" data-home="../../index.html">
+
+<body data-prev="../storage/02-persistentvolume-and-persistentvolumeclaim.html"
+  data-next="../scaling-reliability/01-resource-requests-and-limits.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,31 +21,59 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Storage</p>
-          <h2 class="reveal">StorageClass</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">StorageClass defines how dynamic storage is provisioned.</li>
-                <li class="reveal">use WaitForFirstConsumer for topology-aware scheduling</li>
-                <li class="reveal">choose reclaim policy carefully</li>
-                <li class="reveal">use Retain for critical data</li>
-                <li class="reveal">document storage classes for app teams</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: storage.k8s.io/v1
+      <div class="content">
+        <p class="kicker reveal">Storage</p>
+        <h2 class="reveal">StorageClass</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal"><strong>StorageClass</strong> defines how Kubernetes dynamically provisions storage
+                (cloud disks, CSI drivers, NFS, etc.).</li>
+
+              <li class="reveal">Dynamic provisioning removes the need to manually create PersistentVolumes — faster,
+                safer, and scalable.</li>
+
+              <li class="reveal">Use <strong>WaitForFirstConsumer</strong> so volumes are created in the correct zone
+                after the Pod is scheduled.</li>
+
+              <li class="reveal">Choose reclaim policy carefully:
+                <br>• <strong>Retain</strong> for critical data
+                <br>• <strong>Delete</strong> for ephemeral workloads
+              </li>
+
+              <li class="reveal">Document StorageClasses so app teams know which one to choose (fast SSD, cheap HDD,
+                encrypted, replicated, etc.).</li>
+
+              <li class="reveal">Use annotations inside the StorageClass to describe performance, cost, and intended
+                use.</li>
+
+            </ul>
+          </div>
+
+          <pre class="reveal"><code># Example: documented StorageClass
+apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: fast-ssd
+  # document purposes using annotations / or docs
+  annotations:
+    storage.kubernetes.io/description: "High-performance SSD storage for latency-sensitive workloads"
+    storage.kubernetes.io/cost-tier: "premium"
+    storage.kubernetes.io/use-case: "databases, search engines, analytics"
 provisioner: kubernetes.io/aws-ebs
 parameters:
   type: gp3
+  iops: "6000"
+  throughput: "250"
 reclaimPolicy: Retain
-volumeBindingMode: WaitForFirstConsumer</code></pre>
-          </div>
+volumeBindingMode: WaitForFirstConsumer
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../storage/02-persistentvolume-and-persistentvolumeclaim.html">Previous</a>
@@ -55,4 +86,5 @@ volumeBindingMode: WaitForFirstConsumer</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

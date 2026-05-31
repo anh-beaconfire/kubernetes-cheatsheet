@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,10 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../scaling-reliability/02-horizontalpodautoscaler.html" data-next="../scaling-reliability/04-scheduling-nodeselector-affinity-taints-tolerations.html" data-home="../../index.html">
+
+<body data-prev="../scaling-reliability/02-horizontalpodautoscaler.html"
+  data-next="../scaling-reliability/04-scheduling-nodeselector-affinity-taints-tolerations.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,43 +22,123 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Scaling</p>
-          <h2 class="reveal">Cluster Autoscaler vs HPA vs VPA</h2>
-          <table class="compare-table reveal">
-            <thead>
-              <tr>
-                <th>Autoscaler</th>
-                <th>Scales</th>
-                <th>Example</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>HPA</td>
-                <td>number of pods</td>
-                <td>scale API from 3 to 10 replicas</td>
-              </tr>
-              <tr>
-                <td>VPA</td>
-                <td>pod requests/limits</td>
-                <td>tune memory/cpu</td>
-              </tr>
-              <tr>
-                <td>Cluster Autoscaler</td>
-                <td>number of nodes</td>
-                <td>add worker nodes</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="footer-note reveal">HPA needs schedulable capacity</div>
+      <div class="content">
+        <p class="kicker reveal">Scaling</p>
+        <h2 class="reveal">Cluster Autoscaler vs HPA vs VPA</h2>
+
+        <table class="compare-table reveal">
+          <thead>
+            <tr>
+              <th>Characteristic</th>
+              <th>HPA</th>
+              <th>VPA</th>
+              <th>Cluster Autoscaler</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td><strong>What it scales</strong></td>
+              <td>Number of Pod replicas</td>
+              <td>Pod CPU/Memory requests & limits</td>
+              <td>Number of worker nodes in the cluster</td>
+            </tr>
+
+            <tr>
+              <td><strong>Primary goal</strong></td>
+              <td>Match workload demand with Pod count</td>
+              <td>Right‑size Pods for efficiency & stability</td>
+              <td>Ensure enough capacity to schedule Pods</td>
+            </tr>
+
+            <tr>
+              <td><strong>What it acts on</strong></td>
+              <td>Deployment / StatefulSet / ReplicaSet</td>
+              <td>Pod template (via recommendations or auto‑apply)</td>
+              <td>Node groups / autoscaling groups</td>
+            </tr>
+
+            <tr>
+              <td><strong>Key dependency</strong></td>
+              <td>Accurate CPU/memory <em>requests</em></td>
+              <td>Metrics history (Prometheus / Metrics API)</td>
+              <td>Pending Pods that cannot be scheduled</td>
+            </tr>
+
+            <tr>
+              <td><strong>Metrics used</strong></td>
+              <td>CPU, memory, custom/external metrics</td>
+              <td>Resource usage over time</td>
+              <td>Node utilization & unschedulable Pods</td>
+            </tr>
+
+            <tr>
+              <td><strong>Scaling direction</strong></td>
+              <td>Horizontal (more/fewer Pods)</td>
+              <td>Vertical (bigger/smaller Pods)</td>
+              <td>Cluster-level (more/fewer nodes)</td>
+            </tr>
+
+            <tr>
+              <td><strong>When it triggers</strong></td>
+              <td>Pods exceed target utilization</td>
+              <td>Pod usage diverges from requests</td>
+              <td>Pods are Pending due to insufficient capacity</td>
+            </tr>
+
+            <tr>
+              <td><strong>Risks / pitfalls</strong></td>
+              <td>Wrong requests → wrong scaling; flapping</td>
+              <td>Pod restarts when applying new resources</td>
+              <td>Slow scale-up; cost spikes; PDB blocking scale-down</td>
+            </tr>
+
+            <tr>
+              <td><strong>Best for</strong></td>
+              <td>Traffic-driven workloads (APIs, web apps)</td>
+              <td>Batch jobs, ML workloads, memory-heavy apps</td>
+              <td>Any cluster with variable load</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+
+
+        <pre class="mermaid reveal">
+          flowchart LR
+
+    %% Workload
+    subgraph Workload["Workload (Deployment / StatefulSet)"]
+        Pods["Pods"]
+    end
+
+    %% HPA path
+    HPA["1. HPA<br/>Scales Pod Replicas"] -->|Creates more Pods| Pods
+    Pods -->|2. New Pods Pending| Scheduler["Scheduler"]
+    Scheduler -->|3. Requests more capacity| CA["Cluster Autoscaler<br/>Adds/Removes Nodes"]
+    CA -->|4. Adds nodes| Nodes["Node Pool"]
+    Nodes -->|5. New capacity available| Pods
+
+    %% VPA path
+    VPA["6. VPA<br/>Adjusts CPU/Memory Requests"] -->|Changes Pod size| Pods
+    VPA -->|7. Affects scheduling density| Scheduler
+
+
+        </pre>
+        <div class="footer-note reveal">
+          <strong>Key insight:</strong> HPA scales Pods, VPA sizes Pods, Cluster Autoscaler scales Nodes — all three
+          must be aligned for stable, cost‑efficient scaling.
         </div>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../scaling-reliability/02-horizontalpodautoscaler.html">Previous</a>
       <a class="nav-button" href="../../index.html">Home</a>
-      <a class="nav-button primary" href="../scaling-reliability/04-scheduling-nodeselector-affinity-taints-tolerations.html">Next</a>
+      <a class="nav-button primary"
+        href="../scaling-reliability/04-scheduling-nodeselector-affinity-taints-tolerations.html">Next</a>
     </nav>
   </main>
 
@@ -62,4 +146,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
