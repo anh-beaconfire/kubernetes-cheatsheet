@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../interview-questions/03-crashloopbackoff.html" data-next="../interview-questions/05-service-not-working.html" data-home="../../index.html">
+
+<body data-prev="../interview-questions/03-crashloopbackoff.html"
+  data-next="../interview-questions/05-service-not-working.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,26 +21,73 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Interview</p>
-          <h2 class="reveal">ImagePullBackOff</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Kubernetes cannot pull the image.</li>
-                <li class="reveal">image name typo</li>
-                <li class="reveal">tag does not exist</li>
-                <li class="reveal">private registry auth missing</li>
-                <li class="reveal">registry unavailable</li>
-                <li class="reveal">image pull secret not configured</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl describe pod &lt;pod&gt;
-kubectl get secret
-kubectl create secret docker-registry regcred ...</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Interview</p>
+        <h2 class="reveal">ImagePullBackOff</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal">ImagePullBackOff means Kubernetes tried to pull the container image but failed
+                repeatedly.</li>
+
+              <li class="reveal">Verify the image reference: wrong registry, repository, name, or tag are the most
+                common causes.</li>
+
+              <li class="reveal">Check if the tag exists: using a non-existent or mutable tag often leads to pull
+                failures.</li>
+
+              <li class="reveal">Confirm registry authentication: private registries require valid imagePullSecrets.
+              </li>
+
+              <li class="reveal">Check registry availability: network issues, DNS failures, or rate limits can block
+                pulls.</li>
+
+              <li class="reveal">Inspect imagePullPolicy: `Always` forces pulls and may fail if the registry is
+                unreachable.</li>
+
+              <li class="reveal">Fix by correcting the image name/tag, configuring imagePullSecrets, or restoring
+                registry access.</li>
+
+            </ul>
           </div>
+
+          <pre class="reveal"><code># 1. Inspect pod events to see the exact pull error
+kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;
+# Look for: ErrImagePull, ImagePullBackOff, unauthorized, not found, TLS errors
+
+# 2. Verify the image reference in the pod spec
+kubectl get pod &lt;pod&gt; -n &lt;ns&gt; -o jsonpath='{.spec.containers[*].image}'
+# Look for: typos, wrong registry, wrong tag
+
+# 3. Check if the imagePullSecret exists
+kubectl get secret -n &lt;ns&gt;
+# Look for: missing or incorrectly named secret
+
+# 4. Create or update a docker-registry secret (for private registries)
+kubectl create secret docker-registry regcred \
+  --docker-server=&lt;registry&gt; \
+  --docker-username=&lt;user&gt; \
+  --docker-password=&lt;password&gt; \
+  --docker-email=&lt;email&gt; \
+  -n &lt;ns&gt;
+
+# 5. Patch the service account or pod to use the secret
+kubectl patch serviceaccount default \
+  -p '{"imagePullSecrets": [{"name": "regcred"}]}' -n &lt;ns&gt;
+
+# 6. If registry is unreachable, test connectivity from a node
+kubectl debug node/&lt;node&gt; --image=busybox -- chroot /host sh
+nslookup &lt;registry&gt;
+wget https://&lt;registry&gt;
+# Look for: DNS failures, network blocks, TLS issues
+</code></pre>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../interview-questions/03-crashloopbackoff.html">Previous</a>
@@ -50,4 +100,5 @@ kubectl create secret docker-registry regcred ...</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

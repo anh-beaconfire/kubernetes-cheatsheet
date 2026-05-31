@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../best-practices/02-security-best-practices.html" data-next="../best-practices/04-operational-best-practices.html" data-home="../../index.html">
+
+<body data-prev="../best-practices/02-security-best-practices.html"
+  data-next="../best-practices/04-operational-best-practices.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,45 +21,62 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Best Practices</p>
-          <h2 class="reveal">Reliability Best Practices</h2>
-          <div class="card-grid">
-            <article class="info-card reveal">
-              <h3>multiple replicas</h3>
-              <p>multiple replicas</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>topology spread constraints</h3>
-              <p>topology spread constraints</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>pod anti-affinity for critical apps</h3>
-              <p>pod anti-affinity for critical apps</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>PDBs</h3>
-              <p>PDBs</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>autoscaling</h3>
-              <p>autoscaling</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>observability</h3>
-              <p>observability</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>alerting</h3>
-              <p>alerting</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>graceful shutdown</h3>
-              <p>graceful shutdown</p>
-            </article>
-          </div>
+      <div class="content">
+        <p class="kicker reveal">Best Practices</p>
+        <h2 class="reveal">Reliability Best Practices</h2>
+
+        <div class="card-grid">
+
+          <article class="info-card reveal">
+            <h3>Multiple replicas</h3>
+            <p>Run at least 2-3 replicas to avoid single-pod outages and ensure rolling updates do not cause downtime.
+            </p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Topology spread constraints</h3>
+            <p>Distribute Pods across nodes/zones to avoid correlated failures and improve resilience to node or AZ
+              loss.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Pod anti-affinity</h3>
+            <p>Ensure critical Pods do not land on the same node; reduces risk of losing multiple replicas at once.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>PDBs</h3>
+            <p>Define how many Pods must remain available during disruptions to prevent outages during node drains or
+              upgrades.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Autoscaling</h3>
+            <p>Use HPA/VPA to handle traffic spikes and resource variability; prevents overload and improves service
+              stability.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Observability</h3>
+            <p>Collect metrics, logs, and traces to detect issues early and understand system behavior under load.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Alerting</h3>
+            <p>Set actionable alerts on SLOs, latency, errors, and saturation to catch reliability issues before users
+              notice.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Graceful shutdown</h3>
+            <p>Handle SIGTERM properly and honor terminationGracePeriodSeconds to avoid dropped requests during
+              rollouts.</p>
+          </article>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../best-practices/02-security-best-practices.html">Previous</a>
@@ -69,4 +89,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

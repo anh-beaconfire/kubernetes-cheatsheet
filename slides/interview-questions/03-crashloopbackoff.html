@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../interview-questions/02-failing-pod-interview-question.html" data-next="../interview-questions/04-imagepullbackoff.html" data-home="../../index.html">
+
+<body data-prev="../interview-questions/02-failing-pod-interview-question.html"
+  data-next="../interview-questions/04-imagepullbackoff.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,27 +21,83 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Interview</p>
-          <h2 class="reveal">CrashLoopBackOff</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">CrashLoopBackOff means the container starts, crashes, and Kubernetes repeatedly
-                  restarts it with backoff delay.</li>
-                <li class="reveal">app exception</li>
-                <li class="reveal">missing env variable</li>
-                <li class="reveal">wrong command</li>
-                <li class="reveal">failed dependency</li>
-                <li class="reveal">permission issue</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl logs &lt;pod&gt;
-kubectl logs &lt;pod&gt; --previous
-kubectl describe pod &lt;pod&gt;</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Interview</p>
+        <h2 class="reveal">CrashLoopBackOff</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">CrashLoopBackOff means the container starts, crashes quickly, and Kubernetes keeps
+                restarting it with an increasing backoff delay.</li>
+
+              <li class="reveal">First, confirm state and reason:
+                check pod status and container state (Waiting/Terminated, exit code, reason).</li>
+
+              <li class="reveal">Use logs to find the root cause:
+                application exceptions, startup failures, missing configuration, or dependency errors.</li>
+
+              <li class="reveal">Common causes:
+                missing or wrong env vars, wrong command/args/entrypoint, bad image version, or misconfigured
+                config/secret/volume.</li>
+
+              <li class="reveal">Check probes:
+                overly aggressive liveness/readiness/startup probes can kill containers before they are ready.</li>
+
+              <li class="reveal">Check resources:
+                OOMKilled or resource limits too low can cause repeated crashes.</li>
+
+              <li class="reveal">Check permissions:
+                filesystem permissions, runAsNonRoot, dropped capabilities, or missing service account permissions.</li>
+
+              <li class="reveal">If needed, override command to keep the container alive (e.g., sleep) and debug inside
+                the container.</li>
+
+              <li class="reveal">Fix by updating config (env, secrets, volumes), adjusting probes/resources, or fixing
+                the application code and image.</li>
+            </ul>
           </div>
+
+          <pre class="reveal"><code># 1. Confirm CrashLoopBackOff and container state
+kubectl get pod &lt;pod&gt; -n &lt;ns&gt;
+kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;
+
+# Look for: state=Waiting/Terminated, Reason, ExitCode, OOMKilled, probe failures
+
+# 2. Inspect logs (current and previous restart)
+kubectl logs &lt;pod&gt; -n &lt;ns&gt;
+kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous
+
+# Look for: stack traces, missing env vars, connection failures, bad config
+
+# 3. Verify config, env, and dependencies
+kubectl describe pod &lt;pod&gt; -n &lt;ns&gt; | grep -A5 "Environment"
+kubectl describe pod &lt;pod&gt; -n &lt;ns&gt; | grep -A5 "Mounts"
+kubectl get cm,secret,pvc -n &lt;ns&gt;
+
+# 4. Check probes and resources
+kubectl describe pod &lt;pod&gt; -n &lt;ns&gt; | grep -A5 -E "Liveness|Readiness|Startup"
+kubectl describe pod &lt;pod&gt; -n &lt;ns&gt; | grep -i "OOMKilled"
+
+# 5. Debug by keeping the container alive (override command)
+kubectl run debug-shell \
+  --image=&lt;image&gt; \
+  -n &lt;ns&gt; \
+  --restart=Never \
+  --command -- sh -c "sleep 3600"
+
+# Or temporarily patch the pod/deployment command to `sleep` and exec in:
+kubectl exec -it &lt;pod&gt; -n &lt;ns&gt; -- sh
+
+# After identifying the issue:
+# - fix env/config/secrets/volumes
+# - adjust probes/resources
+# - build and deploy a corrected image
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../interview-questions/02-failing-pod-interview-question.html">Previous</a>
@@ -51,4 +110,5 @@ kubectl describe pod &lt;pod&gt;</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

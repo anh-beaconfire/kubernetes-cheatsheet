@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../interview-questions/04-imagepullbackoff.html" data-next="../reference-summary/01-kubernetes-resource-map.html" data-home="../../index.html">
+
+<body data-prev="../interview-questions/04-imagepullbackoff.html"
+  data-next="../reference-summary/01-kubernetes-resource-map.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,27 +21,79 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Interview</p>
-          <h2 class="reveal">Service Not Working</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">selector mismatch</li>
-                <li class="reveal">pods not ready</li>
-                <li class="reveal">wrong targetPort</li>
-                <li class="reveal">NetworkPolicy blocking</li>
-                <li class="reveal">DNS issue</li>
-                <li class="reveal">app binding to localhost only</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl get svc
-kubectl get endpoints
-kubectl get pods --show-labels
-kubectl describe ingress</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Interview</p>
+        <h2 class="reveal">Service Not Working</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal">Check selector alignment: Service selectors must match Pod labels exactly; mismatches
+                produce zero endpoints.</li>
+
+              <li class="reveal">Verify Pod readiness: only Ready Pods receive traffic; failing readiness probes cause
+                empty endpoints.</li>
+
+              <li class="reveal">Confirm correct targetPort: Service <code>targetPort</code> must match the containerPort the app
+                actually listens on.</li>
+
+              <li class="reveal">Check NetworkPolicies: restrictive ingress/egress rules may block traffic between
+                Service and Pods.</li>
+
+              <li class="reveal">Validate DNS resolution: ensure the Service name resolves and the namespace is correct.
+              </li>
+
+              <li class="reveal">Check application binding: apps listening on <code>127.0.0.1</code> instead of <code>0.0.0.0</code> will not
+                receive Service traffic.</li>
+
+              <li class="reveal">Inspect Ingress/Gateway: incorrect host/path rules or backend references break routing
+                before the Service.</li>
+
+            </ul>
           </div>
+
+          <pre class="reveal"><code># 1. Check the Service definition
+kubectl get svc -n &lt;ns&gt;
+kubectl describe svc &lt;service&gt; -n &lt;ns&gt;
+# Look for: selector, ports, targetPort, type
+
+# 2. Check if the Service has endpoints
+kubectl get endpoints &lt;service&gt; -n &lt;ns&gt;
+# Look for: empty subsets = selector mismatch or Pods not Ready
+
+# 3. Verify Pod labels match the Service selector
+kubectl get pods -n &lt;ns&gt; --show-labels
+# Look for: exact key/value match
+
+# 4. Check Pod readiness and container ports
+kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;
+# Look for: readiness probe failures, wrong containerPort
+
+# 5. Validate DNS resolution inside the cluster
+kubectl exec -it &lt;pod&gt; -n &lt;ns&gt; -- nslookup &lt;service&gt;
+kubectl exec -it &lt;pod&gt; -n &lt;ns&gt; -- curl http://&lt;service&gt;:&lt;port&gt;
+# Look for: NXDOMAIN, connection refused, timeouts
+
+# 6. Inspect NetworkPolicies
+kubectl get networkpolicy -n &lt;ns&gt;
+kubectl describe networkpolicy &lt;policy&gt; -n &lt;ns&gt;
+# Look for: missing allow rules for namespace/pod/port
+
+# 7. Check Ingress/Gateway routing (if applicable)
+kubectl describe ingress -n &lt;ns&gt;
+kubectl get gateway,httproute -n &lt;ns&gt;
+# Look for: wrong host/path, wrong backend service/port
+
+# 8. Ensure the app listens on 0.0.0.0, not localhost
+kubectl logs &lt;pod&gt; -n &lt;ns&gt;
+# Look for: "listening on 127.0.0.1" or similar
+</code></pre>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../interview-questions/04-imagepullbackoff.html">Previous</a>
@@ -51,4 +106,5 @@ kubectl describe ingress</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

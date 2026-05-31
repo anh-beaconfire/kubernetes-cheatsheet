@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../best-practices/01-application-deployment-best-practices.html" data-next="../best-practices/03-reliability-best-practices.html" data-home="../../index.html">
+
+<body data-prev="../best-practices/01-application-deployment-best-practices.html"
+  data-next="../best-practices/03-reliability-best-practices.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,45 +21,57 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Best Practices</p>
-          <h2 class="reveal">Security Best Practices</h2>
-          <div class="card-grid">
-            <article class="info-card reveal">
-              <h3>least privilege RBAC</h3>
-              <p>least privilege RBAC</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>avoid cluster-admin</h3>
-              <p>avoid cluster-admin</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>run containers as non-root</h3>
-              <p>run containers as non-root</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>drop capabilities</h3>
-              <p>drop capabilities</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>restrict egress</h3>
-              <p>restrict egress</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>use NetworkPolicies</h3>
-              <p>use NetworkPolicies</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>scan images</h3>
-              <p>scan images</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>do not commit secrets</h3>
-              <p>do not commit secrets</p>
-            </article>
-          </div>
+      <div class="content">
+        <p class="kicker reveal">Best Practices</p>
+        <h2 class="reveal">Security Best Practices</h2>
+
+        <div class="card-grid">
+
+          <article class="info-card reveal">
+            <h3>Least privilege RBAC</h3>
+            <p>Grant only the permissions a workload or user needs; reduce blast radius and limit lateral movement.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Avoid cluster-admin</h3>
+            <p>Cluster-wide admin rights bypass all controls; use scoped roles and service accounts instead.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Run containers as non-root</h3>
+            <p>Minimizes impact of container escape or compromised processes; enforce with securityContext.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Drop capabilities</h3>
+            <p>Remove unnecessary Linux capabilities to shrink the attack surface; follow a minimal privilege model.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Restrict egress</h3>
+            <p>Limit outbound traffic to prevent data exfiltration and enforce zero-trust boundaries between services.
+            </p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Use NetworkPolicies</h3>
+            <p>Define which Pods can communicate; isolate workloads and block unintended east-west traffic.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Scan images</h3>
+            <p>Detect vulnerabilities early using CI/CD scanners; ensure base images and dependencies are patched.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Do not commit secrets</h3>
+            <p>Store secrets in Secret managers or encrypted stores; enforce scanning to prevent accidental leaks.</p>
+          </article>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../best-practices/01-application-deployment-best-practices.html">Previous</a>
@@ -69,4 +84,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

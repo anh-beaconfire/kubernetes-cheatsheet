@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../best-practices/03-reliability-best-practices.html" data-next="../interview-questions/01-request-flow-interview-question.html" data-home="../../index.html">
+
+<body data-prev="../best-practices/03-reliability-best-practices.html"
+  data-next="../interview-questions/01-request-flow-interview-question.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,45 +21,64 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Best Practices</p>
-          <h2 class="reveal">Operational Best Practices</h2>
-          <div class="card-grid">
-            <article class="info-card reveal">
-              <h3>use GitOps or declarative workflows</h3>
-              <p>use GitOps or declarative workflows</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>use Helm/Kustomize</h3>
-              <p>use Helm/Kustomize</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>standardize labels</h3>
-              <p>standardize labels</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>enforce policies</h3>
-              <p>enforce policies</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>monitor cost and resource waste</h3>
-              <p>monitor cost and resource waste</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>regularly upgrade clusters</h3>
-              <p>regularly upgrade clusters</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>back up etcd for self-managed clusters</h3>
-              <p>back up etcd for self-managed clusters</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>document runbooks</h3>
-              <p>document runbooks</p>
-            </article>
-          </div>
+      <div class="content">
+        <p class="kicker reveal">Best Practices</p>
+        <h2 class="reveal">Operational Best Practices</h2>
+
+        <div class="card-grid">
+
+          <article class="info-card reveal">
+            <h3>Use GitOps or declarative workflows</h3>
+            <p>Store desired state in Git and let controllers reconcile automatically; ensures consistency,
+              auditability, and safe rollbacks.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Use Helm/Kustomize</h3>
+            <p>Standardize packaging and configuration; avoid ad‑hoc YAML drift and ensure reproducible deployments
+              across environments.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Standardize labels</h3>
+            <p>Adopt a consistent labeling scheme for ownership, environment, versioning, and cost allocation; improves
+              querying and automation.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Enforce policies</h3>
+            <p>Use admission controllers or policy engines to block unsafe configs (privileged pods, missing limits,
+              unapproved images).</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Monitor cost and waste</h3>
+            <p>Track over‑provisioning, idle workloads, and unused resources; optimize cluster spend and prevent runaway
+              costs.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Regularly upgrade clusters</h3>
+            <p>Stay within supported Kubernetes versions to receive security patches, API stability, and compatibility
+              with ecosystem tools.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Back up etcd (self‑managed)</h3>
+            <p>Protect against data loss by backing up etcd regularly; required for restoring cluster state in
+              self‑managed environments.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Document runbooks</h3>
+            <p>Create clear operational guides for incidents, rollouts, and maintenance; reduces MTTR and improves team
+              reliability.</p>
+          </article>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../best-practices/03-reliability-best-practices.html">Previous</a>
@@ -69,4 +91,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

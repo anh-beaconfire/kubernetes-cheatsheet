@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../best-practices/04-operational-best-practices.html" data-next="../interview-questions/02-failing-pod-interview-question.html" data-home="../../index.html">
+
+<body data-prev="../best-practices/04-operational-best-practices.html"
+  data-next="../interview-questions/02-failing-pod-interview-question.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,25 +21,59 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Interview</p>
-          <h2 class="reveal">Request Flow Interview Question</h2>
-          <div class="diagram-wrap reveal">
-            <div class="diagram request-diagram"><span>User</span><i></i><span>DNS</span><i></i><span>Load
-                Balancer</span><i></i><span>Ingress
-                Controller</span><i></i><span>Service</span><i></i><span>EndpointSlice</span><i></i><span>Pod</span>
-            </div>
-          </div>
-          <div class="diagram-bullets">
+      <div class="content">
+        <p class="kicker reveal">Interview</p>
+        <h2 class="reveal">How does a request from the internet reach a pod?</h2>
+        <div class="code-layout">
+          <div class="text-panel">
             <ul class="bullet-list">
-              <li class="reveal">How does a request from the internet reach a pod?</li>
-              <li class="reveal">DNS resolves domain to load balancer</li>
-              <li class="reveal">load balancer sends request to ingress controller</li>
-              <li class="reveal">ingress controller evaluates Ingress/Gateway rules</li>
-              <li class="reveal">routes to Service</li>
+              <li class="reveal">Client sends HTTP(S) request to a domain on the public internet.</li>
+              <li class="reveal">DNS resolves the domain to a public IP address of a cloud load balancer.</li>
+              <li class="reveal">The cloud load balancer forwards the request to a Kubernetes node running the ingress
+                controller.</li>
+              <li class="reveal">Traffic reaches the ingress controller Service (typically type=LoadBalancer or
+                NodePort).
+              </li>
+              <li class="reveal">The ingress controller evaluates Ingress/Gateway rules (host, path, TLS) to select a
+                backend Service.</li>
+              <li class="reveal">The selected Kubernetes Service (usually ClusterIP) load balances the request across
+                matching Pods.</li>
+              <li class="reveal">kube-proxy (iptables/IPVS) routes the request from the node to the chosen Pod IP and
+                target
+                port.</li>
+              <li class="reveal">The Pod's container receives the request on its container port and processes it.</li>
             </ul>
           </div>
+          <pre class="mermaid">
+flowchart TD
+
+  %% --- Outside Kubernetes ---
+  subgraph OUTSIDE[Outside Kubernetes]
+    USER["1. User"]
+    DNS["2. DNS"]
+    LB["3. Load Balancer"]
+  end
+
+  %% --- Control Plane ---
+  subgraph CP[Control Plane]
+    API["API Server"]
+  end
+
+  %% --- Worker Node ---
+  subgraph NODE[Worker Node]
+    INGRESS["4. Ingress Controller"]
+    SERVICE["5. Service"]
+    ES["6. EndpointSlice"]
+    POD["7. Pod"]
+  end
+
+  %% --- Connections ---
+  USER --> DNS --> LB --> INGRESS --> SERVICE --> ES --> POD
+  API --> SERVICE
+      </pre>
         </div>
+
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -50,4 +87,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

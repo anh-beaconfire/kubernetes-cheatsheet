@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../interview-questions/05-service-not-working.html" data-next="../reference-summary/02-production-readiness-checklist.html" data-home="../../index.html">
+
+<body data-prev="../interview-questions/05-service-not-working.html"
+  data-next="../reference-summary/02-production-readiness-checklist.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,22 +21,73 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Cheat Sheet</p>
-          <h2 class="reveal">Kubernetes Resource Map</h2>
-          <div class="diagram-wrap reveal">
-            <div class="diagram map-diagram">
-              <span>Workloads</span><span>Networking</span><span>Storage</span><span>Config</span><span>Security</span><span>Scaling</span><span>Operations</span>
-            </div>
-          </div>
-          <div class="diagram-bullets">
-            <ul class="bullet-list">
-              <li class="reveal">Practical Kubernetes concept</li>
-              <li class="reveal">Production usage guidance</li>
-              <li class="reveal">Debugging and operations context</li>
-            </ul>
-          </div>
-        </div>
+      <div class="content">
+        <p class="kicker reveal">Cheat Sheet</p>
+        <h2 class="reveal">Kubernetes Resource Map</h2>
+
+        <pre class="mermaid reveal">
+          flowchart TD
+Workloads -.-> Networking -.-> Storage -.-> Config -.-> Security -.-> Scaling -.-> Operations
+
+
+    subgraph Workloads
+        Deployments
+        StatefulSets
+        DaemonSets
+        Jobs
+        CronJobs
+        Pods
+    end
+
+    subgraph Networking
+        Service
+        Ingress
+        Gateway
+        EndpointSlice
+        NetworkPolicy
+        DNS[CoreDNS]
+    end
+
+    subgraph Storage
+        PVC[PersistentVolumeClaim]
+        PV[PersistentVolume]
+        SC[StorageClass]
+        CSI["CSI Drivers"]
+    end
+
+    subgraph Config
+        ConfigMap
+        Secret
+        HPA[HorizontalPodAutoscaler]
+        VPA[VerticalPodAutoscaler]
+        LimitRange
+    end
+
+    subgraph Security
+        RBAC["Roles & RoleBindings"]
+        SA[ServiceAccount]
+        PSP["PodSecurity(Admission)"]
+        SecCtx[SecurityContext]
+        PodSec[PodSecurityStandards]
+    end
+
+    subgraph Scaling
+        HPA2[HPA]
+        VPA2[VPA]
+        CA[ClusterAutoscaler]
+    end
+
+    subgraph Operations
+        Events
+        Logs
+        Metrics
+        Probes["Liveness/Readiness/Startup"]
+        CRD[CRDs]
+        Operator
+    end
+
+        </pre>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -47,4 +101,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

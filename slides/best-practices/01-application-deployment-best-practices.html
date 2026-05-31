@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../packaging-extensions/03-crds-and-operators.html" data-next="../best-practices/02-security-best-practices.html" data-home="../../index.html">
+
+<body data-prev="../packaging-extensions/03-crds-and-operators.html"
+  data-next="../best-practices/02-security-best-practices.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,44 +21,60 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Best Practices</p>
-          <h2 class="reveal">Application Deployment Best Practices</h2>
-          <div class="card-grid">
-            <article class="info-card reveal">
-              <h3>use Deployments for stateless apps</h3>
-              <p>use Deployments for stateless apps</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>use StatefulSets for stable identity/storage</h3>
-              <p>use StatefulSets for stable identity/storage</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>set requests and limits</h3>
-              <p>set requests and limits</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>use readiness/liveness/startup probes</h3>
-              <p>use readiness/liveness/startup probes</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>use ConfigMaps and Secrets</h3>
-              <p>use ConfigMaps and Secrets</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>use immutable image tags</h3>
-              <p>use immutable image tags</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>use rolling updates</h3>
-              <p>use rolling updates</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>configure PDBs</h3>
-              <p>configure PDBs</p>
-            </article>
-          </div>
+      <div class="content">
+        <p class="kicker reveal">Best Practices</p>
+        <h2 class="reveal">Application Deployment Best Practices</h2>
+
+        <div class="card-grid">
+
+          <article class="info-card reveal">
+            <h3>Use Deployments for stateless apps</h3>
+            <p>Ideal for horizontally scalable services where Pods can be replaced freely without preserving identity.
+            </p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Use StatefulSets for stable identity</h3>
+            <p>Required when Pods need persistent identity, stable network names, or attached storage (databases,
+              queues).</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Set requests and limits</h3>
+            <p>Guarantees minimum resources and prevents noisy-neighbor issues; enables proper scheduling and
+              autoscaling.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Use readiness/liveness/startup probes</h3>
+            <p>Ensures Pods only receive traffic when ready, restarts unhealthy containers, and protects slow-start
+              apps.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Use ConfigMaps and Secrets</h3>
+            <p>Store configuration outside the container image; separate code from environment-specific settings.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Use immutable image tags</h3>
+            <p>Pin images by version or digest to ensure deterministic rollouts and reliable rollbacks.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Use rolling updates</h3>
+            <p>Gradually replace Pods to avoid downtime; tune maxSurge and maxUnavailable for safe production rollouts.
+            </p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Configure PDBs</h3>
+            <p>Define how many Pods must remain available during disruptions to avoid outages during node drains or
+              rollouts.</p>
+          </article>
+
         </div>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -69,4 +88,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

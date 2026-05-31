@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../interview-questions/01-request-flow-interview-question.html" data-next="../interview-questions/03-crashloopbackoff.html" data-home="../../index.html">
+
+<body data-prev="../interview-questions/01-request-flow-interview-question.html"
+  data-next="../interview-questions/03-crashloopbackoff.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,20 +21,63 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Interview</p>
-          <h2 class="reveal">Failing Pod Interview Question</h2>
-          <ul class="bullet-list">
-            <li class="reveal">How do you debug a failing pod?</li>
-            <li class="reveal">check pod phase</li>
-            <li class="reveal">describe pod</li>
-            <li class="reveal">inspect events</li>
-            <li class="reveal">check current and previous logs</li>
-            <li class="reveal">inspect image pull/config/secret/PVC issues</li>
-            <li class="reveal">check probes</li>
-          </ul>
+      <div class="content">
+        <p class="kicker reveal">Interview</p>
+        <h2 class="reveal">How do you debug a failing pod?</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Identify the pod and check its status/phase (Pending, CrashLoopBackOff,
+                ImagePullBackOff, etc.).</li>
+              <li class="reveal">Describe the pod to inspect container statuses(Waiting/Terminated), exit codes, probe failures, image pull errors, mount failures, missing secrets/configs.</li>
+              <li class="reveal">Check current and previous container logs to see application-level errors: crash traces, startup failures, missing env vars, connection errors</li>
+              <li class="reveal">Inspect image configuration: image name/tag, registry access, imagePullSecrets, and pull errors.</li>
+              <li class="reveal">Verify configuration: environment variables, ConfigMaps, Secrets, and mounted volumes/PVCs.
+              </li>
+              <li class="reveal">Review readiness/liveness/startup probes for misconfigurations causing restarts or failing readiness.</li>
+              <li class="reveal">Check node conditions and resource pressure (CPU/memory/disk) that might evict or block the pod.</li>
+              <li class="reveal">If the pod is running but misbehaving, exec into the container or port-forward to reproduce and inspect.</li>
+            </ul>
+          </div>
+          <pre class="reveal"><code># 1. Check pod status and basic info
+kubectl get pod <pod> -n <ns> -o wide
+
+# 2. Describe the pod for detailed state + events
+kubectl describe pod <pod> -n <ns>
+
+# 3. Check logs (current and previous)
+kubectl logs <pod> -n <ns>
+kubectl logs <pod> -n <ns> --previous
+
+# 4. Verify image configuration
+kubectl get pod <pod> -n <ns> -o jsonpath='{.spec.containers[*].image}'
+
+# 5. Inspect ConfigMaps, Secrets, and PVCs
+kubectl get cm, secret, pvc -n <ns>
+
+# 6. Check mounts inside the pod spec
+kubectl describe pod <pod> -n <ns> | grep -A5 "Mounts"
+
+# 7. Inspect readiness/liveness/startup probes
+kubectl describe pod <pod> -n <ns> | grep -A5 -E "Liveness|Readiness|Startup"
+
+# 8. Check node health and resource pressure
+kubectl describe node <node>
+
+# 9. Exec into the pod (if running)
+kubectl exec -it <pod> -n <ns> -- sh
+# Check: DNS resolution, network connectivity, missing files, permissions issues
+
+# 10. Port-forward to reproduce issues locally
+kubectl port-forward pod/<pod> 8080:8080 -n <ns>
+# Use to: hit health endpoints, reproduce startup issues, inspect app behavior
+            </code>
+          </pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../interview-questions/01-request-flow-interview-question.html">Previous</a>
@@ -44,4 +90,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

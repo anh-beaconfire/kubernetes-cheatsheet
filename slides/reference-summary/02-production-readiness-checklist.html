@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../reference-summary/01-kubernetes-resource-map.html" data-next="../reference-summary/03-final-summary.html" data-home="../../index.html">
+
+<body data-prev="../reference-summary/01-kubernetes-resource-map.html"
+  data-next="../reference-summary/03-final-summary.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,44 +21,55 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Cheat Sheet</p>
-          <h2 class="reveal">Production Readiness Checklist</h2>
-          <div class="card-grid">
-            <article class="info-card reveal">
-              <h3>Namespace created</h3>
-              <p>Namespace created</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>Labels standardized</h3>
-              <p>Labels standardized</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>Deployment uses immutable image tag</h3>
-              <p>Deployment uses immutable image tag</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>Requests and limits defined</h3>
-              <p>Requests and limits defined</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>Readiness probe configured</h3>
-              <p>Readiness probe configured</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>Liveness/startup probes configured where appropriate</h3>
-              <p>Liveness/startup probes configured where appropriate</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>Service created</h3>
-              <p>Service created</p>
-            </article>
-            <article class="info-card reveal">
-              <h3>Ingress/Gateway configured with TLS</h3>
-              <p>Ingress/Gateway configured with TLS</p>
-            </article>
-          </div>
+      <div class="content">
+        <p class="kicker reveal">Cheat Sheet</p>
+        <h2 class="reveal">Production Readiness Checklist</h2>
+
+        <div class="card-grid">
+
+          <article class="info-card reveal">
+            <h3>Namespace created</h3>
+            <p>Workload runs in a dedicated namespace with clear ownership, isolation, and resource boundaries.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Labels standardized</h3>
+            <p>Resources follow a consistent labeling scheme for ownership, environment, versioning, and automation.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Immutable image tag</h3>
+            <p>Images use versioned or digest-based tags to ensure deterministic rollouts and reliable rollbacks.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Requests and limits defined</h3>
+            <p>CPU/memory requests and limits are set to ensure proper scheduling, stability, and autoscaling behavior.
+            </p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Readiness probe configured</h3>
+            <p>Ensures Pods only receive traffic when fully initialized and dependencies are available.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Liveness/startup probes</h3>
+            <p>Detects deadlocks and protects slow-starting apps from premature restarts during initialization.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Service created</h3>
+            <p>Workload is exposed internally with correct selectors, ports, and readiness-gated endpoints.</p>
+          </article>
+
+          <article class="info-card reveal">
+            <h3>Ingress/Gateway with TLS</h3>
+            <p>External traffic is routed securely using HTTPS with valid certificates and correct routing rules.</p>
+          </article>
+
         </div>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -69,4 +83,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
