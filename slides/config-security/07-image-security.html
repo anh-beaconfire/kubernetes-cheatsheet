@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../config-security/06-securitycontext.html" data-next="../observability-troubleshooting/01-observability-pillars.html" data-home="../../index.html">
+
+<body data-prev="../config-security/06-securitycontext.html"
+  data-next="../observability-troubleshooting/01-observability-pillars.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,19 +21,52 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Security</p>
-          <h2 class="reveal">Image Security</h2>
-          <ul class="bullet-list">
-            <li class="reveal">use trusted base images</li>
-            <li class="reveal">pin image versions</li>
-            <li class="reveal">scan images in CI/CD</li>
-            <li class="reveal">avoid latest tag</li>
-            <li class="reveal">minimize image size</li>
-            <li class="reveal">remove package managers from runtime image</li>
-            <li class="reveal">use multi-stage builds</li>
-          </ul>
+      <div class="content">
+        <p class="kicker reveal">Security</p>
+        <h2 class="reveal">Image Security</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal"><strong>Use trusted base images</strong> (official, vendor‑maintained, or internally curated).</li>
+              <li class="reveal"><strong>Remove package managers</strong> (npm, mvn, pip3) and build tools from runtime images.</li>
+              <li class="reveal"><strong>Use non‑root users</strong> inside the image to reduce privilege risks.</li>
+              <li class="reveal"><strong>Use multi‑stage builds</strong> to separate build dependencies from runtime.</li>
+              <li class="reveal"><strong>Enable seccomp/AppArmor</strong> defaults when running the container.</li>
+              <li class="reveal"><strong>Minimize image size</strong> to reduce attack surface and speed up deployments.</li>
+              <li class="reveal"><strong>Avoid the <code>latest</code> tag</strong> — it breaks reproducibility and rollbacks.</li>
+              <li class="reveal"><strong>Pin image versions</strong> using tags or digests to ensure deterministic builds.</li>
+              <li class="reveal"><strong>Scan images in CI/CD</strong> for vulnerabilities before pushing to registries.</li>
+              <li class="reveal"><strong>Store images in private registries</strong> with access control and audit logs.</li>
+
+            </ul>
+          </div>
+          <pre class="reveal"><code># Multi-stage Dockerfile with secure practices
+# Java Spring boot
+# 1. Build stage (full JDK + Maven)
+FROM maven:3.9-eclipse-temurin-21 AS builder
+WORKDIR /app
+COPY pom.xml .
+RUN mvn -q dependency:go-offline
+COPY src ./src
+RUN mvn -q package -DskipTests
+
+# 2. Runtime stage (minimal JRE only)
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+
+# Create non-root user
+RUN useradd -u 10001 appuser
+
+# Copy only the final JAR
+COPY --from=builder /app/target/*.jar app.jar
+
+USER appuser
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+</code></pre>
         </div>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -44,4 +80,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

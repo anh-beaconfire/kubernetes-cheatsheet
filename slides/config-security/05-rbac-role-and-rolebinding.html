@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../config-security/04-kubernetes-security-layers.html" data-next="../config-security/06-securitycontext.html" data-home="../../index.html">
+
+<body data-prev="../config-security/04-kubernetes-security-layers.html"
+  data-next="../config-security/06-securitycontext.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,19 +21,42 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Security</p>
-          <h2 class="reveal">RBAC: Role and RoleBinding</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">least privilege</li>
-                <li class="reveal">avoid cluster-admin</li>
-                <li class="reveal">bind permissions to service accounts</li>
-                <li class="reveal">audit permissions regularly</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>apiVersion: rbac.authorization.k8s.io/v1
+      <div class="content">
+        <p class="kicker reveal">Security</p>
+        <h2 class="reveal">RBAC: Role and RoleBinding</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal"><strong>RBAC controls what identities can do</strong> in the cluster — it authorizes
+                API actions after authentication.</li>
+
+              <li class="reveal">Defined as Kubernetes API objects in manifests, GitOps repos, or cluster bootstrap
+                configs.</li>
+
+              <li class="reveal"><strong>Roles</strong> define permissions; <strong>RoleBindings</strong> attach them to
+                subjects (users, groups, service accounts).</li>
+
+              <li class="reveal">Targets <strong>namespaces</strong> (Role/RoleBinding) or the entire cluster
+                (ClusterRole/ClusterRoleBinding).</li>
+
+              <li class="reveal">Follow <strong>least privilege</strong> — grant only the verbs required for the
+                workload.</li>
+
+              <li class="reveal">Avoid <strong>cluster-admin</strong> except for cluster operators; never bind it to
+                workloads.</li>
+
+              <li class="reveal">Bind permissions to <strong>service accounts</strong> used by Pods, not to human users.
+              </li>
+
+              <li class="reveal">Audit permissions regularly to avoid privilege drift.</li>
+
+
+            </ul>
+          </div>
+
+          <pre class="reveal"><code>apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: dev
@@ -54,10 +80,16 @@ subjects:
 roleRef:
   kind: Role
   name: pod-reader
-  apiGroup: rbac.authorization.k8s.io</code></pre>
-          </div>
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# To verify effective permissions
+kubectl auth can-i
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../config-security/04-kubernetes-security-layers.html">Previous</a>
@@ -70,4 +102,5 @@ roleRef:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

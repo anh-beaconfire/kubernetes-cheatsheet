@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../scaling-reliability/07-rolling-updates-and-rollbacks.html" data-next="../config-security/05-rbac-role-and-rolebinding.html" data-home="../../index.html">
+
+<body data-prev="../scaling-reliability/07-rolling-updates-and-rollbacks.html"
+  data-next="../config-security/05-rbac-role-and-rolebinding.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,25 +21,47 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Security</p>
-          <h2 class="reveal">Kubernetes Security Layers</h2>
-          <div class="diagram-wrap reveal">
-            <div class="diagram security-diagram"><span>User /
-                CI</span><span>Authentication</span><span>RBAC</span><span>Admission</span><span>Pod
-                Security</span><span>Runtime</span><span>NetworkPolicy</span></div>
-          </div>
-          <div class="diagram-bullets">
+      <div class="content">
+        <p class="kicker reveal">Security</p>
+        <h2 class="reveal">Kubernetes Security Layers</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
             <ul class="bullet-list">
-              <li class="reveal">cluster access</li>
-              <li class="reveal">API authentication</li>
-              <li class="reveal">RBAC authorization</li>
-              <li class="reveal">namespaces</li>
-              <li class="reveal">pod security</li>
+              <li class="reveal"><strong>User / CI</strong> — entry point; all requests go through the API server.</li>
+              <li class="reveal"><strong>Authentication</strong> — verifies identity using certificates, tokens, or
+                OIDC.
+              </li>
+              <li class="reveal"><strong>RBAC Authorization</strong> — checks whether the authenticated identity is
+                allowed to perform the requested action.</li>
+              <li class="reveal"><strong>Admission Control</strong> — validates or mutates incoming requests (OPA
+                Gatekeeper, Kyverno, ResourceQuota, LimitRanger).</li>
+              <li class="reveal"><strong>Pod Security (PSA)</strong> — enforces Pod-level security standards (privileged
+                /
+                baseline / restricted).</li>
+              <li class="reveal"><strong>Runtime Security</strong> — applies seccomp, AppArmor, SELinux, sandboxing, and
+                runtime monitoring.</li>
+              <li class="reveal"><strong>NetworkPolicy</strong> — restricts Pod-to-Pod and Pod-to-external
+                communication.
+              </li>
             </ul>
           </div>
+          <!-- Security Flow Diagram -->
+
+          <pre class="mermaid reveal">
+flowchart TD
+    A["1. User / CI"] --> B["2. Authentication (certs, tokens, OIDC)"]
+    B --> C["3. Authorization (RBAC)"]
+    C --> D["4. Admission Control (mutating + validating)"]
+    D --> E["5. Pod Security (PSA: privileged / baseline / restricted)"]
+    E --> F["6. Runtime Security (seccomp, AppArmor, SELinux)"]
+    F --> G["7. NetworkPolicy (ingress / egress)"]
+      </pre>
         </div>
+
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../scaling-reliability/07-rolling-updates-and-rollbacks.html">Previous</a>
@@ -49,4 +74,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

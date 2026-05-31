@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../config-security/05-rbac-role-and-rolebinding.html" data-next="../config-security/07-image-security.html" data-home="../../index.html">
+
+<body data-prev="../config-security/05-rbac-role-and-rolebinding.html"
+  data-next="../config-security/07-image-security.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,25 +21,40 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Security</p>
-          <h2 class="reveal">SecurityContext</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">SecurityContext controls Linux security settings for pods and containers.</li>
-                <li class="reveal">run as non-root</li>
-                <li class="reveal">disable privilege escalation</li>
-                <li class="reveal">drop Linux capabilities</li>
-                <li class="reveal">use read-only root filesystem when possible</li>
-                <li class="reveal">avoid privileged pods</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>securityContext:
+      <div class="content">
+        <p class="kicker reveal">Security</p>
+        <h2 class="reveal">SecurityContext</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal"><strong>SecurityContext defines Linux security settings</strong> for Pods and
+                containers (UID/GID, capabilities, seccomp, filesystem rules).</li>
+              <li class="reveal">Configured in the <strong>Pod spec</strong> or per‑container
+                <strong>container.securityContext</strong> inside Deployments, StatefulSets, DaemonSets, Jobs, etc.</li>
+              <li class="reveal">Targets <strong>process privileges</strong>, <strong>filesystem access</strong>, and
+                <strong>kernel attack surface</strong> for each container.</li>
+              <li class="reveal">Run workloads as <strong>non‑root</strong> to reduce blast radius and prevent privilege
+                misuse.</li>
+              <li class="reveal">Disable <strong>privilege escalation</strong> to block setuid binaries and container
+                breakout attempts.</li>
+              <li class="reveal">Drop all Linux <strong>capabilities</strong> unless explicitly required.</li>
+              <li class="reveal">Use a <strong>read‑only root filesystem</strong> to prevent tampering and persistence.
+              </li>
+              <li class="reveal">Avoid <strong>privileged Pods</strong> — they bypass container isolation and expose the
+                host.</li>
+              <li class="reveal">Use <strong>seccomp</strong> and <strong>AppArmor</strong> to restrict system calls and
+                reduce kernel attack surface.</li>
+            </ul>
+          </div>
+
+          <pre class="reveal"><code># Pod-level security context
+securityContext:
   runAsNonRoot: true
   runAsUser: 10001
   seccompProfile:
     type: RuntimeDefault
+
 containers:
   - name: api
     image: myorg/api:1.0.0
@@ -44,10 +62,12 @@ containers:
       allowPrivilegeEscalation: false
       readOnlyRootFilesystem: true
       capabilities:
-        drop: ["ALL"]</code></pre>
-          </div>
+        drop: ["ALL"]
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../config-security/05-rbac-role-and-rolebinding.html">Previous</a>
@@ -60,4 +80,5 @@ containers:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
