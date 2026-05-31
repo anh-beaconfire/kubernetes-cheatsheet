@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../kubectl-cheatsheet/05-rollouts-and-scaling.html" data-next="../packaging-extensions/02-helm.html" data-home="../../index.html">
+
+<body data-prev="../kubectl-cheatsheet/05-rollouts-and-scaling.html" data-next="../packaging-extensions/02-helm.html"
+  data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,29 +21,47 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Packaging</p>
-          <h2 class="reveal">Kustomize</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Kustomize customizes Kubernetes YAML without templates.</li>
-                <li class="reveal">dev/staging/prod overlays</li>
-                <li class="reveal">patch image tags</li>
-                <li class="reveal">environment-specific config</li>
-                <li class="reveal">use base + overlays</li>
-                <li class="reveal">keep patches small</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>resources:
+      <div class="content">
+        <p class="kicker reveal">Packaging</p>
+        <h2 class="reveal">Kustomize</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Kustomize is a Kubernetes-native configuration tool built directly into <code>kubectl</code> (no
+                plugins or 3rd-party libraries).</li>
+              <li class="reveal">Used to customize Kubernetes YAML without templates, keeping manifests declarative and
+                Git-friendly.</li>
+              <li class="reveal">Ideal for managing dev/staging/prod differences using a base + overlays structure.</li>
+              <li class="reveal">Common use cases: patching image tags, replicas, env vars, labels, annotations, and
+                environment-specific config.</li>
+              <li class="reveal">Widely used in GitOps tools (ArgoCD, Flux) and CI/CD pipelines to generate final
+                manifests.</li>
+              <li class="reveal">Best practice: keep patches small and focused to avoid drift and maintain readability.
+              </li>
+
+            </ul>
+          </div>
+
+          <pre class="reveal"><code># kustomization.yaml (base)
+resources:
   - deployment.yaml
   - service.yaml
 
 patches:
-  - path: patch-replicas.yaml</code></pre>
-          </div>
+  - path: patch-replicas.yaml
+
+# Apply using kubectl (built-in support)
+kubectl apply -k ./overlays/staging
+
+# Build manifests without applying (CI/CD, GitOps)
+kubectl kustomize ./overlays/prod
+</code></pre>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../kubectl-cheatsheet/05-rollouts-and-scaling.html">Previous</a>
@@ -53,4 +74,5 @@ patches:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

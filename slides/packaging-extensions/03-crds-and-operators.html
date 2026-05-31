@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../packaging-extensions/02-helm.html" data-next="../best-practices/01-application-deployment-best-practices.html" data-home="../../index.html">
+
+<body data-prev="../packaging-extensions/02-helm.html"
+  data-next="../best-practices/01-application-deployment-best-practices.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,20 +21,24 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Packaging</p>
-          <h2 class="reveal">CRDs and Operators</h2>
-          <ul class="bullet-list">
-            <li class="reveal">CRD extends Kubernetes API with custom resources</li>
-            <li class="reveal">Operator automates domain-specific operational logic</li>
-            <li class="reveal">cert-manager</li>
-            <li class="reveal">Prometheus Operator</li>
-            <li class="reveal">External Secrets Operator</li>
-            <li class="reveal">database operators</li>
-            <li class="reveal">understand operator permissions</li>
-          </ul>
-        </div>
+      <div class="content">
+        <p class="kicker reveal">Packaging</p>
+        <h2 class="reveal">CRDs and Operators</h2>
+
+        <ul class="bullet-list">
+          <li class="reveal">CRDs extend the Kubernetes API by adding new resource types (Custom Resources).</li>
+          <li class="reveal">Operators automate domain-specific operational logic using controllers + CRDs.</li>
+          <li class="reveal">Used to manage complex systems: certificates, monitoring stacks, secrets, databases.</li>
+          <li class="reveal">Operators run inside the cluster and continuously reconcile desired state.</li>
+          <li class="reveal">CRDs define the schema; Operators implement the behavior.</li>
+          <li class="reveal">Examples: cert-manager, Prometheus Operator, External Secrets Operator, database operators.
+          </li>
+          <li class="reveal">Important: understand operator permissions (RBAC), lifecycle, and failure modes.</li>
+
+        </ul>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../packaging-extensions/02-helm.html">Previous</a>
@@ -44,4 +51,5 @@
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

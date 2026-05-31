@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../packaging-extensions/01-kustomize.html" data-next="../packaging-extensions/03-crds-and-operators.html" data-home="../../index.html">
+
+<body data-prev="../packaging-extensions/01-kustomize.html"
+  data-next="../packaging-extensions/03-crds-and-operators.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,28 +21,101 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Packaging</p>
-          <h2 class="reveal">Helm</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Helm is a Kubernetes package manager using charts and templates.</li>
-                <li class="reveal">package reusable apps</li>
-                <li class="reveal">install third-party tools</li>
-                <li class="reveal">parameterize deployments</li>
-                <li class="reveal">review rendered manifests</li>
-                <li class="reveal">pin chart versions</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install myapp ./chart
-helm upgrade myapp ./chart
-helm rollback myapp 1
-helm uninstall myapp</code></pre>
+      <div class="content">
+        <p class="kicker reveal">Packaging</p>
+        <h2 class="reveal">Helm</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+              <li class="reveal">Helm is an external tool (not built into Kubernetes) used as the package manager for
+                Kubernetes applications.</li>
+              <li class="reveal">Uses charts (templates + values) to package reusable applications and deploy them
+                consistently.</li>
+              <li class="reveal">A Helm chart is a packaged application: templates, default values, metadata, and
+                optional dependencies.</li>
+              <li class="reveal">Charts are reusable; you typically have one <strong>chart per application</strong>, not per environment.
+              </li>
+              <li class="reveal">Environment differences are handled through values files (values-dev.yaml,
+                values-prod.yaml).</li>
+              <li class="reveal">Commonly used to install third‑party tools (Prometheus, Grafana, NGINX Ingress,
+                cert-manager).</li>
+              <li class="reveal">Supports parameterized deployments using values.yaml for environment-specific
+                configuration.</li>
+              <li class="reveal">Developers provide templates + values; Helm renders them into Kubernetes manifests
+                before applying.</li>
+            </ul>
           </div>
+
+          <pre class="reveal"><code># Chart structure
+chart/
+  Chart.yaml        # metadata (name, version)
+  values.yaml       # default configuration
+  templates/        # Kubernetes YAML templates
+  charts/           # optional dependencies
+
+---
+# Add a chart repository
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+# Install the application using the chart
+helm install myapp ./myapp-chart
+
+# Upgrade using production values
+helm upgrade myapp ./myapp-chart -f values-prod.yaml
+
+# Roll back to a previous version
+helm rollback myapp 1
+
+# Uninstall the release
+helm uninstall myapp
+
+# Render manifests for debugging (dev environment)
+helm template ./myapp-chart -f values-dev.yaml
+
+</code></pre>
+
         </div>
+        <div style="margin-top: 10px;">
+          <pre class="mermaid reveal">
+flowchart TD
+
+    subgraph Dev["Developer Provides"]
+        TPL["templates/ (YAML templates)"]
+        VAL["values.yaml (default values)"]
+        VALENV["values-prod.yaml (env-specific values)"]
+        CHART["Chart.yaml (metadata)"]
+
+        TPL --> VAL
+        TPL --> VALENV
+        TPL --> CHART
+    end
+
+    Dev --> HELM
+
+    subgraph HELM["Helm (CLI Tool)"]
+        MERGE["Merge values (default + env)"]
+        RENDER["Render templates into pure YAML"]
+        VALIDATE["Validate structure"]
+        VERSION["Track release versions"]
+    end
+
+    HELM --> MANIFESTS
+
+    MANIFESTS["Rendered Kubernetes Manifests<br/>(pure YAML)"] --> APISERVER
+
+    subgraph APISERVER["Kubernetes API Server"]
+        STORE["Store desired state in etcd"]
+        CTRL["Controllers reconcile state"]
+        CREATE["Pods / Services / Deployments created"]
+    end
+
+
+        </pre>
+        </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../packaging-extensions/01-kustomize.html">Previous</a>
@@ -52,4 +128,5 @@ helm uninstall myapp</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
