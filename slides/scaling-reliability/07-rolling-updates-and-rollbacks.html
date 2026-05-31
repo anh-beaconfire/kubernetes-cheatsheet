@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../scaling-reliability/06-liveness-readiness-startup-probes.html" data-next="../config-security/04-kubernetes-security-layers.html" data-home="../../index.html">
+
+<body data-prev="../scaling-reliability/06-liveness-readiness-startup-probes.html"
+  data-next="../config-security/04-kubernetes-security-layers.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,26 +21,80 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Reliability</p>
-          <h2 class="reveal">Rolling Updates and Rollbacks</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">use readiness probes</li>
-                <li class="reveal">use maxSurge/maxUnavailable</li>
-                <li class="reveal">monitor during rollout</li>
-                <li class="reveal">use immutable image tags</li>
-                <li class="reveal">keep rollback path available</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl set image deployment/api api=myorg/api:1.1.0
+      <div class="content">
+        <p class="kicker reveal">Reliability</p>
+        <h2 class="reveal">Rolling Updates and Rollbacks</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal"><strong>Rolling update</strong> gradually replaces old Pods with new ones, keeping the
+                service available during deploys.</li>
+
+              <li class="reveal">Use <strong>readiness probes</strong> so new Pods only receive traffic when they are
+                truly ready.</li>
+
+              <li class="reveal">Tune <strong>maxSurge</strong> and <strong>maxUnavailable</strong> to control how many
+                extra Pods are created and how many can be down during rollout.</li>
+
+              <li class="reveal">Monitor during rollout (errors, latency, saturation) and be ready to pause or roll back
+                quickly.</li>
+
+              <li class="reveal">Use <strong>immutable image tags</strong> (e.g., versioned or digest) to ensure
+                rollbacks are deterministic.</li>
+
+              <li class="reveal">Keep a <strong>rollback path</strong> available: previous ReplicaSet, image tag, or
+                GitOps revision.</li>
+
+              <li class="reveal">Align rolling strategy with <strong>PDBs</strong> and <strong>HPA</strong> so
+                autoscaling and disruption budgets don't contradict
+                <br>• Set <strong>HPA minReplicas ≥ PDB minAvailable</strong> to avoid scale‑down
+                blocking rollouts.
+                <br>• Use <strong>HPA scale-down stabilization</strong> to prevent autoscaling during a
+                rollout.
+                <br>• Avoid overly strict PDBs that block node drains or stall rolling updates.
+
+              </li>
+
+            </ul>
+          </div>
+
+          <pre class="reveal"><code># Deployment with rolling update strategy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # allow 1 extra Pod above desired replicas
+      maxUnavailable: 1  # at most 1 Pod unavailable during update
+  template:
+    spec:
+      containers:
+        - name: api
+          image: myorg/api:1.1.0 
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+
+---
+
+# Rolling out and rolling back from the CLI
+kubectl set image deployment/api api=myorg/api:1.1.0
 kubectl rollout status deployment/api
 kubectl rollout history deployment/api
-kubectl rollout undo deployment/api</code></pre>
-          </div>
+# rollback to previous revision
+kubectl rollout undo deployment/api  
+</code></pre>
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../scaling-reliability/06-liveness-readiness-startup-probes.html">Previous</a>
@@ -50,4 +107,5 @@ kubectl rollout undo deployment/api</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

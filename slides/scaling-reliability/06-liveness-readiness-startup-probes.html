@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../scaling-reliability/05-poddisruptionbudget.html" data-next="../scaling-reliability/07-rolling-updates-and-rollbacks.html" data-home="../../index.html">
+
+<body data-prev="../scaling-reliability/05-poddisruptionbudget.html"
+  data-next="../scaling-reliability/07-rolling-updates-and-rollbacks.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,41 +21,102 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">Reliability</p>
-          <h2 class="reveal">Liveness, Readiness, Startup Probes</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">liveness: should container be restarted?</li>
-                <li class="reveal">readiness: should pod receive traffic?</li>
-                <li class="reveal">startup: has slow-starting app finished booting?</li>
-                <li class="reveal">do not make liveness too aggressive</li>
-                <li class="reveal">readiness should check dependencies needed to serve traffic</li>
-                <li class="reveal">startup probe protects slow apps</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>livenessProbe:
-  httpGet:
-    path: /healthz
-    port: 8080
-  initialDelaySeconds: 30
-  periodSeconds: 10
+      <div class="content">
+        <p class="kicker reveal">Reliability</p>
+        <h2 class="reveal">Liveness, Readiness, Startup Probes</h2>
 
-readinessProbe:
-  httpGet:
-    path: /ready
-    port: 8080
-  periodSeconds: 5
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
 
-startupProbe:
-  httpGet:
-    path: /startup
-    port: 8080
-  failureThreshold: 30
-  periodSeconds: 10</code></pre>
+              <li class="reveal"><strong>Liveness probe</strong>: answers “Should this container be restarted?” —
+                detects deadlocks and hard failures.</li>
+
+              <li class="reveal"><strong>Readiness probe</strong>: answers “Should this Pod receive traffic?” — controls
+                inclusion in Service endpoints.</li>
+
+              <li class="reveal"><strong>Startup probe</strong>: answers “Has a slow‑starting app finished booting?” —
+                delays liveness/readiness until startup is done.</li>
+
+              <li class="reveal">Probes are defined in the <strong>container spec</strong> inside the Pod template
+                (Deployment, StatefulSet, DaemonSet, Job, or Pod).</li>
+
+              <li class="reveal">Do not make liveness too aggressive — flapping liveness can cause restart storms and
+                hide real issues.</li>
+
+              <li class="reveal">Readiness should check what’s needed to serve traffic (DB, cache, migrations, warm
+                caches), not just “process is up”.</li>
+
+              <li class="reveal">Startup probe protects slow apps by giving them time to initialize before
+                liveness/readiness start firing.</li>
+
+            </ul>
           </div>
+
+          <pre class="reveal"><code># Probes defined inside the container of a Deployment Pod template
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: api
+          image: my-api:1.0
+
+          # 1) Liveness: restart container if this fails repeatedly
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+
+          # 2) Readiness: only send traffic when this passes
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            periodSeconds: 5
+            failureThreshold: 3
+
+          # 3) Startup: give slow apps time to boot
+          startupProbe:
+            httpGet:
+              path: /startup
+              port: 8080
+            failureThreshold: 30   # 30 * 10s = up to 300s to start
+            periodSeconds: 10
+</code></pre>
         </div>
+        <prev class="mermaid reveal">
+flowchart TD
+
+    subgraph Node["Node (Kubelet)"]
+      Pod["Pod"]
+      Container["Container"]
+    end
+
+    Client["Client"] -->|"0. Call service"| Service["Service"]
+    Service -->|"1. Only Ready Pods"| Pod
+
+    Kubelet["Kubelet"] -->|"2. Runs probes"| Container
+
+    Startup["3. Startup Probe"] -->|"3.1. Must succeed first"| Liveness["Liveness Probe"]
+    Startup -->|"3.2. Must succeed first"| Readiness["Readiness Probe"]
+
+    Liveness -->|"Fail threshold reached"| Restart["Restart Container"]
+    Readiness -->|"Fail"| RemoveEP["Remove Pod from Service endpoints"]
+    Readiness -->|"Pass"| AddEP["Add Pod to Service endpoints"]
+
+    Restart --> Container
+    AddEP --> Service
+    RemoveEP --> Service
+        </prev>
+      </div>
     </article>
 
     <nav class="slide-nav" aria-label="Slide navigation">
@@ -66,4 +130,5 @@ startupProbe:
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>
