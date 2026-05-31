@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../kubectl-cheatsheet/02-get-and-inspect-resources.html" data-next="../kubectl-cheatsheet/04-logs-exec-port-forward.html" data-home="../../index.html">
+
+<body data-prev="../kubectl-cheatsheet/02-get-and-inspect-resources.html"
+  data-next="../kubectl-cheatsheet/04-logs-exec-port-forward.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,23 +21,52 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">kubectl</p>
-          <h2 class="reveal">Apply, Edit, Delete</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Use declarative kubectl apply -f for repeatable environments.</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl apply -f app.yaml
-kubectl diff -f app.yaml
-kubectl delete -f app.yaml
-kubectl edit deployment api
-kubectl delete pod &lt;pod&gt;</code></pre>
+      <div class="content">
+        <p class="kicker reveal">kubectl</p>
+        <h2 class="reveal">Apply, Edit, Delete</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal">Use <code>kubectl apply -f</code> to ensure consistent,
+                repeatable environments across clusters.</li>
+
+              <li class="reveal">Preview changes to avoid accidental production
+                modifications.</li>
+
+              <li class="reveal">Edit live resources — useful for quick fixes, but changes are not
+                stored in Git unless updated manually.</li>
+
+              <li class="reveal">Delete safely — remove resources cleanly using the same manifest or by
+                name.</li>
+
+              <li class="reveal">Tip — always understand what the API server will reconcile
+                before applying or deleting.</li>
+
+            </ul>
           </div>
+
+          <pre class="reveal"><code># Apply declarative config (create or update)
+kubectl apply -f app.yaml
+
+# Show what will change before applying
+kubectl diff -f app.yaml
+
+# Delete using the same manifest
+kubectl delete -f app.yaml
+
+# Edit a live resource (opens editor)
+kubectl edit deployment api
+
+# Delete a specific Pod (forces recreation by Deployment)
+kubectl delete pod <pod>
+</code></pre>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../kubectl-cheatsheet/02-get-and-inspect-resources.html">Previous</a>
@@ -47,4 +79,5 @@ kubectl delete pod &lt;pod&gt;</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

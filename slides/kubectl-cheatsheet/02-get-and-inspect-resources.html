@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../kubectl-cheatsheet/01-context-and-namespace-commands.html" data-next="../kubectl-cheatsheet/03-apply-edit-delete.html" data-home="../../index.html">
+
+<body data-prev="../kubectl-cheatsheet/01-context-and-namespace-commands.html"
+  data-next="../kubectl-cheatsheet/03-apply-edit-delete.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,27 +21,61 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">kubectl</p>
-          <h2 class="reveal">Get and Inspect Resources</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Practical Kubernetes concept</li>
-                <li class="reveal">Production usage guidance</li>
-                <li class="reveal">Debugging and operations context</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl get pods
-kubectl get pods -o wide
-kubectl get all
-kubectl get deploy,svc,ingress
-kubectl describe pod &lt;pod&gt;
-kubectl explain deployment.spec
-kubectl api-resources</code></pre>
+      <div class="content">
+        <p class="kicker reveal">kubectl</p>
+        <h2 class="reveal">Get and Inspect Resources</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal">List resources quickly — get Pods, Deployments, Services, and Ingress
+                to understand the current state.</li>
+
+              <li class="reveal">Use wide output — see Pod IPs, nodes, and readiness for debugging
+                scheduling and networking issues.</li>
+
+              <li class="reveal">Inspect resource details — describe shows Events, conditions,
+                container states, and configuration.</li>
+
+              <li class="reveal">Understand API structure — explain helps you understand fields, spec
+                structure, and valid configuration.</li>
+
+              <li class="reveal">Discover resource types — api-resources shows everything the cluster
+                supports (CRDs included).</li>
+
+              <li class="reveal">Senior SWE tip — always start with “get” to understand the surface
+                area, then “describe” to find the root cause.</li>
+
+            </ul>
           </div>
+
+          <pre class="reveal"><code># 1. List Pods (status, age, restarts)
+kubectl get pods
+
+# 2. Wide output (node, IP, readiness)
+kubectl get pods -o wide
+
+# 3. List everything in the namespace (quick overview)
+kubectl get all
+
+# 4. List specific resource types (can get multiple at once)
+kubectl get deploy,svc,ingress
+
+# 5. Inspect a Pod in detail (events, container state, probes)
+kubectl describe pod <pod>
+
+# 6. Understand spec fields
+kubectl explain deployment.spec
+
+# 7. List all API resources (including CRDs)
+kubectl api-resources
+</code></pre>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../kubectl-cheatsheet/01-context-and-namespace-commands.html">Previous</a>
@@ -51,4 +88,5 @@ kubectl api-resources</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

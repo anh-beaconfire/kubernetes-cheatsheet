@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="../../assets/css/code.css">
   <link rel="stylesheet" href="../../assets/css/theme.css">
 </head>
-<body data-prev="../kubectl-cheatsheet/03-apply-edit-delete.html" data-next="../kubectl-cheatsheet/05-rollouts-and-scaling.html" data-home="../../index.html">
+
+<body data-prev="../kubectl-cheatsheet/03-apply-edit-delete.html"
+  data-next="../kubectl-cheatsheet/05-rollouts-and-scaling.html" data-home="../../index.html">
   <main class="slide-page">
     <header class="slide-header">
       <a class="home-link" href="../../index.html">Kubernetes Cheatsheet</a>
@@ -18,25 +21,48 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">kubectl</p>
-          <h2 class="reveal">Logs, Exec, Port Forward</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Practical Kubernetes concept</li>
-                <li class="reveal">Production usage guidance</li>
-                <li class="reveal">Debugging and operations context</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl logs deployment/api
-kubectl logs -f pod/&lt;pod&gt;
-kubectl logs &lt;pod&gt; --previous
-kubectl exec -it &lt;pod&gt; -- sh
-kubectl port-forward svc/api-service 8080:80</code></pre>
+      <div class="content">
+        <p class="kicker reveal">kubectl</p>
+        <h2 class="reveal">Logs, Exec, Port Forward</h2>
+
+        <div class="code-layout">
+          <div class="text-panel">
+            <ul class="bullet-list">
+
+              <li class="reveal">Use logs to understand container behavior, crashes, startup failures, and probe issues.
+              </li>
+
+              <li class="reveal">Use exec to inspect the runtime environment: env vars, config files, DNS, network,
+                permissions.</li>
+
+              <li class="reveal">Use port-forward to test services locally without exposing them externally.</li>
+
+              <li class="reveal">Tip: logs + describe + exec form the core debugging loop for most Pod
+                issues.</li>
+
+            </ul>
           </div>
+
+          <pre class="reveal"><code># View logs from all Pods in a Deployment
+kubectl logs deployment/api
+
+# Stream logs from a specific Pod (live tail)
+kubectl logs -f pod/<pod>
+
+# View logs from the previous container instance (crash loops)
+kubectl logs <pod> --previous
+
+# Exec into a running Pod (debug environment)
+kubectl exec -it <pod> -- sh
+
+# Forward local port to a Service (test locally)
+kubectl port-forward svc/api-service 8080:80
+</code></pre>
+
         </div>
+      </div>
     </article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../kubectl-cheatsheet/03-apply-edit-delete.html">Previous</a>
@@ -49,4 +75,5 @@ kubectl port-forward svc/api-service 8080:80</code></pre>
   <script src="../../assets/js/mermaid-init.js"></script>
   <script src="../../assets/js/navigation.js"></script>
 </body>
+
 </html>

@@ -18,25 +18,42 @@
     </header>
 
     <article class="slide">
-<div class="content">
-          <p class="kicker reveal">kubectl</p>
-          <h2 class="reveal">Rollouts and Scaling</h2>
-          <div class="code-layout">
-            <div class="text-panel">
-              <ul class="bullet-list">
-                <li class="reveal">Practical Kubernetes concept</li>
-                <li class="reveal">Production usage guidance</li>
-                <li class="reveal">Debugging and operations context</li>
-              </ul>
-            </div>
-            <pre class="reveal"><code>kubectl rollout status deployment/api
+  <div class="content">
+    <p class="kicker reveal">kubectl</p>
+    <h2 class="reveal">Rollouts and Scaling</h2>
+
+    <div class="code-layout">
+      <div class="text-panel">
+        <ul class="bullet-list">
+          <li class="reveal">Rollouts control how new versions of your application are deployed and how Pods are replaced.</li>
+          <li class="reveal">Rollout status and history help verify if a deployment succeeded or if it failed partway through.</li>
+          <li class="reveal">Undo lets you revert to a previous ReplicaSet when a deployment breaks.</li>
+          <li class="reveal">Manual scaling adjusts replicas immediately; autoscaling reacts to CPU or custom metrics.</li>
+          <li class="reveal">Tip: rollouts, scaling, and HPA all interact — understand how they affect each other during incidents.</li>
+
+        </ul>
+      </div>
+
+      <pre class="reveal"><code># Check rollout progress (waits until complete)
+kubectl rollout status deployment/api
+
+# View previous ReplicaSets and revisions
 kubectl rollout history deployment/api
+
+# Roll back to the previous revision
 kubectl rollout undo deployment/api
+
+# Manually scale the Deployment
 kubectl scale deployment/api --replicas=5
-kubectl autoscale deployment api --cpu-percent=70 --min=3 --max=10</code></pre>
-          </div>
-        </div>
-    </article>
+
+# Create an HPA (CPU-based autoscaling)
+kubectl autoscale deployment api --cpu-percent=70 --min=3 --max=10
+</code></pre>
+
+    </div>
+  </div>
+</article>
+
 
     <nav class="slide-nav" aria-label="Slide navigation">
       <a class="nav-button" href="../kubectl-cheatsheet/04-logs-exec-port-forward.html">Previous</a>
